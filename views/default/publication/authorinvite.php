@@ -1,11 +1,11 @@
 <?php
-        /**
-         * @package Elgg
-         * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-         * @author Roger Curry, Grid Research Centre [curry@cpsc.ucalgary.ca]
-         * @author Tingxi Tan, Grid Research Centre [txtan@cpsc.ucalgary.ca]
-         * @link http://grc.ucalgary.ca/
-         */
+/**
+ * @package Elgg
+ * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+ * @author Roger Curry, Grid Research Centre [curry@cpsc.ucalgary.ca]
+ * @author Tingxi Tan, Grid Research Centre [txtan@cpsc.ucalgary.ca]
+ * @link http://grc.ucalgary.ca/
+ */
 
 global $CONFIG;
 
@@ -14,12 +14,16 @@ $formatauthor = preg_replace('/ /','_',$exauthor);
 $publication_guid = $vars['publication_guid'];
 $publication = get_entity($publication_guid);
 $publication_title = $publication->title;
-$invitee = get_loggedin_user();
+$invitee = elgg_get_logged_in_user_entity();
 $invitee_name = $invitee->name;
+
 $canedit = $vars['canedit'];
+$canedit = false; // disable invites for now
+
+
 $content = '<p>'.sprintf(elgg_echo("publication:inviteinfomsg"),$exauthor,$exauthor).'</p>';
 $content .= "<p><label>Enter email address</label>";
-$content .= elgg_view('input/email', array('internalname'=>'emails', 'internalid'=>'emails'));
+$content .= elgg_view('input/email', array('name'=>'emails', 'id'=>'emails'));
 $content .= "</p><p><label>Message</label>";
 $content .= "<textarea class='input-textarea' name='emailmessage'>" .sprintf(elgg_echo('publication:invitemsg'),$exauthor,$publication_title,$invitee_name).elgg_echo('publication:additionalmsg')."</textarea></p>";
 $content .= "<input type='hidden' name='author' value=''/>";
@@ -38,8 +42,8 @@ $userinfo = <<< EOT
 		<p><b>$exauthor</b>
 EOT;
 if($canedit){
-	if(get_plugin_setting('toggleinvites','publications') != 'Off')
-	$userinfo.= " <input type=button class='submit_button' value='invite' onclick=\"show_dialog('$exauthor');\"/>";
+	if(elgg_get_plugin_setting('toggleinvites','publications') != 'Off')
+		$userinfo.= " <input type=button class='submit_button' value='invite' onclick=\"show_dialog('$exauthor');\"/>";
 }
 $userinfo .= "</p></div></div>";
 echo $userinfo;
@@ -47,14 +51,14 @@ echo $dialog;
 
 ?>
 <script type='text/javascript'>
-                function show_dialog(author){
-                       $("input:hidden[name='author']").val(author);
-			var formatauthor = author.replace(/ /g,'_');
-                        $('#invite_dialog_'+formatauthor).show();
-                }
-                function hide_dialog(author){
-			var formatauthor = author.replace(/ /g,'_');
-                        $('#invite_dialog_'+formatauthor).hide();
-                }
+	function show_dialog(author){
+		$("input:hidden[name='author']").val(author);
+		var formatauthor = author.replace(/ /g,'_');
+        $('#invite_dialog_'+formatauthor).show();
+	}
+	
+	function hide_dialog(author){
+		var formatauthor = author.replace(/ /g,'_');
+        $('#invite_dialog_'+formatauthor).hide();
+	}
 </script>
-

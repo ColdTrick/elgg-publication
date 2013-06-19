@@ -7,7 +7,4 @@
 	$url = "<a href=\"{$performed_by->getURL()}\">{$performed_by->name}</a>";
 	$string = sprintf(elgg_echo("publication:river:posted"),$url) . " ";
 	$string .= elgg_echo("publication:river:annotate:create") . " <a href=\"" . $object->getURL() . "\">" . $object->title . "</a>";
-
-?>
-
-<?php echo $string; ?>
+	echo $string;

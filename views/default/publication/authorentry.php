@@ -8,12 +8,15 @@
          */
 
 
-if(is_array($vars['authors'])) $authors = $vars['authors'];
-else if($vars['authors']){
+if(is_array($vars['authors'])) {
+	$authors = $vars['authors'];
+} else if($vars['authors']){
 	$authors = array();
 	$authors[] = $vars['authors'];
 }
-$users = get_entities('user','',0,'',0);
+
+$users = elgg_get_entities(array("type" => "user", "limit" => false)); // TODO this will cause performance issues if site grows larger
+
 $sorted = array();
 foreach($users as $user){
 	$user_guid = $user->getGUID();
@@ -23,7 +26,7 @@ foreach($users as $user){
 natcasesort($sorted);
 ?>
 
-<table id='authortable'>
+<table>
 	<tr>
 	<td>
 		<table>
@@ -46,30 +49,32 @@ natcasesort($sorted);
 ?>
 		</select>
 		</td>
-		<tr><td style='padding-top:5px'>
-		<a class='authorentrybutton' onclick=up();>up</a>&nbsp
-		<a class='authorentrybutton' onclick=down();>down</a>
+		<tr><td class="pvs">
+			<a class='elgg-button elgg-button-action' onclick=up();>up</a>&nbsp
+			<a class='elgg-button elgg-button-action' onclick=down();>down</a>
 		</td></tr>
 		<tr><td>
-		 <div style='margin-top:5px' class='contentWrapper'>
-                <input type='text' id='unregistered'/><br/><br/>
-                <a class='authorentrybutton' onmouseover=this.style.cursor='pointer' onclick=addunregisteredauthor()>Add Unregistered Author</a>
-                </div>
+		 	<div>
+            	<input type='text' id='unregistered'/><br/><br/>
+                <a class='elgg-button elgg-button-action' onclick=addunregisteredauthor()>Add Unregistered Author</a>
+            </div>
 		</td></tr>
 		
 	</table>
 	</td>
-	<td style='padding-top:5px'>
-		<a onmouseover=this.style.cursor='pointer' class='authorentrybutton' onclick=add();><< add</a><br/>
-		<a onmouseover=this.style.cursor='pointer' class='authorentrybutton' onclick=remove();>remove >></a><br/>
+	<td class="pas">
+		<a class='elgg-button elgg-button-action' onclick=add();><< add</a><br/>
+		<a class='elgg-button elgg-button-action' onclick=remove();>remove >></a><br/>
 	</td>
 	<td>
-		 <select id='authorinput' name='authorinput' size='12' style='width:22em'>
+		<select id='authorinput' name='authorinput' size='12' style='width:22em'>
 <?php
 
-                foreach($sorted as $key=>$value)echo "<option value='$key,$value'>$value</option>";
+                foreach($sorted as $key=>$value) {
+                	echo "<option value='$key,$value'>$value</option>";
+                }
 ?>
-                </select>
+		</select>
 	</td></tr>
 	
 </table>

@@ -1,0 +1,5 @@
+= Version history =
+
+0.3 (2013-06-19):
+
+- changed: upgraded to work for Elgg 1.8

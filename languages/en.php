@@ -1,12 +1,11 @@
 <?php
-        /**
-         * @package Elgg
-         * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
-         * @author Roger Curry, Grid Research Centre [curry@cpsc.ucalgary.ca]
-         * @author Tingxi Tan, Grid Research Centre [txtan@cpsc.ucalgary.ca]
-         * @link http://grc.ucalgary.ca/
-         */
-
+	/**
+	 * @package Elgg
+	 * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
+	 * @author Roger Curry, Grid Research Centre [curry@cpsc.ucalgary.ca]
+	 * @author Tingxi Tan, Grid Research Centre [txtan@cpsc.ucalgary.ca]
+	 * @link http://grc.ucalgary.ca/
+	 */
 
 	$english = array(
 		'publication:keywords' => "Keywords",
@@ -22,8 +21,6 @@
 		'publication:upload' => 'Upload Files',
 		'publication:attachment:title' => 'File Attachment',
 		'publication:type'=>'Type',
-		'publication:presentation' => 'Associated Presentations',
-		'publication:widget:num_display' => 'Number of Publications to Display',
 		'publication:source:ref' => "Source",
 		'publication:inviteinfomsg' => "<b>%s</b> is not a registered user.<br/>Send an invitation to <b>%s</b> to join Geochronos.",
 		'publication:invitemsg'=> "Hi %s, 
@@ -57,8 +54,8 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:modify' => 'External Authors Invititation: ',
 		'publication:your' => "Your publications",
 		
-		'publication:authored:your' => "Publications you have authored",
-		'publication:catalogued:your' => "Publications you have catalogued",
+		'publication:authored:your' => "Publications authored",
+		'publication:catalogued:your' => "Publications catalogued",
 		'publications:catalogued' => "publications catalogued",
 		'publication:posttitle' => "%s's publication: %s",
 		'publication:friendsselect'=>"Select Contact to View Publications",
@@ -69,7 +66,12 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:newpost'=>'New Publication on Geochronos',
 		'publication:via' => "added a new publication titled",
 		'publication:read' => "Read publication",
+		'publications:add' => "Add a publication",
 		'publication:add' => "Add a publication",
+		'publication:export' => "Export to BibTeX File",
+		'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
+		'publication:export:confirm:user' => "Do you want to export all %s's publications as a BibTeX file?",
+		'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 		'publication:import' => "Import BibTeX File",
 		'publication:bibtex' => 'BibTeX File',
 		'publication:selectimport' => 'Select file',
@@ -77,6 +79,7 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:saveimport' => 'Import',
 		'publication:edit' => "Edit a publication",
 		'publication:abstract' => "Abstract",
+		'publication:details' => "Details",
 		'publication:strapline' => "%s",
 		'item:object:publication' => 'Publications',
 		'publication:never' => 'never',
@@ -88,14 +91,12 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:enablepublication' => 'Enable group publication',
 		'publication:group' => 'Group publications',
 		'publication:search' => 'Search Publications',			
-	        'publication:river:created' => "%s wrote",
-	        'publication:river:updated' => "%s updated",
-	        'publication:river:posted' => "%s posted",
-	        'publications:widget' => "Publications",
-	        'publications:widget:description' => "Add a list of publications to your profile",
-	        'publication:river:create' => "a new publication titled",
-	        'publication:river:update' => "a publication titled",
-	        'publication:river:annotate' => "a comment on this publication",
+        'river:create:object:publication' => "%s wrote a new publication titled %s",
+        'river:update:object:publication' => "%s updated a publication titled %s",
+        'publication:river:posted' => "%s posted",
+        'publications:widget' => "Publications",
+        'publications:widget:description' => "Add a list of publications to your profile",
+        'publication:river:annotate' => "a comment on this publication",
 		'publication:posted' => "Your publication was successfully posted.",
 		'publication:deleted' => "Your publication was successfully deleted.",
 		'publication:error' => 'Something went wrong. Please try again.',
@@ -108,5 +109,3 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 	);
 					
 	add_translation("en",$english);
-
-?>
