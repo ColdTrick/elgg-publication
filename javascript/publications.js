@@ -19,7 +19,7 @@ function draw_custom_fields(type, guid){
 
 function tag(groupguid, pubguid, ts, token){
 	$.ajax({
-		url: elgg.get_site_url() + '/action/publication/tag',
+		url: elgg.get_site_url() + '/action/publications/tag',
 		data:'groupguid='+groupguid+'&pubguid='+pubguid+'&__elgg_ts='+ts+'&__elgg_token='+token,
 		success: function(){
 			$('#'+groupguid+'-'+pubguid+'-tag').hide('fast');
@@ -30,7 +30,7 @@ function tag(groupguid, pubguid, ts, token){
 
 function untag(groupguid, pubguid, ts, token) {
 	$.ajax({
-		url : elgg.get_site_url() + 'action/publication/untag',
+		url : elgg.get_site_url() + 'action/publications/untag',
 		data : 'groupguid=' + groupguid + '&pubguid=' + pubguid + '&__elgg_ts=' + ts + '&__elgg_token=' + token,
 		success : function() {
 			$('#' + groupguid + '-' + pubguid + '-untag').hide('fast');

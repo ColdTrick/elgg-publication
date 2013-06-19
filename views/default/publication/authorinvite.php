@@ -29,7 +29,7 @@ $content .= "<textarea class='input-textarea' name='emailmessage'>" .sprintf(elg
 $content .= "<input type='hidden' name='author' value=''/>";
 $content .= "<input type='hidden' name='publication' value='$publication_guid' />";
 $content .= "<input type='submit' value='invite'/>&nbsp<input type='button' value='cancel' onclick=\"hide_dialog('$formatauthor')\"/>";
-$form = elgg_view('input/form', array('action'=>"$CONFIG->wwwroot/action/publication/invite", 'body'=>$content));
+$form = elgg_view('input/form', array('action'=>"$CONFIG->wwwroot/action/publications/invite", 'body'=>$content));
 $dialog = "<div style='display:none' id='invite_dialog_$formatauthor' class='publication_dialog'>$form</div>";
 $userinfo = <<< EOT
 	<div class='search_listing'>
