@@ -13,6 +13,8 @@ Todo
 - Improve javascript functions to be more elgg standardized
 - Scan language file for unused or duplicate entries
 - check files for untranslated text
+- remove inline css
+- sticky form for publication/add
 
 
 Original Credits
