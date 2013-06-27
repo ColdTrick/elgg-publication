@@ -9,6 +9,8 @@
 
 	gatekeeper();
 		
+	$entity = false;
+	
 	$guid = (int) get_input('guid');
 	if ($guid) {
 		if($entity = get_entity($guid)){
