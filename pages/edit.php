@@ -32,6 +32,10 @@
 		elgg_push_breadcrumb($page_owner_entity->name, "publications/owner/" . $page_owner_entity->username);
 	}
 	
+	if ($entity) {
+		elgg_push_breadcrumb($entity->title, $entity->getURL());
+	}
+	
 	elgg_push_breadcrumb($title);
 	
 	// build page
