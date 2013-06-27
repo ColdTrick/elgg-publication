@@ -55,6 +55,8 @@ if($entity){
 
 $required_text = elgg_echo("publications:forms:required");
 
+$custom_field = "";
+
 //required filed by type
 if($type == "ARTICLE"){
 	$journal_label = elgg_echo('publication:journal');
