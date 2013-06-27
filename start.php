@@ -322,8 +322,6 @@
 
 	// Register actions
 	elgg_register_action("publications/add", elgg_get_plugins_path() . "publications/actions/add.php");
-	elgg_register_action("publications/tag", elgg_get_plugins_path() . "publications/actions/tag.php");
-	elgg_register_action("publications/untag", elgg_get_plugins_path() . "publications/actions/untag.php");
 	elgg_register_action("publications/edit", elgg_get_plugins_path() . "publications/actions/edit.php");
 	elgg_register_action("publications/delete", elgg_get_plugins_path() . "publications/actions/delete.php");
-	elgg_register_action("publications/invite", elgg_get_plugins_path() . "publications/actions/invite.php");
+// 	elgg_register_action("publications/invite", elgg_get_plugins_path() . "publications/actions/invite.php");
