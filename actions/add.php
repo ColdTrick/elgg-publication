@@ -123,6 +123,7 @@ if($file_contents = get_uploaded_file("attachment")){
 	$fh = new ElggFile();
 	$fh->owner_guid = $publication->getGUID();
 	$file_name = $_FILES["attachment"]["name"];
+	$mime = $_FILES["attachment"]["type"];
 	$fh->setFilename($file_name);
 	
 	if($fh->open("write")){
@@ -130,6 +131,7 @@ if($file_contents = get_uploaded_file("attachment")){
 		$fh->close();
 		
 		$publication->attached_file = $file_name;
+		$publication->attached_file_mime_type = $mime;
 	}
 }
 

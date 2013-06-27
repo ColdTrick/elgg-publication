@@ -24,6 +24,12 @@
 			case "custom_fields":
 				include(dirname(dirname(__FILE__)) . "/pages/custom_fields.php");
 				break;
+			case "download_attachment":
+				if(isset($page[1])){
+					set_input("guid", $page[1]);
+				}
+				include(dirname(dirname(__FILE__)) . "/pages/download_attachment.php");
+				break;
 			case "edit":
 				if(isset($page[1])){
 					set_input("guid", $page[1]);

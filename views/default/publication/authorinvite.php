@@ -31,21 +31,13 @@ $content .= "<input type='hidden' name='publication' value='$publication_guid' /
 $content .= "<input type='submit' value='invite'/>&nbsp<input type='button' value='cancel' onclick=\"hide_dialog('$formatauthor')\"/>";
 $form = elgg_view('input/form', array('action'=>"$CONFIG->wwwroot/action/publications/invite", 'body'=>$content));
 $dialog = "<div style='display:none' id='invite_dialog_$formatauthor' class='publication_dialog'>$form</div>";
-$userinfo = <<< EOT
-	<div class='search_listing'>
-		<div class='search_listing_icon'>
-		<div class='usericon'>
-		<img border='0' src="$CONFIG->wwwroot/mod/profile/graphics/defaultsmall.gif"/>
-		</div>
-		</div>
-		<div class='search_listing_info'>
-		<p><b>$exauthor</b>
-EOT;
+$userinfo = elgg_view_image_block("<div class='elgg-avatar elgg-avatar-tiny'><a><img border='0' src='" . $CONFIG->wwwroot . "/_graphics/icons/user/defaulttiny.gif'/></a></div>", "<b>$exauthor</b>");
+
 if($canedit){
 	if(elgg_get_plugin_setting('toggleinvites','publications') != 'Off')
 		$userinfo.= " <input type=button class='submit_button' value='invite' onclick=\"show_dialog('$exauthor');\"/>";
 }
-$userinfo .= "</p></div></div>";
+
 echo $userinfo;
 echo $dialog;
 

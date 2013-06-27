@@ -61,6 +61,7 @@
 		elgg_register_plugin_hook_handler("register", "menu:filter", "publication_register_menu_filter");
 // 		elgg_register_plugin_hook_handler("action","register","publication_custom_register");
 		elgg_register_plugin_hook_handler("permissions_check", "object", "publication_write_permission_check");
+		elgg_register_plugin_hook_handler("permissions_check:comment", "object", "publication_permissions_check_comment");
 		
 		// register event handlers
 		elgg_register_event_handler("login", "user", "publication_login_check");
