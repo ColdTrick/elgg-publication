@@ -14,8 +14,6 @@ if (!$entity) {
 	return TRUE;
 }
 
-
-
 if ($full) {
 	$owner = $entity->getOwnerEntity();
 	$container = $entity->getContainerEntity();

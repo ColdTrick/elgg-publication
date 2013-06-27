@@ -1,5 +1,4 @@
 <?php
-global $CONFIG;
 
 /**
  * @package Elggi
@@ -57,7 +56,7 @@ if ($entity) {
 // set the required variables
 
 $type_label = elgg_echo('publication:type');
-$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value'=>$type, 'onchange'=>"draw_custom_fields(this.options[this.selectedIndex].text,'$guid')",'options'=>array('ARTICLE','INPROCEEDINGS','BOOK','PHDTHESIS','MASTERSTHESIS','TECHREPORT')));
+$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value'=>$type, 'onchange'=>"elgg.publications.draw_custom_fields(this.options[this.selectedIndex].text,'$guid')",'options'=>array('ARTICLE','INPROCEEDINGS','BOOK','PHDTHESIS','MASTERSTHESIS','TECHREPORT')));
 
 $title_label = elgg_echo('title');
 $title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'value' => $title));
@@ -84,35 +83,38 @@ $entity_hidden .= elgg_view('input/hidden', array('name' => 'container_guid', 'v
 
 $access = "<label>" . elgg_echo("access") . "</label><br />" . elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
 
+$required_text = elgg_echo("publications:forms:required");
+$authors_label = elgg_echo('publication:authors');
+
 $form_body = <<<EOT
-		<p>
-			<label>$title_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br />
+		<div>
+			<label>$title_label<span class='elgg-quiet mls'>$required_text</span></label><br />
             $title_textbox
-		</p>
-		<p>
+		</div>
+		<div>
 			<label>$type_label</label><br/>
 			$type_dropdown
-		</p>
-		<p>
-			<label>Authors<span style='font-size:small;font-style:italic''> (*required field)</span></label>
+		</div>
+		<div>
+			<label>$authors_label<span class='elgg-quiet mls'>$required_text</span></label>
 			$authors_input
-		</p>
-		<p>
+		</div>
+		<div>
 			$access
-		</p>
-		<p class='longtext_editarea'>
+		</div>
+		<div>
 			<label>$abstract_label</label><br />
             $abstract_textarea
-		</p>
+		</div>
 		<script type='text/javascript'>
-			draw_custom_fields('$type','$guid');
+			elgg.publications.draw_custom_fields('$type','$guid');
 		</script>
 		<div id='pub_custom_fields'></div>
 		
-		<p>
+		<div>
 			$entity_hidden
 			$submit_input
-		</p>
+		</div>
 EOT;
 
 echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, 'id' => 'publicationPostForm'));
