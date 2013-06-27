@@ -8,7 +8,9 @@
 	*/
 
 	$authors = elgg_extract("authors", $vars, array());
-	if (!empty($authors) && !is_array($authors)) {
+	if (empty($authors)) {
+		$authors = array(elgg_get_logged_in_user_guid());
+	} elseif (!empty($authors) && !is_array($authors)) {
 		$authors = array($authors);
 	}
 	
