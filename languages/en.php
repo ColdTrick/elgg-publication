@@ -23,6 +23,8 @@
 		'publications:list:mastersthesis' => "Masters Thesis, %s",
 		'publications:list:phdthesis' => "PhD Thesis, %s",
 		'publications:list:inproceedings' => "Proceedings of the %s",
+
+		'publications:details:attachment:download' => "Click to download attachment",
 				
 				
 				

@@ -47,14 +47,26 @@ if (is_array($authors)) {
 	register_error(elgg_echo("publication:blankauthors"));
 	forward(REFERER);
 }
-
-$attachment = get_input('attachment_guid');
 	
 $publication = get_entity($guid);
 if ($publication) {
 	if ($publication->getSubtype() == "publication" && $publication->canEdit()) {
 	
-	
+		//files
+		if($file_contents = get_uploaded_file("attachment")){
+			$fh = new ElggFile();
+			$fh->owner_guid = $publication->getGUID();
+			$file_name = $_FILES["attachement"]["name"];
+			$fh->setFilename($file_name);
+		
+			if($fh->open("write")){
+				$fh->write($file_contents);
+				$fh->close();
+		
+				$publication->attached_file = $file_name;
+			}
+		}
+		
 		$tagarray = string_to_tag_array($keywords);
 			
 		if (empty($title)) {
@@ -127,8 +139,6 @@ if ($publication) {
 		}
 		$pauthors = implode(',',$pauthors);
 		$publication->authors = $pauthors;
-	
-		$publication->attachment = $attachment;
 	
 		system_message(elgg_echo("publication:posted"));
 		add_to_river('river/object/publication/update','update',$_SESSION['user']->guid,$publication->guid);

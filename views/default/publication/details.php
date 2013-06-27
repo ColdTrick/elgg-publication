@@ -117,4 +117,10 @@ if ($entity->description) {
 	echo elgg_view_module("info", elgg_echo('publication:abstract'), elgg_view('output/longtext', array('value' => $entity->description)));
 }
 
+if ($attached_file = $entity->attached_file) {
+	$download_link = elgg_view("output/url", array("text" => elgg_echo("publications:details:attachment:download"), "href" => "publications/download_attachment/" . $entity->getGUID(), "class" => "elgg-button elgg-button-action"));
+	echo elgg_view_module("info", elgg_echo('publication:attachment:title'), $download_link);
+}
+
+
 echo elgg_view_module("info", elgg_echo('publication:details'), $details);

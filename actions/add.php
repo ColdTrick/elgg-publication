@@ -125,6 +125,21 @@ if (is_array($pauthors) && sizeof($pauthors) > 0) {
 	}
 }
 
+//files
+if($file_contents = get_uploaded_file("attachment")){
+	$fh = new ElggFile();
+	$fh->owner_guid = $publication->getGUID();
+	$file_name = $_FILES["attachment"]["name"];
+	$fh->setFilename($file_name);
+	
+	if($fh->open("write")){
+		$fh->write($file_contents);
+		$fh->close();
+		
+		$publication->attached_file = $file_name;
+	}
+}
+
 $pauthors = implode(',',$pauthors);
 $publication->authors=$pauthors;
 
