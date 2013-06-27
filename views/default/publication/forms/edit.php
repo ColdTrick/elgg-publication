@@ -1,5 +1,4 @@
 <?php
-global $CONFIG;
 
 /**
  * @package Elggi
@@ -57,7 +56,7 @@ if ($entity) {
 // set the required variables
 
 $type_label = elgg_echo('publication:type');
-$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value'=>$type, 'onchange'=>"draw_custom_fields(this.options[this.selectedIndex].text,'$guid')",'options'=>array('ARTICLE','INPROCEEDINGS','BOOK','PHDTHESIS','MASTERSTHESIS','TECHREPORT')));
+$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value'=>$type, 'onchange'=>"elgg.publications.draw_custom_fields(this.options[this.selectedIndex].text,'$guid')",'options'=>array('ARTICLE','INPROCEEDINGS','BOOK','PHDTHESIS','MASTERSTHESIS','TECHREPORT')));
 
 $title_label = elgg_echo('title');
 $title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'value' => $title));
@@ -105,7 +104,7 @@ $form_body = <<<EOT
             $abstract_textarea
 		</p>
 		<script type='text/javascript'>
-			draw_custom_fields('$type','$guid');
+			elgg.publications.draw_custom_fields('$type','$guid');
 		</script>
 		<div id='pub_custom_fields'></div>
 		
