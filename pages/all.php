@@ -9,14 +9,16 @@
 
 elgg_register_title_button();
 
-elgg_register_menu_item("title", array(
-	"name" => "bibtex_export",
-	"text" => elgg_echo("publication:export"),
-	"href" => "action/publications/export?type=all",
-	"is_action" => true,
-	"class" => "elgg-button elgg-button-action",
-	"confirm" => elgg_echo("publication:export:confirm:all")
-));
+if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+	elgg_register_menu_item("title", array(
+		"name" => "bibtex_export",
+		"text" => elgg_echo("publication:export"),
+		"href" => "action/publications/export?type=all",
+		"is_action" => true,
+		"class" => "elgg-button elgg-button-action",
+		"confirm" => elgg_echo("publication:export:confirm:all")
+	));
+}
 
 $title = elgg_echo('publication:everyone');
 $listing = elgg_list_entities(array(

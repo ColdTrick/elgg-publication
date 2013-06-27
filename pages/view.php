@@ -17,15 +17,16 @@ if ($entity = get_entity($guid)) {
 	forward("publications/all");
 }
 
-elgg_register_menu_item("title", array(
-		"name" => "bibtex_export",
-		"text" => elgg_echo("publication:export"),
-		"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
-		"is_action" => true,
-		"class" => "elgg-button elgg-button-action",
-		"confirm" => elgg_echo("publication:export:confirm:single")
-));
-
+if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+	elgg_register_menu_item("title", array(
+			"name" => "bibtex_export",
+			"text" => elgg_echo("publication:export"),
+			"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
+			"is_action" => true,
+			"class" => "elgg-button elgg-button-action",
+			"confirm" => elgg_echo("publication:export:confirm:single")
+	));
+}
 
 $page_owner_entity = elgg_get_page_owner_entity();
 if ($page_owner_entity instanceof ElggGroup) {

@@ -8,6 +8,22 @@
 	 */
 
 	$english = array(
+			
+		// new keys
+		
+		'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
+				
+				
+				
+		
+				
+				
+				
+				
+				
+				
+		// old keys
+			
 		'publication:keywords' => "Keywords",
 		'publication:exauthors' => "Additional Authors (not registered)",
 		'publication:authors' => "Authors",

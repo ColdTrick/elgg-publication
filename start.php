@@ -11,12 +11,20 @@
 	
 		// Load system configuration
 		
-		require_once(dirname(__FILE__) . "/lib/PARSEENTRIES.php");
-		require_once(dirname(__FILE__) . "/lib/PARSECREATORS.php");		    		
-		require_once(dirname(__FILE__) . "/lib/export_helper.php");
-				
-		elgg_register_js('publications', elgg_get_site_url() . "mod/publications/javascript/publications.js");
-		elgg_load_js("publications");
+		if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+			require_once(dirname(__FILE__) . "/lib/PARSEENTRIES.php");
+			require_once(dirname(__FILE__) . "/lib/PARSECREATORS.php");		    		
+			require_once(dirname(__FILE__) . "/lib/export_helper.php");
+			
+			elgg_register_plugin_hook_handler("register", "menu:page", "publication_register_menu_page");
+			
+			elgg_register_action("publications/import", elgg_get_plugins_path() . "publications/actions/import.php");
+			elgg_register_action("publications/export", elgg_get_plugins_path() . "publications/actions/export.php");
+			
+		}
+		
+		// extend javascript
+		elgg_extend_view("js/elgg", "js/publications/site");
 		
 		// Extend hover-over menu	
 		elgg_extend_view('profile/menu/links','publication/menu');
@@ -51,7 +59,6 @@
 		add_group_tool_option('publication', elgg_echo('publication:enablepublication'), true);	
 		
 		// menu setup hooks
-		elgg_register_plugin_hook_handler("register", "menu:page", "publication_register_menu_page");
 		elgg_register_plugin_hook_handler("register", "menu:owner_block", "publication_register_menu_owner_block");
 		elgg_register_plugin_hook_handler("register", "menu:filter", "publication_register_menu_filter");
 	}
@@ -233,9 +240,6 @@
 			case "all":
 				include(dirname(__FILE__) . "/pages/all.php");
 				break;
-// 			case "friends":
-// 				include(dirname(__FILE__) . "/pages/friends.php");
-// 				break;
 			case "group":
 				if(isset($page[1])){
 					set_input("guid", $page[1]);
@@ -254,21 +258,17 @@
 				}
 				include(dirname(__FILE__) . "/pages/edit.php");
 				break;
-// 			case "archive":
-// 				include(dirname(__FILE__) . "/pages/archive.php");
-// 				break;
 			case "view":
 				if(isset($page[1])){
 					set_input("guid", $page[1]);
 				}
 				include(dirname(__FILE__) . "/pages/view.php");
 				break;
-// 			case "embed":
-// 				include(dirname(__FILE__) . "/pages/embed.php");
-// 				break;
 			case "import":
-				include(dirname(__FILE__) . "/pages/import.php");
-				break;
+				if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+					include(dirname(__FILE__) . "/pages/import.php");
+					break;
+				}
 			default:
 				forward("publications/all");
 				break;
@@ -321,8 +321,6 @@
 // 	elgg_register_plugin_hook_handler('action','register','publication_custom_register');
 
 	// Register actions
-	elgg_register_action("publications/import", elgg_get_plugins_path() . "publications/actions/import.php");
-	elgg_register_action("publications/export", elgg_get_plugins_path() . "publications/actions/export.php");
 	elgg_register_action("publications/add", elgg_get_plugins_path() . "publications/actions/add.php");
 	elgg_register_action("publications/tag", elgg_get_plugins_path() . "publications/actions/tag.php");
 	elgg_register_action("publications/untag", elgg_get_plugins_path() . "publications/actions/untag.php");

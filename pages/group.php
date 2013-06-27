@@ -13,15 +13,16 @@ $title = elgg_echo('publication:user', array($page_owner_entity->name));
 
 elgg_register_title_button();
 
-elgg_register_menu_item("title", array(
-		"name" => "bibtex_export",
-		"text" => elgg_echo("publication:export"),
-		"href" => "action/publications/export?type=user&user_guid=" . $page_owner_entity->getGUID(),
-		"is_action" => true,
-		"class" => "elgg-button elgg-button-action",
-		"confirm" => elgg_echo("publication:export:confirm:user", array($page_owner_entity->name))
-));
-
+if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+	elgg_register_menu_item("title", array(
+			"name" => "bibtex_export",
+			"text" => elgg_echo("publication:export"),
+			"href" => "action/publications/export?type=user&user_guid=" . $page_owner_entity->getGUID(),
+			"is_action" => true,
+			"class" => "elgg-button elgg-button-action",
+			"confirm" => elgg_echo("publication:export:confirm:user", array($page_owner_entity->name))
+	));
+}
 elgg_push_breadcrumb($page_owner_entity->name);
 
 $options = array(
