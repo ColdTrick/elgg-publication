@@ -192,5 +192,27 @@
 		
 		return $result;
 	}
+
+	/**
+	 * Disable commenting on publications
+	 *
+	 * @param string $hook
+	 * @param string $entity_type
+	 * @param string $returnvalue
+	 * @param array $params
+	 * @return string
+	 */
+	function publication_permissions_check_comment($hook, $entity_type, $returnvalue, $params) {
+		$result = $returnvalue;
+		
+		if (!empty($params) && is_array($params)) {
+			$entity = elgg_extract("entity", $params);
+			if (!empty($entity) && elgg_instanceof($entity, "object", "publication")) {
+				$result = false;
+			}
+		}
+		
+		return $result;
+	}
 	
 	
