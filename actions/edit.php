@@ -13,7 +13,8 @@ $abstract = get_input('publicationabstract');
 $access = get_input('access_id');
 $keywords = get_input('publicationkeywords');
 $comments_on = get_input('comments_select','Off');
-$authors = get_input('authorselected');
+$author_guids = get_input('authors');
+$author_text = get_input("authors_text");
 $uri = get_input('uri');
 $type = get_input('type');
 $year = get_input('year');
@@ -33,17 +34,7 @@ $edition = get_input('edition');
 $organization = get_input('organization');
 $type_field = get_input('type_field');
 
-if (is_array($authors)) {
-	$pauthors = array();
-	for($i = 0; $i < count($authors); $i++){
-		$ca = preg_split('/,/',$authors[$i]);
-		if ($ca[0] == 'new') {
-			$pauthors[$i] = $ca[1];
-		} else {
-			$pauthors[$i] = (int)$ca[0];
-		}
-	}
-} else {
+if (empty($author_guids) && empty($author_text)) {
 	register_error(elgg_echo("publication:blankauthors"));
 	forward(REFERER);
 }
@@ -131,13 +122,21 @@ if ($publication) {
 		$publication->type_field = $type_field;
 	
 		$publication->clearRelationships();
-		if (is_array($pauthors) && sizeof($pauthors) > 0) {
-			foreach($pauthors as $author) {
-				if(is_int($author))
-					add_entity_relationship($publication->getGUID(),'author',$author);
+		if (!empty($author_guids)) {
+			foreach ($author_guids as $author) {
+				add_entity_relationship($publication->getGUID(), 'author', $author);
 			}
 		}
-		$pauthors = implode(',',$pauthors);
+		if (!empty($author_guids) && !empty($author_text)) {
+			$pauthors = array_merge($author_guids, $author_text);
+		} elseif (!empty($author_guids)) {
+			$pauthors  = $author_guids;
+		} elseif (!empty($author_text)) {
+			$pauthors = $author_text;
+		} else {
+			$pauthors = array();
+		}
+		$pauthors = implode(',', $pauthors);
 		$publication->authors = $pauthors;
 	
 		system_message(elgg_echo("publication:posted"));
