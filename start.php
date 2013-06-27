@@ -12,9 +12,9 @@
 		// Load system configuration
 		
 		if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
-			require_once(dirname(__FILE__) . "/lib/PARSEENTRIES.php");
-			require_once(dirname(__FILE__) . "/lib/PARSECREATORS.php");		    		
-			require_once(dirname(__FILE__) . "/lib/export_helper.php");
+			require_once(dirname(__FILE__) . "/vendors/bibtex/PARSEENTRIES.php");
+			require_once(dirname(__FILE__) . "/vendors/bibtex/PARSECREATORS.php");		    		
+			require_once(dirname(__FILE__) . "/vendors/bibtex/export_helper.php");
 			
 			elgg_register_plugin_hook_handler("register", "menu:page", "publication_register_menu_page");
 			
