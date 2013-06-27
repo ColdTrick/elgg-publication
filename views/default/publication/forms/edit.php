@@ -86,6 +86,9 @@ $access = "<label>" . elgg_echo("access") . "</label><br />" . elgg_view("input/
 $required_text = elgg_echo("publications:forms:required");
 $authors_label = elgg_echo('publication:authors');
 
+$attachment_label = elgg_echo("publication:attachment");
+$attachment_input = elgg_view("input/file", array("name" => "attachment"));
+$attachment_input .= "<div class='elgg-subtext'>" . elgg_echo("publication:attachment:instruction") . "</div>";
 $form_body = <<<EOT
 		<div>
 			<label>$title_label<span class='elgg-quiet mls'>$required_text</span></label><br />
@@ -106,6 +109,10 @@ $form_body = <<<EOT
 			<label>$abstract_label</label><br />
             $abstract_textarea
 		</div>
+		<div>
+			<label>$attachment_label</label><br />
+            $attachment_input
+		</div>
 		<script type='text/javascript'>
 			elgg.publications.draw_custom_fields('$type','$guid');
 		</script>
@@ -117,4 +124,4 @@ $form_body = <<<EOT
 		</div>
 EOT;
 
-echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, 'id' => 'publicationPostForm'));
+echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, "enctype" => "multipart/form-data"));
