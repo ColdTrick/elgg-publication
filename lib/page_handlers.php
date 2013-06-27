@@ -41,6 +41,9 @@
 					include(dirname(dirname(__FILE__)) . "/pages/import.php");
 					break;
 				}
+			case "author_autocomplete":
+				include(dirname(dirname(__FILE__)) . "/procedures/author_autocomplete.php");
+				break;
 			default:
 				forward("publications/all");
 				break;
