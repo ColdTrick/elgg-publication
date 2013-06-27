@@ -53,9 +53,6 @@
 		// Register entity type
 		elgg_register_entity_type('object','publication');
 			
-		// Register an annotation handler for comments etc
-		elgg_register_plugin_hook_handler('entity:annotate', 'object', 'publication_annotate_comments');
-		
 		add_group_tool_option('publication', elgg_echo('publication:enablepublication'), true);	
 		
 		// menu setup hooks
@@ -275,15 +272,6 @@
 		}
 		
 		return true;	
-	}
-
-	// TODO is this needed?
-	function publication_annotate_comments($hook, $entity_type, $returnvalue, $params){
-		$entity = $params['entity'];
-		if (($entity instanceof ElggEntity) &&	($entity->getSubtype() == 'publication') && ($entity->comments_on!='Off') && (elgg_extract("full" ,$params))){
-			// Display comments
-			return elgg_view_comments($entity);
-		}		
 	}
 
 	function publication_notify_message($hook, $entity_type, $returnvalue, $params){
