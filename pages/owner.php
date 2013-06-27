@@ -55,27 +55,6 @@ if (!$catalogued) {
 $listing = elgg_view_module("info", elgg_echo('publication:authored:your'), $authored);
 $listing .= elgg_view_module("info", elgg_echo('publication:catalogued:your'), $catalogued);
 
-
-// if($page_owner == $_SESSION['user']){
-// 	$area2 = elgg_view_title(elgg_echo('publication:authored:your'));
-// }else{
-// 	$area1 = elgg_view_title($page_owner->name . "'s " . elgg_echo('publications'));
-// }
-
-
-// if($page_owner instanceof ElggGroup)
-// 	$area2 .= list_entities_from_relationship('tagby',$page_owner->getGUID(),false,'object','publication',0);
-// else
-// 	$area2 .= list_entities_from_relationship('author',$page_owner->getGUID(),true,'object','publication',0);
-
-
-// if($page_owner == $_SESSION['user']){
-// 	$area2 .= elgg_view_title(elgg_echo('publication:catalogued:your'));
-
-// 	$area2 .= list_user_objects($page_owner->getGUID(),'publication',10,false);
-
-// }
-
 $sidebar = "";
 
 if(elgg_is_logged_in()){
