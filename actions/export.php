@@ -4,7 +4,7 @@ $download_type = get_input('type');
 if ($download_type == 'single') {
 	$guid = get_input('guid');
 	$pub = get_entity($guid);
-	$output = getBibTex($pub);
+	$output = publications_get_bibtex($pub);
 } else if($download_type == 'user') {
 	$user_guid = get_input('user_guid');
 	$user = get_entity($user_guid);
@@ -27,7 +27,7 @@ if ($download_type == 'single') {
 	
 	if($pubs){
 		foreach($pubs as $pub){
-			$bibtex = getBibTex($pub);
+			$bibtex = publications_get_bibtex($pub);
 			$output .= $bibtex . "\n\n";
 		}
 	}
@@ -41,7 +41,7 @@ if ($download_type == 'single') {
 	
 	if($pubs){
 		foreach($pubs as $pub){
-			$bibtex = getBibTex($pub);
+			$bibtex = publications_get_bibtex($pub);
 			$output .= $bibtex . "\n\n";
 		}
 	}

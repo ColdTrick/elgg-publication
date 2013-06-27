@@ -7,14 +7,15 @@
 	* @link http://grc.ucalgary.ca/
 	*/
 
+	require_once(dirname(__FILE__) . "/lib/functions.php");
+
 	function publication_init() {
 	
 		// Load system configuration
 		
 		if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
 			require_once(dirname(__FILE__) . "/vendors/bibtex/PARSEENTRIES.php");
-			require_once(dirname(__FILE__) . "/vendors/bibtex/PARSECREATORS.php");		    		
-			require_once(dirname(__FILE__) . "/vendors/bibtex/export_helper.php");
+			require_once(dirname(__FILE__) . "/vendors/bibtex/PARSECREATORS.php");
 			
 			elgg_register_plugin_hook_handler("register", "menu:page", "publication_register_menu_page");
 			
@@ -26,7 +27,7 @@
 		// extend javascript
 		elgg_extend_view("js/elgg", "js/publications/site");
 		
-		// Extend hover-over menu	
+		// Extend hover-over menu
 		elgg_extend_view('profile/menu/links','publication/menu');
 		elgg_extend_view('account/forms/register','publication/register');
 				
@@ -53,7 +54,7 @@
 		// Register entity type
 		elgg_register_entity_type('object','publication');
 			
-		add_group_tool_option('publication', elgg_echo('publication:enablepublication'), true);	
+		add_group_tool_option('publication', elgg_echo('publication:enablepublication'), true);
 		
 		// menu setup hooks
 		elgg_register_plugin_hook_handler("register", "menu:owner_block", "publication_register_menu_owner_block");
@@ -66,7 +67,7 @@
 				if($menu_item->getName() == "friend"){
 					unset($return_value[$index]);
 				}
-			}	
+			}
 			
 			return $return_value;
 		}
@@ -107,7 +108,7 @@
 	}
 	
 	//extend the create user function to include additional information
-	//for invited authors	
+	//for invited authors
 	function publication_create_user($event, $object_type, $object){
 		foreach ($_POST as $key=>$value) {
 			if ($key == 'author') {
@@ -119,8 +120,8 @@
 		}
 		
 		if ($author && $publication) {
-			create_metadata($object->guid, 'exauthor_name', $author, "", $object->guid, ACCESS_PUBLIC);	
-			create_metadata($object->guid, 'firstpublication', $publication, "", $object->guid, ACCESS_PUBLIC);	
+			create_metadata($object->guid, 'exauthor_name', $author, "", $object->guid, ACCESS_PUBLIC);
+			create_metadata($object->guid, 'firstpublication', $publication, "", $object->guid, ACCESS_PUBLIC);
 		}
 	}
 
@@ -271,7 +272,7 @@
 				break;
 		}
 		
-		return true;	
+		return true;
 	}
 
 	function publication_notify_message($hook, $entity_type, $returnvalue, $params){
