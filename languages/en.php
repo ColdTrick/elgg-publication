@@ -12,6 +12,17 @@
 		// new keys
 		
 		'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
+
+			
+			
+		'publications:forms:required' => "(* required field)",
+
+		'publications:list:pages' => "pp. %s",
+		'publications:list:edition' => "%s ed.",
+		'publications:list:techreport' => "Techreport, %s",
+		'publications:list:mastersthesis' => "Masters Thesis, %s",
+		'publications:list:phdthesis' => "PhD Thesis, %s",
+		'publications:list:inproceedings' => "Proceedings of the %s",
 				
 				
 				

@@ -29,19 +29,19 @@ $details .= "<table class='elgg-table mbm'>";
 $details .= "<tr><td><label>" . elgg_echo("publication:type") . ":</label></td><td>" . $type . "</td></tr>";
 
 if($type == 'ARTICLE'){
-	$field_title = 'Journal';
+	$field_title = elgg_echo('publication:journal');
 	$field_text = $entity->journal;
 } else if($type == 'INPROCEEDINGS') {
-	$field_title = 'Booktitle';
+	$field_title = elgg_echo('publication:booktitle');
 	$field_text = $entity->booktitle;
 } else if($type == 'BOOK') {
-	$field_title = 'Publisher';
+	$field_title = elgg_echo('publication:publisher');
 	$field_text = $entity->publisher;
 } else if($type == 'PHDTHESIS' || $type == 'MASTERSTHESIS') {
-	$field_title = 'School';
+	$field_title = elgg_echo('publication:school');
 	$field_text = $entity->school;
 } else if($type == 'TECHREPORT') {
-	$field_title = 'Institution';
+	$field_title = elgg_echo('publication:institution');
 	$field_text = $entity->institution;
 }
 

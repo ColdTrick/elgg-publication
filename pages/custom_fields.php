@@ -53,32 +53,34 @@ if($entity){
 	$type_field = '';
 }
 
+$required_text = elgg_echo("publications:forms:required");
+
 //required filed by type
 if($type == "ARTICLE"){
 	$journal_label = elgg_echo('publication:journal');
 	$journal_input = elgg_view('input/text',array('name'=>'journal','value'=>$journal));
-	$custom_field .= "<p><label>$journal_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$journal_input</p>";
+	$custom_field .= "<p><label>$journal_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$journal_input</p>";
 }else if($type == "INPROCEEDINGS"){
 	$booktitle_label = elgg_echo('publication:booktitle');
 	$booktitle_input = elgg_view('input/text',array('name'=>'booktitle','value'=>$booktitle));
-	$custom_field .= "<p><label>$booktitle_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$booktitle_input</p>";
+	$custom_field .= "<p><label>$booktitle_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$booktitle_input</p>";
 }else if($type == "BOOK"){
 	$publisher_label = elgg_echo('publication:publisher');
 	$publisher_input = elgg_view('input/text',array('name'=>'publisher','value'=>$publisher));
-	$custom_field .= "<p><label>$publisher_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$publisher_input</p>";
+	$custom_field .= "<p><label>$publisher_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$publisher_input</p>";
 }else if($type == "PHDTHESIS" || $type == "MASTERSTHESIS"){
 	$school_label = elgg_echo('publication:school');
 	$school_input = elgg_view('input/text',array('name'=>'school','value'=>$school));
-	$custom_field .= "<p><label>$school_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$school_input</p>";
+	$custom_field .= "<p><label>$school_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$school_input</p>";
 }else if($type == "TECHREPORT"){
 	$institution_label = elgg_echo('publication:institution');
 	$institution_input = elgg_view('input/text',array('name'=>'institution','value'=>$institution));
-	$custom_field .= "<p><label>$institution_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$institution_input</p>";
+	$custom_field .= "<p><label>$institution_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$institution_input</p>";
 }
 
 $year_label = elgg_echo('publication:year');
 $year_input = elgg_view('input/text',array('name'=>'year','value'=>$year));
-$custom_field .= "<p><label>$year_label<span style='font-size:small;font-style:italic''> (*required field)</span></label><br/>$year_input</p>";
+$custom_field .= "<p><label>$year_label<span class='elgg-quiet mls'>$required_text</span></label><br/>$year_input</p>";
 
 //optional fields by type
 if($type == 'ARTICLE'){
