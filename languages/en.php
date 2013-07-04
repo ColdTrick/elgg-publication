@@ -16,6 +16,7 @@
 
 
 		'publications:forms:required' => "(* required field)",
+		'publications:forms:required:alert' => "Please fill out all required fields.",
 
 		'publications:list:pages' => "pp. %s",
 		'publications:list:edition' => "%s ed.",
@@ -28,6 +29,7 @@
 
 
 		'publications:form:author:input:info' => "Enter the names of the authors. Select a author from the dropdown.",
+
 
 
 

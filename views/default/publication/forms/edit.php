@@ -17,18 +17,18 @@ if ($entity) {
 	$action = "publications/edit";
 	$type = $entity->pubtype;
 	$title = $entity->title;
-	
+
 	$abstract = $entity->description;
 	if (empty($abstract)) {
 		$abstract = "";
 	}
-	
+
 	$access_id = $entity->access_id;
 	$highlight = 'default';
 	$authors = $entity->authors;
 	$authors = explode(',',$authors);
 	$attachment_guid = $entity->attachment;
-	
+
 	if ($attachment_guid) {
 		$attachment_entity = get_entity($attachment_guid);
 		if ($attachment_entity) {
@@ -63,7 +63,7 @@ $title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'va
 $abstract_label = elgg_echo('publication:abstract');
 $abstract_textarea = elgg_view('input/longtext', array('name' => 'publicationabstract', 'value' => $abstract));
 
-$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('publish'),'js'=>'onclick=selectall()'));
+$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('publish')));
 
 $authors_input = elgg_view('publication/authorentry', array('authors' => $authors));
 
@@ -117,11 +117,11 @@ $form_body = <<<EOT
 			elgg.publications.draw_custom_fields('$type','$guid');
 		</script>
 		<div id='pub_custom_fields'></div>
-		
+
 		<div>
 			$entity_hidden
 			$submit_input
 		</div>
 EOT;
 
-echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, "enctype" => "multipart/form-data"));
+echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, "enctype" => "multipart/form-data", "class" => "publications-add"));
