@@ -12,6 +12,7 @@ $guid = (int) get_input('guid');
 if ($entity = get_entity($guid)) {
 	$content = elgg_view_entity($entity, array("full_view" => true));
 	$title = $entity->title;
+	$content .= elgg_view_comments($entity);
 } else {
 	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", array($guid)));
 	forward("publications/all");
