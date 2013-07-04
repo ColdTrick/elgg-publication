@@ -27,7 +27,7 @@
 		'publications:details:attachment:download' => "Click to download attachment",
 
 
-		'publications:form:author:input:info' => "Enter the names of the authors. Select a author from the dropdown or press enter.",
+		'publications:form:author:input:info' => "Enter the names of the authors. Select a author from the dropdown.",
 
 
 

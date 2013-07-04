@@ -61,6 +61,11 @@ $destination = $id . "_autocomplete_results";
 						$( this ).data( "autocomplete" ).menu.active ) {
 					event.preventDefault();
 				}
+
+				if ( event.keyCode === 13 ) {
+					// don't submit form on enter
+					event.preventDefault();
+				}
 			})
 			.autocomplete({
 				source: function( request, response ) {
