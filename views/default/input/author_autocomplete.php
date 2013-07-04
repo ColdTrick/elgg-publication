@@ -10,21 +10,21 @@ $destination = $id . "_autocomplete_results";
 
 ?>
 <input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
-
+<div class="elgg-subtext mbs"><?php echo elgg_echo("publications:form:author:input:info"); ?></div>
 <div id="<?php echo $destination; ?>">
 	<?php
 		if (!empty($value)) {
 			if (!is_array($value)) {
 				$value = array($value);
 			}
-		
+
 			// make sure we can see all users
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
-			
+
 			foreach($value as $v) {
 				echo "<div class='" . $destination . "_result'>";
-				
+
 				if (is_numeric($v)) {
 					// existing user
 					if ($user = get_user($v)) {
@@ -37,11 +37,11 @@ $destination = $id . "_autocomplete_results";
 					echo elgg_view("input/hidden", array("name" => $name . "_text[]", "value" => $v));
 					echo $v;
 				}
-				
+
 				echo "<span class='elgg-icon elgg-icon-delete-alt'></span>";
 				echo "</div>";
 			}
-			
+
 			// restore hidden settings
 			access_show_hidden_entities($hidden);
 		}
@@ -68,13 +68,13 @@ $destination = $id . "_autocomplete_results";
 						q: request.term,
 						'user_guids[]': function() {
 							var result = [];
-							
+
 							$("#<?php echo $destination; ?> input[name='<?php echo $name; ?>[]']").each(function(index, elem){
 								if ($(elem).val() != "") {
 									result.push($(elem).val());
 								}
 							});
-		
+
 							return result;
 						}
 					}, response );
@@ -93,19 +93,19 @@ $destination = $id . "_autocomplete_results";
 				select: function( event, ui ) {
 					this.value = "";
 					var result = "";
-					
+
 					result += "<div class='<?php echo $destination; ?>_result'>";
-		
+
 					if(ui.item.type == "user"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
 					} else if(ui.item.type == "text"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_text[]' />";
 					}
 					result += ui.item.content;
-		
+
 					result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
 					result += "</div>";
-					
+
 					$('#<?php echo $destination; ?>').append(result);
 					return false;
 				},
@@ -113,8 +113,8 @@ $destination = $id . "_autocomplete_results";
 			}).data( "autocomplete" )._renderItem = function( ul, item ) {
 				var list_body = "";
 				list_body = item.content;
-				
-			
+
+
 				return $( "<li></li>" )
 				.data( "item.autocomplete", item )
 				.append( "<a>" + list_body + "</a>" )
@@ -126,5 +126,5 @@ $destination = $id . "_autocomplete_results";
 			$(this).parent('div').remove();
 		});
 	});
-	
+
 </script>

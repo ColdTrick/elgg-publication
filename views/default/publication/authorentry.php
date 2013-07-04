@@ -13,5 +13,5 @@
 	} elseif (!empty($authors) && !is_array($authors)) {
 		$authors = array($authors);
 	}
-	
+
 	echo elgg_view("input/author_autocomplete", array("name" => "authors", "id" => "publications-authors", "value" => $authors));

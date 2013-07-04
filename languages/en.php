@@ -8,13 +8,13 @@
 	 */
 
 	$english = array(
-			
+
 		// new keys
-		
+
 		'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
 
-			
-			
+
+
 		'publications:forms:required' => "(* required field)",
 
 		'publications:list:pages' => "pp. %s",
@@ -25,18 +25,21 @@
 		'publications:list:inproceedings' => "Proceedings of the %s",
 
 		'publications:details:attachment:download' => "Click to download attachment",
-				
-				
-				
-		
-				
-				
-				
-				
-				
-				
+
+
+		'publications:form:author:input:info' => "Enter the names of the authors. Select a author from the dropdown or press enter.",
+
+
+
+
+
+
+
+
+
+
 		// old keys
-			
+
 		'publication:keywords' => "Keywords",
 		'publication:exauthors' => "Additional Authors (not registered)",
 		'publication:authors' => "Authors",
@@ -52,7 +55,7 @@
 		'publication:type'=>'Type',
 		'publication:source:ref' => "Source",
 		'publication:inviteinfomsg' => "<b>%s</b> is not a registered user.<br/>Send an invitation to <b>%s</b> to join Geochronos.",
-		'publication:invitemsg'=> "Hi %s, 
+		'publication:invitemsg'=> "Hi %s,
 
 I have included you as an author on a publication titled: '%s' on the Geochronos Portal. I invite you to register for Geochronos.
 
@@ -82,7 +85,7 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:user:friends' => "%s's contacts' publication",
 		'publication:modify' => 'External Authors Invititation: ',
 		'publication:your' => "Your publications",
-		
+
 		'publication:authored:your' => "Publications authored",
 		'publication:catalogued:your' => "Publications catalogued",
 		'publications:catalogued' => "publications catalogued",
@@ -119,7 +122,7 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:bibtex:blank' => 'BibTex file has no entries',
 		'publication:enablepublication' => 'Enable group publication',
 		'publication:group' => 'Group publications',
-		'publication:search' => 'Search Publications',			
+		'publication:search' => 'Search Publications',
         'river:create:object:publication' => "%s wrote a new publication titled %s",
         'river:update:object:publication' => "%s updated a publication titled %s",
         'publication:river:posted' => "%s posted",
@@ -136,5 +139,5 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:notfound' => "Sorry; we could not find the specified publication.",
 		'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	);
-					
+
 	add_translation("en",$english);
