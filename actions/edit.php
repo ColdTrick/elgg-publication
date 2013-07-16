@@ -12,37 +12,35 @@ $title = get_input('publicationtitle');
 $abstract = get_input('publicationabstract');
 $access = get_input('access_id');
 $keywords = get_input('publicationkeywords');
-$comments_on = get_input('comments_select','Off');
 $author_guids = get_input('authors');
 $author_text = get_input("authors_text");
 $uri = get_input('uri');
 $type = get_input('type');
 $year = get_input('year');
-$journal = get_input('journal');
+$journaltitle = get_input('journaltitle');
 $publisher = get_input('publisher');
+$publish_location = get_input('publish_location');
 $booktitle = get_input('booktitle');
-$school = get_input('school');
-$institution = get_input('institution');
 $volume = get_input('volume');
-$number = get_input('number');
-$pages = get_input('number');
-$month = get_input('month');
-$note = get_input('note');
-$series = get_input('series');
-$address = get_input('address');
-$edition = get_input('edition');
-$organization = get_input('organization');
-$type_field = get_input('type_field');
+$pages = get_input('pages');
+$page_from = get_input('page_from');
+$page_to = get_input('page_to');
+$translation = get_input('translation');
+$promotion = get_input('promotion');
 
 if (empty($author_guids) && empty($author_text)) {
 	register_error(elgg_echo("publication:blankauthors"));
 	forward(REFERER);
 }
-	
+
+if (!in_array($type, array("book", "article_book", "article_journal"))) {
+	$type = "article_book";
+}
+
 $publication = get_entity($guid);
 if ($publication) {
 	if ($publication->getSubtype() == "publication" && $publication->canEdit()) {
-	
+
 		//files
 		if($file_contents = get_uploaded_file("attachment")){
 			$fh = new ElggFile();
@@ -50,79 +48,72 @@ if ($publication) {
 			$file_name = $_FILES["attachment"]["name"];
 			$mime = $_FILES["attachment"]["type"];
 			$fh->setFilename($file_name);
-		
+
 			if($fh->open("write")){
 				$fh->write($file_contents);
 				$fh->close();
-		
+
 				$publication->attached_file = $file_name;
 				$publication->attached_file_mime_type = $mime;
 			}
 		}
-		
+
 		$tagarray = string_to_tag_array($keywords);
-			
-		if (empty($title)) {
+
+		if (empty($title) || empty($type)) {
 			register_error(elgg_echo("publication:blank"));
-			forward("mod/publications/add.php");
+			forward(REFERER);
 		}
-		if($type == 'ARTICLE'){
-			if(empty($journal) || empty($year)){
-				register_error(elgg_echo("publication:blankdefault"));                forward($_SERVER['HTTP_REFERER']);
-			}
-		}else if($type =='INPROCEEDINGS'){
-			if(empty($booktitle) || empty($year)){
-				register_error(elgg_echo("publication:blankdefault"));
-				forward($_SERVER['HTTP_REFERER']);
-			}
-		}else if($type =='BOOK'){
-			if(empty($publisher) || empty($year)){
-				register_error(elgg_echo("publication:blankdefault"));
-				forward($_SERVER['HTTP_REFERER']);
-			}
-		}else if($type =='PHDTHESIS' || $type == "MASTERSTHESIS"){
-			if(empty($school) || empty($year)){
-				register_error(elgg_echo("publication:blankdefault"));
-				forward($_SERVER['HTTP_REFERER']);
-			}
-		}else if($type == 'TECHREPORT'){
-			if(empty($institution) || empty($year)){
-				register_error(elgg_echo("publication:blankdefault"));
-				forward($_SERVER['HTTP_REFERER']);
-			}
+
+		switch($type) {
+			case "article_book":
+				if(empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to)) {
+					register_error(elgg_echo("publication:blankdefault"));
+					forward(REFERER);
+				}
+
+				break;
+			case "article_journal":
+				if(empty($journaltitle) || empty($volume) || empty($page_from) || empty($page_to)) {
+					register_error(elgg_echo("publication:blankdefault"));
+					forward(REFERER);
+				}
+
+				break;
+			case "book":
+			default:
+				if(empty($publish_location) || empty($publisher) || empty($pages)) {
+					register_error(elgg_echo("publication:blankdefault"));
+					forward(REFERER);
+				}
+
+				break;
 		}
-	
-		$owner = get_entity($publication->getOwner());
+
 		$publication->access_id = $access;
 		$publication->title = $title;
 		$publication->description = $abstract;
 		if (!$publication->save()) {
 			register_error(elgg_echo("publication:error"));
-			forward("mod/publications/edit.php?publicationpost=" . $guid);
+			forward(REFERER);
 		}
-		$publication->clearMetadata('tags');
-		if (is_array($tagarray)) {
-			$publication->tags = $tagarray;
-		}
-		$publication->comments_on = $comments_on; //whether the users wants to allow comments or not on the publication post
+
+		$publication->tags = $tagarray;
+
 		$publication->uri = $uri;
 		$publication->year = $year;
 		$publication->pubtype = $type;
-		$publication->journal = $journal;
+		$publication->journaltitle = $journaltitle;
 		$publication->booktitle = $booktitle;
-		$publication->school = $school;
-		$publication->institution = $institution;
+		$publication->publisher = $publisher;
+		$publication->publish_location = $publish_location;
 		$publication->volume = $volume;
-		$publication->number = $number;
 		$publication->pages = $pages;
-		$publication->month = $month;
-		$publication->note = $note;
-		$publication->series = $series;
-		$publication->address = $address;
-		$publication->edition = $edition;
-		$publication->organization = $organization;
-		$publication->type_field = $type_field;
-	
+		$publication->page_from = $page_from;
+		$publication->page_to = $page_to;
+		$publication->translation = $translation;
+		$publication->promotion = $promotion;
+
 		$publication->clearRelationships();
 		if (!empty($author_guids)) {
 			foreach ($author_guids as $author) {
@@ -140,10 +131,10 @@ if ($publication) {
 		}
 		$pauthors = implode(',', $pauthors);
 		$publication->authors = $pauthors;
-	
+
 		system_message(elgg_echo("publication:posted"));
 		add_to_river('river/object/publication/update','update',$_SESSION['user']->guid,$publication->guid);
-		
+
 		forward($publication->getURL());
 	}
 } else {

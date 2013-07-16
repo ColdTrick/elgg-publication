@@ -14,6 +14,10 @@ if(!(is_array($authors))) {
 	$authors = array($authors);
 }
 
+if (!in_array($type, array("book", "article_book", "article_journal"))) {
+	$type = "article_book";
+}
+
 foreach($authors as $author){
 	if(!ctype_digit($author)) {
 		$authors_content .= elgg_view('publication/authorinvite', array('exauthor' => $author, 'publication_guid' => $entity->getGUID(), 'canedit' => $entity->canEdit()));
@@ -26,80 +30,58 @@ foreach($authors as $author){
 
 $details .= "<table class='elgg-table mbm'>";
 
-$details .= "<tr><td><label>" . elgg_echo("publication:type") . ":</label></td><td>" . $type . "</td></tr>";
+$details .= "<tr><td><label>" . elgg_echo("publication:type") . ":</label></td><td>" . elgg_echo("publications:type:" . $type) . "</td></tr>";
 
-if($type == 'ARTICLE'){
-	$field_title = elgg_echo('publication:journal');
-	$field_text = $entity->journal;
-} else if($type == 'INPROCEEDINGS') {
-	$field_title = elgg_echo('publication:booktitle');
-	$field_text = $entity->booktitle;
-} else if($type == 'BOOK') {
-	$field_title = elgg_echo('publication:publisher');
-	$field_text = $entity->publisher;
-} else if($type == 'PHDTHESIS' || $type == 'MASTERSTHESIS') {
-	$field_title = elgg_echo('publication:school');
-	$field_text = $entity->school;
-} else if($type == 'TECHREPORT') {
-	$field_title = elgg_echo('publication:institution');
-	$field_text = $entity->institution;
+switch ($type) {
+	case "article_book":
+
+		$details .= "<tr><td><label>" . elgg_echo('publication:booktitle') . ":</label></td><td>" . $entity->booktitle . "</td></tr>";
+
+		// book_editors
+
+
+		$details .= "<tr><td><label>" . elgg_echo('publication:publish_location') . ":</label></td><td>" . $entity->publish_location . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:publisher') . ":</label></td><td>" . $entity->publisher . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:page_from') . ":</label></td><td>" . $entity->page_from . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:page_to') . ":</label></td><td>" . $entity->page_to . "</td></tr>";
+
+		break;
+	case "article_journal":
+
+		$details .= "<tr><td><label>" . elgg_echo('publication:journaltitle') . ":</label></td><td>" . $entity->journaltitle . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:volume') . ":</label></td><td>" . $entity->volume . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:page_from') . ":</label></td><td>" . $entity->page_from . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:page_to') . ":</label></td><td>" . $entity->page_to . "</td></tr>";
+
+		break;
+	case "book":
+	default:
+		$details .= "<tr><td><label>" . elgg_echo('publication:publish_location') . ":</label></td><td>" . $entity->publish_location . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:publisher') . ":</label></td><td>" . $entity->publisher . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:pages') . ":</label></td><td>" . $entity->pages . "</td></tr>";
+
+		break;
 }
 
-$details .= "<tr><td><label>" . $field_title . ":</label></td><td>" . $field_text . "</td></tr>";
-
-if (!empty($entity->month)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:month") . ":</label></td><td>" . $entity->month . "</td></tr>";
+if ($entity->uri) {
+	$details .= "<tr><td><label>" . elgg_echo('publication:uri') . ":</label></td><td>" . elgg_view("output/url", array("value" => $entity->uri)) . "</td></tr>";
 }
 
-if (!empty($entity->year)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:year") . ":</label></td><td>" . $entity->year . "</td></tr>";
+$details .= "<tr><td><label>" . elgg_echo('publications:details:translation') . ":</label></td><td>";
+if ($entity->translation) {
+	$details .= elgg_echo("option:yes");
+} else {
+	$details .= elgg_echo("option:no");
 }
+$details .= "</td></tr>";
 
-if (!empty($entity->organization)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:organization") . ":</label></td><td>" . $entity->organization . "</td></tr>";
+$details .= "<tr><td><label>" . elgg_echo('publications:details:promotion') . ":</label></td><td>";
+if ($entity->promotion) {
+	$details .= elgg_echo("option:yes");
+} else {
+	$details .= elgg_echo("option:no");
 }
-
-if (!empty($entity->edition)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:edition") . ":</label></td><td>" . $entity->edition . "</td></tr>";
-}
-
-if (!empty($entity->type_field)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:type_field") . ":</label></td><td>" . $entity->type_field . "</td></tr>";
-}
-
-if (!empty($entity->volume)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:volume") . ":</label></td><td>" . $entity->volume . "</td></tr>";
-}
-
-if (!empty($entity->number)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:number") . ":</label></td><td>" . $entity->number . "</td></tr>";
-}
-
-if (!empty($entity->series)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:series") . ":</label></td><td>" . $entity->series . "</td></tr>";
-}
-
-if (!empty($entity->address)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:address") . ":</label></td><td>" . $entity->address . "</td></tr>";
-}
-
-if (!empty($entity->pages)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:pages") . ":</label></td><td>" . $entity->pages . "</td></tr>";
-}
-
-if (!empty($entity->uri)) {
-	$uri = elgg_view("output/url", array("href" => $entity->uri, "target" => "_blank"));
-	$details .= "<tr><td><label>" . elgg_echo("publication:uri") . ":</label></td><td>" . $uri . "</td></tr>";
-}
-
-if (!empty($entity->url)) {
-	$url = elgg_view("output/url", array("href" => $entity->url, "target" => "_blank"));
-	$details .= "<tr><td><label>" . elgg_echo("publication:url") . ":</label></td><td>" . $url . "</td></tr>";
-}
-
-if (!empty($entity->doi)) {
-	$details .= "<tr><td><label>" . elgg_echo("publication:doi") . ":</label></td><td>" . $entity->doi . "</td></tr>";
-}
+$details .= "</td></tr>";
 
 $details .= "</table>";
 

@@ -28,6 +28,11 @@ if ($entity) {
 	$authors = $entity->authors;
 	$authors = explode(',',$authors);
 	$attachment_guid = $entity->attachment;
+	$year = $entity->year;
+	$keywords = $entity->tags;
+	$uri = $entity->uri;
+	$translation = $entity->translation;
+	$promotion = $entity->promotion;
 
 	if ($attachment_guid) {
 		$attachment_entity = get_entity($attachment_guid);
@@ -46,20 +51,37 @@ if ($entity) {
 	$guid = '';
 	$action = "publications/add";
 	$title = "";
-	$type = "ARTICLE";
+	$type = "book";
 	$abstract = "";
 	$authors = array();
 	$attachment_guid = '';
 	$attachment_file = '';
+	$year = '';
+	$keywords = '';
+	$uri = '';
+	$translation = '';
+	$promotion = '';
+}
+
+if (!in_array($type, array("book", "article_book", "article_journal"))) {
+	$type = "article_book";
 }
 
 // set the required variables
-
+$type_options = array(
+		"book" => elgg_echo("publications:type:book"),
+		"article_book" => elgg_echo("publications:type:article_book"),
+		"article_journal" => elgg_echo("publications:type:article_journal")
+		);
 $type_label = elgg_echo('publication:type');
-$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value'=>$type, 'onchange'=>"elgg.publications.draw_custom_fields(this.options[this.selectedIndex].text,'$guid')",'options'=>array('ARTICLE','INPROCEEDINGS','BOOK','PHDTHESIS','MASTERSTHESIS','TECHREPORT')));
+$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value' => $type, 'onchange'=>"elgg.publications.draw_custom_fields($(this).val(),'$guid')",'options_values' => $type_options));
 
 $title_label = elgg_echo('title');
 $title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'value' => $title));
+
+$year_label = elgg_echo('publication:year');
+$year_input = elgg_view('input/text', array('name' => 'year', 'value' => $year));
+
 $abstract_label = elgg_echo('publication:abstract');
 $abstract_textarea = elgg_view('input/longtext', array('name' => 'publicationabstract', 'value' => $abstract));
 
@@ -89,21 +111,32 @@ $authors_label = elgg_echo('publication:authors');
 $attachment_label = elgg_echo("publication:attachment");
 $attachment_input = elgg_view("input/file", array("name" => "attachment"));
 $attachment_input .= "<div class='elgg-subtext'>" . elgg_echo("publication:attachment:instruction") . "</div>";
+
+//common optional fields across all types
+$keywords_label = elgg_echo('publication:keywords');
+$keywords_input = elgg_view('input/tags', array('name' => 'publicationkeywords', 'value' => $keywords));
+
+$uri_label = elgg_echo('publication:uri');
+$uri_input = elgg_view('input/text', array('name' => 'uri', 'value' => $uri));
+
+$translation_label = elgg_echo('publication:translation');
+$translation_input = elgg_view('input/checkbox', array('name' => 'translation', 'value' => '1', 'checked' => ($translation == true)));
+
+$promotion_label = elgg_echo('publication:promotion');
+$promotion_input = elgg_view('input/checkbox', array('name' => 'promotion', 'value' => '1', 'checked' => ($promotion == true)));
+
 $form_body = <<<EOT
 		<div>
 			<label>$title_label<span class='elgg-quiet mls'>$required_text</span></label><br />
             $title_textbox
 		</div>
 		<div>
-			<label>$type_label</label><br/>
-			$type_dropdown
-		</div>
-		<div>
 			<label>$authors_label<span class='elgg-quiet mls'>$required_text</span></label>
 			$authors_input
 		</div>
 		<div>
-			$access
+			<label>$year_label<span class='elgg-quiet mls'>$required_text</span></label><br/>
+			$year_input
 		</div>
 		<div>
 			<label>$abstract_label</label><br />
@@ -113,11 +146,31 @@ $form_body = <<<EOT
 			<label>$attachment_label</label><br />
             $attachment_input
 		</div>
+		<div>
+			$access
+		</div>
+		<div>
+			<label>$type_label</label><br/>
+			$type_dropdown
+		</div>
 		<script type='text/javascript'>
 			elgg.publications.draw_custom_fields('$type','$guid');
 		</script>
 		<div id='pub_custom_fields'></div>
-
+		<div>
+			<label>$keywords_label</label><br/>
+			$keywords_input
+		</div>
+		<div>
+			<label>$uri_label</label><br/>
+			$uri_input
+		</div>
+		<div>
+			<label>$translation_label</label> $translation_input
+		</div>
+		<div>
+			<label>$promotion_label</label> $promotion_input
+		</div>
 		<div>
 			$entity_hidden
 			$submit_input
