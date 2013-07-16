@@ -8,27 +8,29 @@
  */
 
 // Get input data
-$title = get_input('publicationtitle');
-$abstract = get_input('publicationabstract');
-$keywords = get_input('publicationkeywords');
+$title = get_input("publicationtitle");
+$abstract = get_input("publicationabstract");
+$keywords = get_input("publicationkeywords");
 
-$access = get_input('access_id');
+$access = (int) get_input("access_id");
 
-$author_guids = get_input('authors');
+$author_guids = get_input("authors");
 $author_text = get_input("authors_text");
-$uri = get_input('uri');
-$type = get_input('type');
-$year = get_input('year');
-$journaltitle = get_input('journaltitle');
-$publisher = get_input('publisher');
-$publish_location = get_input('publish_location');
-$booktitle = get_input('booktitle');
-$volume = get_input('volume');
-$pages = get_input('pages');
-$page_from = get_input('page_from');
-$page_to = get_input('page_to');
-$translation = get_input('translation');
-$promotion = get_input('promotion');
+$uri = get_input("uri");
+$type = get_input("type");
+$year = get_input("year");
+$journaltitle = get_input("journaltitle");
+$publisher = get_input("publisher");
+$publish_location = get_input("publish_location");
+$booktitle = get_input("booktitle");
+$volume = get_input("volume");
+$pages = get_input("pages");
+$page_from = get_input("page_from");
+$page_to = get_input("page_to");
+$translation = get_input("translation");
+$promotion = get_input("promotion");
+$book_editors_guids = get_input("book_editors");
+$book_editors_text = get_input("book_editors_text");
 
 if (empty($author_guids) && empty($author_text)) {
 	register_error(elgg_echo("publication:blankauthors"));
@@ -46,7 +48,7 @@ if (empty($title) || empty($type)) {
 
 switch($type) {
 	case "article_book":
-		if(empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to)) {
+		if(empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to) || (empty($book_editors_guids) && empty($book_editors_text))) {
 			register_error(elgg_echo("publication:blankdefault"));
 			forward(REFERER);
 		}
@@ -71,8 +73,8 @@ switch($type) {
 
 $publication = new ElggObject();
 $publication->subtype = "publication";
-$publication->owner_guid = $_SESSION['user']->getGUID();
-$publication->container_guid = (int)get_input('container_guid', $_SESSION['user']->getGUID());
+$publication->owner_guid = elgg_get_logged_in_user_guid();
+$publication->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 $publication->access_id = $access;
 $publication->title = $title;
 $publication->description = $abstract;
@@ -105,6 +107,12 @@ if (!empty($author_guids)) {
 	}
 }
 
+if (!empty($book_editors_guids)) {
+	foreach ($book_editors_guids as $book_editor) {
+		add_entity_relationship($publication->getGUID(), 'book_editor', $book_editor);
+	}
+}
+
 //files
 if($file_contents = get_uploaded_file("attachment")){
 	$fh = new ElggFile();
@@ -133,6 +141,18 @@ if (!empty($author_guids) && !empty($author_text)) {
 }
 $pauthors = implode(',', $pauthors);
 $publication->authors = $pauthors;
+
+if (!empty($book_editors_guids) && !empty($book_editors_text)) {
+	$pbook_editors = array_merge($book_editors_guids, $book_editors_text);
+} elseif (!empty($book_editors_guids)) {
+	$pbook_editors  = $book_editors_guids;
+} elseif (!empty($book_editors_text)) {
+	$pbook_editors = $book_editors_text;
+} else {
+	$pbook_editors = array();
+}
+$pbook_editors = implode(',', $pbook_editors);
+$publication->book_editors = $pbook_editors;
 
 system_message(elgg_echo("publication:posted"));
 add_to_river('river/object/publication/create','create', $_SESSION['user']->guid, $publication->guid);

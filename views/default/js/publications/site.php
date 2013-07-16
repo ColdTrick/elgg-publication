@@ -31,6 +31,12 @@ elgg.publications.init = function(){
 			$("#publications-authors_autocomplete").focus();
 			result = false;
 		}
+		
+		if(result && $(this).find("#publications-book-editors_autocomplete_results").length && ($(this).find("#publications-book-editors_autocomplete_results").html().trim() == "")) {
+			alert(elgg.echo("publications:forms:required:alert"));
+			$("#publications-book-editors_autocomplete").focus();
+			result = false;
+		}
 
 		return result;
 	});

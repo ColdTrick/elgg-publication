@@ -7,39 +7,40 @@
  * @link http://grc.ucalgary.ca/
  */
 
-global $CONFIG;
 
-$exauthor = $vars['exauthor'];
+$exauthor = elgg_extract("exauthor", $vars);
 $formatauthor = preg_replace('/ /','_',$exauthor);
-$publication_guid = $vars['publication_guid'];
+$publication_guid = (int) elgg_extract("publication_guid", $vars);
 $publication = get_entity($publication_guid);
 $publication_title = $publication->title;
 $invitee = elgg_get_logged_in_user_entity();
 $invitee_name = $invitee->name;
 
-$canedit = $vars['canedit'];
+$canedit = (bool) elgg_extract("canedit", $vars, false);
 $canedit = false; // disable invites for now
 
-
-$content = '<p>'.sprintf(elgg_echo("publication:inviteinfomsg"),$exauthor,$exauthor).'</p>';
-$content .= "<p><label>Enter email address</label>";
-$content .= elgg_view('input/email', array('name'=>'emails', 'id'=>'emails'));
-$content .= "</p><p><label>Message</label>";
-$content .= "<textarea class='input-textarea' name='emailmessage'>" .sprintf(elgg_echo('publication:invitemsg'),$exauthor,$publication_title,$invitee_name).elgg_echo('publication:additionalmsg')."</textarea></p>";
-$content .= "<input type='hidden' name='author' value=''/>";
-$content .= "<input type='hidden' name='publication' value='$publication_guid' />";
-$content .= "<input type='submit' value='invite'/>&nbsp<input type='button' value='cancel' onclick=\"hide_dialog('$formatauthor')\"/>";
-$form = elgg_view('input/form', array('action'=>"$CONFIG->wwwroot/action/publications/invite", 'body'=>$content));
-$dialog = "<div style='display:none' id='invite_dialog_$formatauthor' class='publication_dialog'>$form</div>";
-$userinfo = elgg_view_image_block("<div class='elgg-avatar elgg-avatar-tiny'><a><img border='0' src='" . $CONFIG->wwwroot . "/_graphics/icons/user/defaulttiny.gif'/></a></div>", "<b>$exauthor</b>");
+$userinfo = elgg_view_image_block("<div class='elgg-avatar elgg-avatar-tiny'><a><img border='0' src='" . elgg_get_site_url() . "/_graphics/icons/user/defaulttiny.gif'/></a></div>", "<b>$exauthor</b>");
 
 if($canedit){
 	if(elgg_get_plugin_setting('toggleinvites','publications') != 'Off')
-		$userinfo.= " <input type=button class='submit_button' value='invite' onclick=\"show_dialog('$exauthor');\"/>";
+		$userinfo .= " <input type=button class='submit_button' value='invite' onclick=\"show_dialog('$exauthor');\"/>";
 }
 
 echo $userinfo;
-echo $dialog;
+
+if ($canedit) {
+	$content = '<p>'.sprintf(elgg_echo("publication:inviteinfomsg"),$exauthor,$exauthor).'</p>';
+	$content .= "<p><label>Enter email address</label>";
+	$content .= elgg_view('input/email', array('name'=>'emails', 'id'=>'emails'));
+	$content .= "</p><p><label>Message</label>";
+	$content .= "<textarea class='input-textarea' name='emailmessage'>" .sprintf(elgg_echo('publication:invitemsg'),$exauthor,$publication_title,$invitee_name).elgg_echo('publication:additionalmsg')."</textarea></p>";
+	$content .= "<input type='hidden' name='author' value=''/>";
+	$content .= "<input type='hidden' name='publication' value='$publication_guid' />";
+	$content .= "<input type='submit' value='invite'/>&nbsp<input type='button' value='cancel' onclick=\"hide_dialog('$formatauthor')\"/>";
+	
+	$form = elgg_view('input/form', array('action' => elgg_get_site_url() . "action/publications/invite", 'body' => $content));
+	
+	echo "<div style='display:none' id='invite_dialog_$formatauthor' class='publication_dialog'>$form</div>";
 
 ?>
 <script type='text/javascript'>
@@ -54,3 +55,5 @@ echo $dialog;
         $('#invite_dialog_'+formatauthor).hide();
 	}
 </script>
+<?php
+} // end canedit
