@@ -11,30 +11,58 @@
 
 		// new keys
 
+
+
 		'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
 
 
 
-		'publications:forms:required' => "(* required field)",
+
+		'publications:forms:required' => "*",
+		'publications:forms:required:hint' => "* required fields",
+
 		'publications:forms:required:alert' => "Please fill out all required fields.",
 
 		'publications:list:pages' => "pp. %s",
+
 		'publications:list:edition' => "%s ed.",
+
 		'publications:list:techreport' => "Techreport, %s",
+
 		'publications:list:mastersthesis' => "Masters Thesis, %s",
+
 		'publications:list:phdthesis' => "PhD Thesis, %s",
+
 		'publications:list:inproceedings' => "Proceedings of the %s",
 
+
 		'publications:type:book' => "Book",
+
 		'publications:type:article_book' => "Article in a book",
+
 		'publications:type:article_journal' => "Article in a journal/review",
 
+
 		'publications:details:attachment:download' => "Click to download attachment",
+
 		'publications:details:translation' => "Text is a translation",
+
 		'publications:details:promotion' => "Text is part of a promotion",
 
 
-		'publications:form:author:input:info' => "Enter the names of the authors. Select a author from the dropdown.",
+		'publication:forms:authors' => "Authors",
+		'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -49,6 +77,7 @@
 		// old keys
 
 		'publication:keywords' => "Keywords",
+		'publication:keywords:instruction' => "",
 		'publication:exauthors' => "Additional Authors (not registered)",
 		'publication:authors' => "Authors",
 		'publication:uri' => "URI",
@@ -62,15 +91,15 @@
 		'publication:attachment:title' => 'File Attachment',
 		'publication:type'=>'Type',
 		'publication:source:ref' => "Source",
-		'publication:inviteinfomsg' => "<b>%s</b> is not a registered user.<br/>Send an invitation to <b>%s</b> to join Geochronos.",
+		'publication:inviteinfomsg' => "<b>%s</b> is not a registered user.<br/>Send an invitation to <b>%s</b> to join our Community.",
 		'publication:invitemsg'=> "Hi %s,
 
-I have included you as an author on a publication titled: '%s' on the Geochronos Portal. I invite you to register for Geochronos.
+I have included you as an author on a publication titled: '%s' on our Portal. I invite you to register for our Community.
 
 %s
 
 ",
-		'publication:additionalmsg'=>"\"GeoChronos is an on-line environment for members of the Earth Observation Science community that is aimed at enabling scientists to share data and scientific applications and to collaborate more effectively.\"",
+		'publication:additionalmsg'=>"\"[Text about your community]\"",
 		'publication:volume' => "Volume",
 		'publication:number' => "Number",
 		'publication:month'=> "Month",
@@ -84,7 +113,7 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:promotion' => "Is it part of a promotion?",
 		'publication:journaltitle' => "Title of journal/review",
 		'publication:journal' => "Journal",
-		'publication:publisher' => "Publisher",
+		'publication:publisher' => "Publishing company",
 		'publication:publish_location' => "Place of publication",
 		'publication:school' => "School",
 		'publication:institution' => "Institution",
@@ -110,7 +139,7 @@ I have included you as an author on a publication titled: '%s' on the Geochronos
 		'publication:yourfriends' => "Your contacts' latest publications",
 		'publication:everyone' => "All site publications",
 		'publication:new' => "New publication",
-		'publication:newpost'=>'New Publication on Geochronos',
+		'publication:newpost'=>'New Publication on your community',
 		'publication:via' => "added a new publication titled",
 		'publication:read' => "Read publication",
 		'publications:add' => "Add a publication",

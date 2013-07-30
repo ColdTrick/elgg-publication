@@ -88,21 +88,14 @@ if ($entity->uri) {
 	$details .= "<tr><td><label>" . elgg_echo('publication:uri') . ":</label></td><td>" . elgg_view("output/url", array("value" => $entity->uri)) . "</td></tr>";
 }
 
-$details .= "<tr><td><label>" . elgg_echo('publications:details:translation') . ":</label></td><td>";
-if ($entity->translation) {
-	$details .= elgg_echo("option:yes");
-} else {
-	$details .= elgg_echo("option:no");
+/* Client specific data */
+if($entity->translation) {
+	$details .= "<tr><td colspan='2'><label>" . elgg_echo('publications:details:translation') . "</label></td></tr>";
 }
-$details .= "</td></tr>";
 
-$details .= "<tr><td><label>" . elgg_echo('publications:details:promotion') . ":</label></td><td>";
 if ($entity->promotion) {
-	$details .= elgg_echo("option:yes");
-} else {
-	$details .= elgg_echo("option:no");
+	$details .= "<tr><td colspan='2'><label>" . elgg_echo('publications:details:promotion') . "</label></td></tr>";
 }
-$details .= "</td></tr>";
 
 $details .= "</table>";
 
