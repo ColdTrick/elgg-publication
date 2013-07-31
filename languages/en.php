@@ -38,9 +38,9 @@
 
 		'publications:type:book' => "Book",
 
-		'publications:type:article_book' => "Article in Edited Book",
+		'publications:type:article_book' => "Article in a book",
 
-		'publications:type:article_journal' => "Original Research Article",
+		'publications:type:article_journal' => "Article in a journal/review",
 
 
 		'publications:details:attachment:download' => "Click to download attachment",
@@ -113,7 +113,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 		'publication:promotion' => "Is it part of a promotion?",
 		'publication:journaltitle' => "Title of journal/review",
 		'publication:journal' => "Journal",
-		'publication:publisher' => "Publisher",
+		'publication:publisher' => "Publishing company",
 		'publication:publish_location' => "Place of publication",
 		'publication:school' => "School",
 		'publication:institution' => "Institution",
