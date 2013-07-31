@@ -17,7 +17,7 @@ elgg.publications.init = function(){
 	$(".publications-add").submit(function() {
 		var result = true;
 
-		$(this).find("[name='publicationtitle'],[name='year'],[name='booktitle'],[name='journaltitle'],[name='publisher'],[name='publish_location'],[name='pages'],[name='page_from'],[name='page_to'],[name='volume']").each(function(index, elem) {
+		$(this).find("[name='publicationtitle'],[name='year'],[name='booktitle'],[name='journaltitle'],[name='publisher'],[name='publish_location'],[name='pages'],[name='page_from'],[name='page_to'],[name='number']").each(function(index, elem) {
 			if($(elem).val() == "") {
 				alert(elgg.echo("publications:forms:required:alert"));
 				$(elem).focus();

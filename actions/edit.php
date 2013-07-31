@@ -22,7 +22,7 @@ $journaltitle = get_input('journaltitle');
 $publisher = get_input('publisher');
 $publish_location = get_input('publish_location');
 $booktitle = get_input('booktitle');
-$volume = get_input('volume');
+$number = get_input('number');
 $pages = get_input('pages');
 $page_from = get_input('page_from');
 $page_to = get_input('page_to');
@@ -103,7 +103,7 @@ if ($publication = get_entity($guid)) {
 
 			case "article_journal":
 
-				if(empty($journaltitle) || empty($volume) || empty($page_from) || empty($page_to)) {
+				if(empty($journaltitle) || empty($number) || empty($page_from) || empty($page_to)) {
 
 					register_error(elgg_echo("publication:blankdefault"));
 
@@ -150,7 +150,7 @@ if ($publication = get_entity($guid)) {
 		$publication->booktitle = $booktitle;
 		$publication->publisher = $publisher;
 		$publication->publish_location = $publish_location;
-		$publication->volume = $volume;
+		$publication->number = $number;
 		$publication->pages = $pages;
 		$publication->page_from = $page_from;
 		$publication->page_to = $page_to;

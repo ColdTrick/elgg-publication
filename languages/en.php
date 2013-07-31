@@ -101,7 +101,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 ",
 		'publication:additionalmsg'=>"\"[Text about your community]\"",
 		'publication:volume' => "Volume",
-		'publication:number' => "Number",
+		'publication:number' => "Volume no.",
 		'publication:month'=> "Month",
 		'publication:pages' => "Number of pages",
 		'publication:page_from' => "Page from",
