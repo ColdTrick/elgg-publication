@@ -14,9 +14,6 @@ $type = $entity->pubtype;
 
 $contents = array();
 
-/* TITLE */
-$contents[] = '<h3 class="publication-title">' . elgg_view("output/url", array("href" => $entity->getURL(), "text" => $entity->title, "class" => "publications-list-title")) . '</h3>';
-
 /* PUBLICATION TYPE */
 switch ($type) {
 	case "article_book":
@@ -32,6 +29,9 @@ switch ($type) {
 }
 
 $contents[] = '<span class="publication-type">' . $type_name . '</span>';
+
+/* TITLE */
+$contents[] = '<h3 class="publication-title">' . elgg_view("output/url", array("href" => $entity->getURL(), "text" => $entity->title, "class" => "publications-list-title")) . '</h3>';
 
 /* METADATA */
 $contents[] = '<ul class="publication-data">';
@@ -67,7 +67,7 @@ switch ($type) {
 		break;
 	case "article_journal":
 		if(!empty($entity->journaltitle)) {
-			$contents[] = '<li class="pub-type journal-article">' . $entity->journaltitle . '</li>';
+			$contents[] = '<li class="pub-type journal-title">' . $entity->journaltitle . '</li>';
 		}
 
 		break;
@@ -80,11 +80,11 @@ switch ($type) {
 }
 
 if (!empty($entity->year)) {
-	$contents[] = '<li class="year">' . $entity->year . '</li>';
+	$contents[] = '<li class="year">(' . $entity->year . ')</li>';
 }
-if (!empty($entity->pages)) {
-	$contents[] = '<li class="pages">' . elgg_echo("publications:list:pages", array($entity->pages)) . '</li>';
-}
+/*if (!empty($entity->pages)) {
+	$contents[] = '<li class="pages">' . elgg_echo("publications:list:pagestotal", array($entity->pages)) . '</li>';
+}*/
 
 $contents[] = '</ul>';
 
