@@ -182,6 +182,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 		'publication:blankdefault' => "Please fill in all required fields.",
 		'publication:notfound' => "Sorry; we could not find the specified publication.",
 		'publication:notdeleted' => "Sorry; we could not delete this publication.",
+		'publication:seeall' => "See all publications from",
 	);
 
 	add_translation("en",$english);
