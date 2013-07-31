@@ -30,7 +30,7 @@ $destination = $id . "_autocomplete_results";
 					if ($user = get_user($v)) {
 						echo elgg_view("input/hidden", array("name" => $name . "[]", "value" => $v));
 						echo elgg_view_entity_icon($user, "tiny");
-						echo $user->name;
+						echo '<span class="author">' . $user->name . '</span>';
 					}
 				} else {
 					// free text user
@@ -106,7 +106,10 @@ $destination = $id . "_autocomplete_results";
 					} else if(ui.item.type == "text"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_text[]' />";
 					}
+
+					result += '<span class="author">';
 					result += ui.item.content;
+					result += "</span>";
 
 					result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
 					result += "</div>";
