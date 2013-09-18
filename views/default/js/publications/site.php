@@ -40,6 +40,8 @@ elgg.publications.init = function(){
 
 		return result;
 	});
+
+	$("#publications-authors_autocomplete_results").sortable({ containment: "parent", axis: "y" });
 }
 //register init hook
 elgg.register_hook_handler("init", "system", elgg.publications.init);
