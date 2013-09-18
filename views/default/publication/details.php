@@ -70,7 +70,7 @@ switch ($type) {
 	case "article_journal":
 
 		$details .= "<tr><td><label>" . elgg_echo('publication:journaltitle') . ":</label></td><td>" . $entity->journaltitle . "</td></tr>";
-		$details .= "<tr><td><label>" . elgg_echo('publication:volume') . ":</label></td><td>" . $entity->volume . "</td></tr>";
+		$details .= "<tr><td><label>" . elgg_echo('publication:number') . ":</label></td><td>" . $entity->number . "</td></tr>";
 		$details .= "<tr><td><label>" . elgg_echo('publication:page_from') . ":</label></td><td>" . $entity->page_from . "</td></tr>";
 		$details .= "<tr><td><label>" . elgg_echo('publication:page_to') . ":</label></td><td>" . $entity->page_to . "</td></tr>";
 
@@ -88,21 +88,14 @@ if ($entity->uri) {
 	$details .= "<tr><td><label>" . elgg_echo('publication:uri') . ":</label></td><td>" . elgg_view("output/url", array("value" => $entity->uri)) . "</td></tr>";
 }
 
-$details .= "<tr><td><label>" . elgg_echo('publications:details:translation') . ":</label></td><td>";
-if ($entity->translation) {
-	$details .= elgg_echo("option:yes");
-} else {
-	$details .= elgg_echo("option:no");
+/* Client specific data */
+if($entity->translation) {
+	$details .= "<tr><td colspan='2'><label>" . elgg_echo('publications:details:translation') . "</label></td></tr>";
 }
-$details .= "</td></tr>";
 
-$details .= "<tr><td><label>" . elgg_echo('publications:details:promotion') . ":</label></td><td>";
 if ($entity->promotion) {
-	$details .= elgg_echo("option:yes");
-} else {
-	$details .= elgg_echo("option:no");
+	$details .= "<tr><td colspan='2'><label>" . elgg_echo('publications:details:promotion') . "</label></td></tr>";
 }
-$details .= "</td></tr>";
 
 $details .= "</table>";
 

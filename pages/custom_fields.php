@@ -18,7 +18,7 @@ if($entity){
 	$publish_location = $entity->publish_location;
 	$booktitle = $entity->booktitle;
 	$book_editors = $entity->book_editors;
-	$volume = $entity->volume;
+	$number = $entity->number;
 	$page_from = $entity->page_from;
 	$page_to = $entity->page_to;
 	$pages = $entity->pages;
@@ -29,9 +29,10 @@ if($entity){
 	$publish_location = '';
 	$booktitle = '';
 	$book_editors = '';
-	$volume = '';
+	$number = '';
 	$pages = '';
 	$page_from = '';
+
 	$page_to = '';
 }
 
@@ -42,21 +43,33 @@ $custom_field = "";
 switch ($type) {
 	case "article_book":
 		$custom_field .= "<div><label>" . elgg_echo('publication:booktitle') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text', array('name' => 'booktitle', 'value' => $booktitle)) . "</div>";
 
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:book_editors') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/author_autocomplete', array('name' => 'book_editors', 'value' => $book_editors, 'id' => 'publications-book-editors')) . "</div>";
 
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:publish_location') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text', array('name' => 'publish_location', 'value' => $publish_location)) . "</div>";
 
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:publisher') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text', array('name' => 'publisher', 'value' => $publisher)) . "</div>";
 
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:page_from') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text', array('name' => 'page_from', 'value' => $page_from)) . "</div>";
 
+
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:page_to') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text', array('name' => 'page_to', 'value' => $page_to)) . "</div>";
 
 		break;
@@ -64,8 +77,8 @@ switch ($type) {
 		$custom_field .= "<div><label>" . elgg_echo('publication:journaltitle') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
 		$custom_field .= elgg_view('input/text',array('name' => 'journaltitle', 'value' => $journaltitle)) . "</div>";
 
-		$custom_field .= "<div><label>" . elgg_echo('publication:volume') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
-		$custom_field .= elgg_view('input/text',array('name' => 'volume', 'value' => $volume)) . "</div>";
+		$custom_field .= "<div><label>" . elgg_echo('publication:number') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+		$custom_field .= elgg_view('input/text',array('name' => 'number', 'value' => $number)) . "</div>";
 
 		$custom_field .= "<div><label>" . elgg_echo('publication:page_from') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
 		$custom_field .= elgg_view('input/text',array('name' => 'page_from', 'value' => $page_from)) . "</div>";
@@ -77,12 +90,18 @@ switch ($type) {
 	case "book":
 	default:
 		$custom_field .= "<div><label>" . elgg_echo('publication:publish_location') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text',array('name' => 'publish_location', 'value' => $publish_location)) . "</div>";
 
+
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:publisher') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text',array('name' => 'publisher', 'value' => $publisher)) . "</div>";
 
+
 		$custom_field .= "<div><label>" . elgg_echo('publication:pages') . "<span class='elgg-quiet mls'>$required_text</span></label><br/>";
+
 		$custom_field .= elgg_view('input/text',array('name' => 'pages', 'value' => $pages)) . "</div>";
 
 		break;

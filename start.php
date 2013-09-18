@@ -83,7 +83,7 @@
 			elgg_register_menu_item("site", array(
 				"name" => "publications",
 				"text" => elgg_echo("publications"),
-				"href" => "publications/owner/" . $user->username
+				"href" => "publications/all"
 			));
 		} else {
 			// And for logged out users

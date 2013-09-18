@@ -30,7 +30,7 @@ $destination = $id . "_autocomplete_results";
 					if ($user = get_user($v)) {
 						echo elgg_view("input/hidden", array("name" => $name . "[]", "value" => $v));
 						echo elgg_view_entity_icon($user, "tiny");
-						echo $user->name;
+						echo '<span class="author">' . $user->name . '</span>';
 					}
 				} else {
 					// free text user
@@ -54,7 +54,9 @@ $destination = $id . "_autocomplete_results";
 	$(document).ready(function() {
 
 		$("#<?php echo $id; ?>_autocomplete").each(function() {
+			var autocompleteActive = false;
 			$(this)
+			.focus(function(){ autocompleteActive = false; })
 			// don't navigate away from the field on tab when selecting an item
 			.bind( "keydown", function( event ) {
 				if ( event.keyCode === $.ui.keyCode.TAB &&
@@ -65,6 +67,25 @@ $destination = $id . "_autocomplete_results";
 				if ( event.keyCode === 13 ) {
 					// don't submit form on enter
 					event.preventDefault();
+
+					if (!autocompleteActive) {
+						var result = "";
+
+						result += "<div class='<?php echo $destination; ?>_result'>";
+
+						result += "<input type='hidden' value='" + $(this).val() + "' name='<?php echo $name; ?>_text[]' />";
+
+						result += '<span class="author">';
+						result += $(this).val();
+						result += "</span>";
+
+						result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+						result += "</div>";
+
+						$('#<?php echo $destination; ?>').append(result);
+
+						$(this).val('').blur();
+					}					
 				}
 			})
 			.autocomplete({
@@ -84,6 +105,7 @@ $destination = $id . "_autocomplete_results";
 						}
 					}, response );
 				},
+				delay: 0,				
 				search: function() {
 					// custom minLength
 					var term = this.value;
@@ -91,11 +113,13 @@ $destination = $id . "_autocomplete_results";
 						return false;
 					}
 				},
-				focus: function() {
+				focus: function(event, ui) {
+					autocompleteActive = true;
 					// prevent value inserted on focus
-					return false;
+					event.preventDefault();
 				},
 				select: function( event, ui ) {
+					autocompleteActive = true;
 					this.value = "";
 					var result = "";
 
@@ -106,24 +130,31 @@ $destination = $id . "_autocomplete_results";
 					} else if(ui.item.type == "text"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_text[]' />";
 					}
+
+					result += '<span class="author">';
 					result += ui.item.content;
+					result += "</span>";
 
 					result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
 					result += "</div>";
 
 					$('#<?php echo $destination; ?>').append(result);
+					autocompleteActive = false;
 					return false;
 				},
-				autoFocus: true
+				autoFocus: false
 			}).data( "autocomplete" )._renderItem = function( ul, item ) {
 				var list_body = "";
-				list_body = item.content;
+				list_body += item.content;
 
+				console.log(list_body);
 
 				return $( "<li></li>" )
 				.data( "item.autocomplete", item )
 				.append( "<a>" + list_body + "</a>" )
 				.appendTo( ul );
+
+
 			};
 		});
 
