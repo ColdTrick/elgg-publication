@@ -48,6 +48,11 @@
 		}
 	
 		if($users = elgg_get_entities_from_relationship($query_options)){
+			$result[] = array(
+				"type" => "text",
+				"value" => $q,
+				"content" => $q
+			);
 			foreach($users as $user){
 				$result[] = array(
 					"type" => "user",
