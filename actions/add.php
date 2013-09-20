@@ -24,7 +24,7 @@ $journaltitle = get_input("journaltitle");
 $publisher = get_input("publisher");
 $publish_location = get_input("publish_location");
 $booktitle = get_input("booktitle");
-$volume = get_input("volume");
+$number = get_input("number");
 $pages = get_input("pages");
 $page_from = get_input("page_from");
 $page_to = get_input("page_to");
@@ -35,6 +35,7 @@ $book_editors_text = get_input("book_editors_text");
 
 if (empty($author_guids) && empty($author_text)) {
 	register_error(elgg_echo("publication:blankauthors"));
+
 	forward(REFERER);
 }
 
@@ -51,23 +52,31 @@ switch($type) {
 	case "article_book":
 		if(empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to) || (empty($book_editors_guids) && empty($book_editors_text))) {
 			register_error(elgg_echo("publication:blankdefault"));
+
 			forward(REFERER);
 		}
 
 		break;
 	case "article_journal":
-		if(empty($journaltitle) || empty($volume) || empty($page_from) || empty($page_to)) {
+		if(empty($journaltitle) || empty($number) || empty($page_from) || empty($page_to)) {
+
 			register_error(elgg_echo("publication:blankdefault"));
+
 			forward(REFERER);
+
 		}
 
 		break;
 	case "book":
 	default:
 		if(empty($publish_location) || empty($publisher) || empty($pages)) {
+
 			register_error(elgg_echo("publication:blankdefault"));
+
 			forward(REFERER);
+
 		}
+
 
 		break;
 }
@@ -94,7 +103,7 @@ $publication->journaltitle = $journaltitle;
 $publication->booktitle = $booktitle;
 $publication->publisher = $publisher;
 $publication->publish_location = $publish_location;
-$publication->volume = $volume;
+$publication->number = $number;
 $publication->pages = $pages;
 $publication->page_from = $page_from;
 $publication->page_to = $page_to;
@@ -110,11 +119,14 @@ if (!empty($author_guids)) {
 
 if (!empty($book_editors_guids)) {
 	foreach ($book_editors_guids as $book_editor) {
+
 		add_entity_relationship($publication->getGUID(), 'book_editor', $book_editor);
+
 	}
 }
 
 //files
+
 if($file_contents = get_uploaded_file("attachment")){
 	$fh = new ElggFile();
 	$fh->owner_guid = $publication->getGUID();
@@ -144,15 +156,25 @@ $pauthors = implode(',', $authors_order);
 $publication->authors = $pauthors;
 
 if (!empty($book_editors_guids) && !empty($book_editors_text)) {
+
 	$pbook_editors = array_merge($book_editors_guids, $book_editors_text);
+
 } elseif (!empty($book_editors_guids)) {
+
 	$pbook_editors  = $book_editors_guids;
+
 } elseif (!empty($book_editors_text)) {
+
 	$pbook_editors = $book_editors_text;
+
 } else {
+
 	$pbook_editors = array();
+
 }
+
 $pbook_editors = implode(',', $pbook_editors);
+
 $publication->book_editors = $pbook_editors;
 
 system_message(elgg_echo("publication:posted"));

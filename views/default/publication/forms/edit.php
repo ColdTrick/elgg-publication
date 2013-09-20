@@ -30,6 +30,7 @@ if ($entity) {
 	$attachment_guid = $entity->attachment;
 	$year = $entity->year;
 	$keywords = $entity->tags;
+
 	$uri = $entity->uri;
 	$translation = $entity->translation;
 	$promotion = $entity->promotion;
@@ -58,8 +59,10 @@ if ($entity) {
 	$attachment_file = '';
 	$year = '';
 	$keywords = '';
+
 	$uri = '';
 	$translation = '';
+
 	$promotion = '';
 }
 
@@ -80,6 +83,7 @@ $title_label = elgg_echo('title');
 $title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'value' => $title));
 
 $year_label = elgg_echo('publication:year');
+
 $year_input = elgg_view('input/text', array('name' => 'year', 'value' => $year));
 
 $abstract_label = elgg_echo('publication:abstract');
@@ -106,23 +110,31 @@ $entity_hidden .= elgg_view('input/hidden', array('name' => 'container_guid', 'v
 $access = "<label>" . elgg_echo("access") . "</label><br />" . elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
 
 $required_text = elgg_echo("publications:forms:required");
-$authors_label = elgg_echo('publication:authors');
+$required_hint = elgg_echo("publications:forms:required:hint");
+$authors_label = elgg_echo('publication:forms:authors');
 
 $attachment_label = elgg_echo("publication:attachment");
 $attachment_input = elgg_view("input/file", array("name" => "attachment"));
 $attachment_input .= "<div class='elgg-subtext'>" . elgg_echo("publication:attachment:instruction") . "</div>";
 
 //common optional fields across all types
+
 $keywords_label = elgg_echo('publication:keywords');
+
 $keywords_input = elgg_view('input/tags', array('name' => 'publicationkeywords', 'value' => $keywords));
+$keywords_input.= "<div class='elgg-subtext'>" . elgg_echo("publication:keywords:instruction") . "</div>";
+
 
 $uri_label = elgg_echo('publication:uri');
+
 $uri_input = elgg_view('input/text', array('name' => 'uri', 'value' => $uri));
 
 $translation_label = elgg_echo('publication:translation');
+
 $translation_input = elgg_view('input/checkbox', array('name' => 'translation', 'value' => '1', 'checked' => ($translation == true)));
 
 $promotion_label = elgg_echo('publication:promotion');
+
 $promotion_input = elgg_view('input/checkbox', array('name' => 'promotion', 'value' => '1', 'checked' => ($promotion == true)));
 
 $form_body = <<<EOT
@@ -147,9 +159,6 @@ $form_body = <<<EOT
             $attachment_input
 		</div>
 		<div>
-			$access
-		</div>
-		<div>
 			<label>$type_label</label><br/>
 			$type_dropdown
 		</div>
@@ -166,10 +175,16 @@ $form_body = <<<EOT
 			$uri_input
 		</div>
 		<div>
-			<label>$translation_label</label> $translation_input
+			$translation_input <label>$translation_label</label>
 		</div>
 		<div>
-			<label>$promotion_label</label> $promotion_input
+			$promotion_input <label>$promotion_label</label>
+		</div>
+		<div>
+			$access
+		</div>
+		<div class="hint">
+			$required_hint
 		</div>
 		<div>
 			$entity_hidden
