@@ -14,6 +14,7 @@ $access = get_input('access_id');
 $keywords = get_input('publicationkeywords');
 $author_guids = get_input('authors');
 $author_text = get_input("authors_text");
+$authors_order = get_input("authors_order");
 $uri = get_input('uri');
 $type = get_input('type');
 $year = get_input('year');
@@ -132,7 +133,7 @@ if ($publication = get_entity($guid)) {
 		} else {
 			$pauthors = array();
 		}
-		$pauthors = implode(',', $pauthors);
+		$pauthors = implode(',', $authors_order);
 		$publication->authors = $pauthors;
 
 		// save book editors

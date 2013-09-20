@@ -29,12 +29,14 @@ $destination = $id . "_autocomplete_results";
 					// existing user
 					if ($user = get_user($v)) {
 						echo elgg_view("input/hidden", array("name" => $name . "[]", "value" => $v));
+						echo elgg_view("input/hidden", array("name" => "authors_order[]", "value" => $v));
 						echo elgg_view_entity_icon($user, "tiny");
 						echo $user->name;
 					}
 				} else {
 					// free text user
 					echo elgg_view("input/hidden", array("name" => $name . "_text[]", "value" => $v));
+					echo elgg_view("input/hidden", array("name" => "authors_order[]", "value" => $v));
 					echo $v;
 				}
 
@@ -103,8 +105,10 @@ $destination = $id . "_autocomplete_results";
 
 					if(ui.item.type == "user"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
+						result += "<input type='hidden' value='" + ui.item.value + "' name='authors_order[]' />";
 					} else if(ui.item.type == "text"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_text[]' />";
+						result += "<input type='hidden' value='" + ui.item.value + "' name='authors_order[]' />";
 					}
 					result += ui.item.content;
 

@@ -16,6 +16,7 @@ $access = (int) get_input("access_id");
 
 $author_guids = get_input("authors");
 $author_text = get_input("authors_text");
+$authors_order = get_input("authors_order");
 $uri = get_input("uri");
 $type = get_input("type");
 $year = get_input("year");
@@ -139,7 +140,7 @@ if (!empty($author_guids) && !empty($author_text)) {
 } else {
 	$pauthors = array();
 }
-$pauthors = implode(',', $pauthors);
+$pauthors = implode(',', $authors_order);
 $publication->authors = $pauthors;
 
 if (!empty($book_editors_guids) && !empty($book_editors_text)) {
