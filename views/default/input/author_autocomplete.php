@@ -76,7 +76,7 @@ $destination = $id . "_autocomplete_results";
 						result += "<div class='<?php echo $destination; ?>_result'>";
 
 						result += "<input type='hidden' value='" + $(this).val() + "' name='<?php echo $name; ?>_text[]' />";
-						result += "<input type='hidden' value='" + $(this).val() + "' name='authors_order[]' />";
+						result += "<input type='hidden' value='" + $(this).val() + "' name='<?php echo $name; ?>_order[]' />";
 						
 						result += '<span class="author">';
 						result += $(this).val();
@@ -130,10 +130,10 @@ $destination = $id . "_autocomplete_results";
 
 					if(ui.item.type == "user"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>[]' />";
-						result += "<input type='hidden' value='" + ui.item.value + "' name='authors_order[]' />";
+						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_order[]' />";
 					} else if(ui.item.type == "text"){
 						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_text[]' />";
-						result += "<input type='hidden' value='" + ui.item.value + "' name='authors_order[]' />";
+						result += "<input type='hidden' value='" + ui.item.value + "' name='<?php echo $name; ?>_order[]' />";
 					}
 
 					result += '<span class="author">';
