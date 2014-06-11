@@ -76,7 +76,8 @@ $destination = $id . "_autocomplete_results";
 						result += "<div class='<?php echo $destination; ?>_result'>";
 
 						result += "<input type='hidden' value='" + $(this).val() + "' name='<?php echo $name; ?>_text[]' />";
-
+						result += "<input type='hidden' value='" + $(this).val() + "' name='authors_order[]' />";
+						
 						result += '<span class="author">';
 						result += $(this).val();
 						result += "</span>";
