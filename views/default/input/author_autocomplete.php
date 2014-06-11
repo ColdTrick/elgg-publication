@@ -29,14 +29,14 @@ $destination = $id . "_autocomplete_results";
 					// existing user
 					if ($user = get_user($v)) {
 						echo elgg_view("input/hidden", array("name" => $name . "[]", "value" => $v));
-						echo elgg_view("input/hidden", array("name" => "authors_order[]", "value" => $v));
+						echo elgg_view("input/hidden", array("name" => $name . "_order[]", "value" => $v));
 						echo elgg_view_entity_icon($user, "tiny");
 						echo '<span class="author">' . $user->name . '</span>';
 					}
 				} else {
 					// free text user
 					echo elgg_view("input/hidden", array("name" => $name . "_text[]", "value" => $v));
-					echo elgg_view("input/hidden", array("name" => "authors_order[]", "value" => $v));
+					echo elgg_view("input/hidden", array("name" => $name . "_order[]", "value" => $v));
 					echo $v;
 				}
 
