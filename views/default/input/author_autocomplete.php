@@ -88,7 +88,7 @@ $destination = $id . "_autocomplete_results";
 						$('#<?php echo $destination; ?>').append(result);
 
 						$(this).val('').blur();
-					}					
+					}
 				}
 			})
 			.autocomplete({
@@ -108,7 +108,7 @@ $destination = $id . "_autocomplete_results";
 						}
 					}, response );
 				},
-				delay: 0,				
+				delay: 0,
 				search: function() {
 					// custom minLength
 					var term = this.value;
@@ -148,18 +148,14 @@ $destination = $id . "_autocomplete_results";
 					return false;
 				},
 				autoFocus: false
-			}).data( "autocomplete" )._renderItem = function( ul, item ) {
+			}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 				var list_body = "";
 				list_body += item.content;
 
-				console.log(list_body);
-
 				return $( "<li></li>" )
-				.data( "item.autocomplete", item )
-				.append( "<a>" + list_body + "</a>" )
-				.appendTo( ul );
-
-
+					.data( "item.autocomplete", item )
+					.append( "<a>" + list_body + "</a>" )
+					.appendTo( ul );
 			};
 		});
 
