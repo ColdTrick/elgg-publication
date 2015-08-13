@@ -47,12 +47,15 @@
 			$query_options["wheres"][] = "(e.guid NOT IN (" . implode(", ", $current_users) . "))";
 		}
 	
+		// by default return the plain text so a name can always be added
+		$result[] = array(
+			"type" => "text",
+			"value" => $q,
+			"content" => $q
+		);
+		
 		if($users = elgg_get_entities_from_relationship($query_options)){
-			$result[] = array(
-				"type" => "text",
-				"value" => $q,
-				"content" => $q
-			);
+			
 			foreach($users as $user){
 				$result[] = array(
 					"type" => "user",
@@ -61,13 +64,6 @@
 					"name" => $user->name
 				);
 			}
-		} else {
-			// no users found so add as free text
-			$result[] = array(
-				"type" => "text",
-				"value" => $q,
-				"content" => $q
-			);
 		}
 		
 		// restore hidden users
