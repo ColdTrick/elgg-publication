@@ -41,7 +41,11 @@ elgg.publications.init = function(){
 		return result;
 	});
 
-	$("#publications-authors_autocomplete_results").sortable({ containment: "parent", axis: "y" });
+	$("#publications-authors_autocomplete_results").sortable({
+		containment: "parent",
+		axis: "y",
+		tolerance: "pointer"
+	});
 }
 //register init hook
 elgg.register_hook_handler("init", "system", elgg.publications.init);
