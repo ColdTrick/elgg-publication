@@ -134,6 +134,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:blank' => "Sorry; you need to fill in both the title and body before you can post this publication.",
 	'publication:blankauthors' => "No authors selected.",
 	'publication:blankdefault' => "Please fill in all required fields.",
+	'publication:type_not_supported' => "The chosen publication type is not supported",
 	'publication:notfound' => "Sorry; we could not find the specified publication.",
 	'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	'publications:seeall' => "See all publications from",

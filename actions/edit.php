@@ -8,12 +8,13 @@
  */
 
 $guid = (int) get_input('guid');
+
 $title = get_input('publicationtitle');
 $abstract = get_input('publicationabstract');
-$access = get_input('access_id');
+$access = (int) get_input('access_id');
+
 $keywords = get_input('publicationkeywords');
 $author_guids = get_input('authors');
-
 $author_text = get_input("authors_text");
 $authors_order = get_input("authors_order");
 $uri = get_input('uri');
@@ -33,17 +34,19 @@ $book_editors_guids = get_input("book_editors");
 
 $book_editors_text = get_input("book_editors_text");
 
+if (empty($title) || empty($type)) {
+	register_error(elgg_echo("publication:blank"));
+	forward(REFERER);
+}
+
 if (empty($author_guids) && empty($author_text)) {
 	register_error(elgg_echo("publication:blankauthors"));
 	forward(REFERER);
 }
 
-if (!in_array($type, ["book", "article_book", "article_journal"])) {
-	$type = "article_book";
-}
-
-if (empty($title) || empty($type)) {
-	register_error(elgg_echo("publication:blank"));
+$types = publications_get_types();
+if (!in_array($type, $types)) {
+	register_error(elgg_echo('publication:type_not_supported'));
 	forward(REFERER);
 }
 
@@ -72,32 +75,30 @@ switch ($type) {
 		break;
 }
 
-$publication = get_entity($guid);
-if (empty($publication)) {
-	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", [$guid]));
-	forward("publications/all");
-}
-
-if (($publication->getSubtype() !== "publication") || !$publication->canEdit()) {
-	forward("publications/all");
-}
-
-// files
-$file_contents = get_uploaded_file("attachment");
-if (!empty($file_contents)) {
+$new_entity = true;
+if (!empty($guid)) {
+	$publication = get_entity($guid);
+	if (empty($publication)) {
+		register_error(elgg_echo("InvalidParameterException:GUIDNotFound", [$guid]));
+		forward("publications/all");
+	}
 	
-	$fh = new ElggFile();
-	$fh->owner_guid = $publication->getGUID();
-	$file_name = $_FILES["attachment"]["name"];
-	$mime = $_FILES["attachment"]["type"];
-	$fh->setFilename($file_name);
+	if (!($publication instanceof Publication) || !$publication->canEdit()) {
+		forward("publications/all");
+	}
 	
-	if ($fh->open("write")) {
-		$fh->write($file_contents);
-		$fh->close();
-		
-		$publication->attached_file = $file_name;
-		$publication->attached_file_mime_type = $mime;
+	$new_entity = false;
+} else {
+	$publication = new Publication();
+	$publication->owner_guid = elgg_get_logged_in_user_guid();
+	$publication->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
+	$publication->access_id = $access;
+	$publication->title = $title;
+	$publication->description = $abstract;
+	
+	if (!$publication->save()) {
+		register_error(elgg_echo("publication:error"));
+		forward(REFERER);
 	}
 }
 
@@ -166,8 +167,38 @@ if (!empty($book_editors_guids) && !empty($book_editors_text)) {
 }
 
 $pbook_editors = implode(',', $pbook_editors);
-
 $publication->book_editors = $pbook_editors;
+
+// files
+$file_contents = get_uploaded_file("attachment");
+if (!empty($file_contents)) {
+
+	$fh = new ElggFile();
+	$fh->owner_guid = $publication->getGUID();
+	$file_name = $_FILES["attachment"]["name"];
+	$mime = $_FILES["attachment"]["type"];
+	$fh->setFilename($file_name);
+
+	if ($fh->open("write")) {
+		$fh->write($file_contents);
+		$fh->close();
+
+		$publication->attached_file = $file_name;
+		$publication->attached_file_mime_type = $mime;
+	}
+}
+
+$publication->save();
+if ($new_entity) {
+	elgg_create_river_item([
+		'view' => 'river/object/publication/create',
+		'action_type' => 'create',
+		'subject_guid' => $publication->getOwnerGUID(),
+		'object_guid' => $publication->getGUID(),
+		'target_guid' => $publication->getContainerGUID(),
+		'access_id' => $publication->access_id,
+	]);
+}
 
 system_message(elgg_echo("publication:posted"));
 

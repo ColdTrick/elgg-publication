@@ -11,7 +11,7 @@ $entity = elgg_extract("entity", $vars);
 
 if ($entity) {
 	$guid = $entity->getGUID();
-	$action = "publications/edit";
+	
 	$type = $entity->pubtype;
 	$title = $entity->title;
 
@@ -47,7 +47,7 @@ if ($entity) {
 } else {
 	$access_id = null;
 	$guid = '';
-	$action = "publications/add";
+	
 	$title = "";
 	$type = "book";
 	$abstract = "";
@@ -63,19 +63,23 @@ if ($entity) {
 	$promotion = '';
 }
 
-if (!in_array($type, ["book", "article_book", "article_journal"])) {
+$types = publications_get_types();
+if (!in_array($type, $types)) {
 	$type = "article_book";
 }
 
 // set the required variables
-$type_options = [
-	"book" => elgg_echo("publications:type:book"),
-	"article_book" => elgg_echo("publications:type:article_book"),
-	"article_journal" => elgg_echo("publications:type:article_journal")
-];
+$type_options = [];
+foreach ($types as $type_option) {
+	$label = $type_option;
+	if (elgg_language_key_exists("publications:type:{$type_option}")) {
+		$label = elgg_echo("publications:type:{$type_option}");
+	}
+	$type_options[$type_option] = $label;
+}
 $type_label = elgg_echo('publication:type');
 $type_dropdown = elgg_view("input/select", [
-	'name'=>'type',
+	'name' => 'type',
 	'value' => $type,
 	'onchange' => "elgg.publications.draw_custom_fields($(this).val(),'$guid')",
 	'options_values' => $type_options

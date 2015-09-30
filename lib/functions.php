@@ -111,3 +111,15 @@ function publications_bibtex_enabled() {
 	
 	return $enabled;
 }
+
+/**
+ * Return the supported publication types
+ *
+ * @todo make this into a plugin hook
+ *
+ * @return array
+ */
+function publications_get_types() {
+	
+	return ['book', 'article_book', 'article_journal'];
+}

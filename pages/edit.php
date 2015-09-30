@@ -42,9 +42,6 @@ $form_vars = [
 	'enctype' => 'multipart/form-data',
 	'class' => 'publications-add',
 ];
-if (empty($entity)) {
-	$form_vars['action'] = 'action/publications/add';
-}
 $form = elgg_view_form('publications/edit', $form_vars, ['entity' => $entity]);
 
 // build page
