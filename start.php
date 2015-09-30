@@ -26,9 +26,6 @@ function publication_init() {
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('publications', 'publication_page_handler');
 	
-	// Register a URL handler for publication posts
-	elgg_register_entity_url_handler('object', 'publication', 'publication_url');
-	
 	// Add a new widget
 	elgg_register_widget_type('publications', elgg_echo('publications:widget'), elgg_echo('publications:widget:description'));
 	
@@ -39,7 +36,7 @@ function publication_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'publication_notify_message');
 	
 	// Register entity type for search
-	elgg_register_entity_type('object', 'publication');
+	elgg_register_entity_type('object', Publication::SUBTYPE);
 	
 	// add group option
 	add_group_tool_option('publication', elgg_echo('publication:enablepublication'), true);
@@ -53,6 +50,7 @@ function publication_init() {
 	
 	// register event handlers
 	elgg_register_event_handler('login', 'user', 'publication_login_check');
+	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'upgrade']);
 	
 	// Make sure the publication initialisation function is called on initialisation
 	elgg_register_event_handler('pagesetup', 'system', 'publication_pagesetup');
@@ -79,12 +77,3 @@ function publication_pagesetup() {
 	]);
 }
 
-/**
- * Make sure we create a correct URL for a publication
- *
- * @param ElggObject $entity
- * @return string
- */
-function publication_url(ElggObject $entity) {
-	return elgg_normalize_url("publications/view/{$entity->getGUID()}/" . elgg_get_friendly_title($entity->title));
-}

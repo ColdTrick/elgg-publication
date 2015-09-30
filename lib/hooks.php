@@ -130,7 +130,7 @@ function publication_write_permission_check($hook, $type, $return_value, $params
 		return;
 	}
 	
-	if (empty($entity) || !elgg_instanceof($entity, "object", "publication")) {
+	if (empty($entity) || !($entity instanceof Publication)) {
 		return;
 	}
 	
@@ -159,7 +159,7 @@ function publication_notify_message($hook, $type, $return_value, $params) {
 	$entity = elgg_extract("entity", $params);
 	$method = elgg_extract("method", $params);
 	
-	if (empty($entity) || !elgg_instanceof($entity, "object", "publication")) {
+	if (empty($entity) || !($entity instanceof Publication)) {
 		return;
 	}
 	
@@ -190,7 +190,7 @@ function publication_permissions_check_comment($hook, $type, $return_value, $par
 	}
 	
 	$entity = elgg_extract("entity", $params);
-	if (empty($entity) || !elgg_instanceof($entity, "object", "publication")) {
+	if (empty($entity) || !($entity instanceof Publication)) {
 		return;
 	}
 	

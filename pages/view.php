@@ -9,7 +9,7 @@
 
 $guid = (int) get_input('guid');
 
-elgg_entity_gatekeeper($guid, 'object', 'publication');
+elgg_entity_gatekeeper($guid, 'object', Publication::SUBTYPE);
 $entity = get_entity($guid);
 
 $title = $entity->title;

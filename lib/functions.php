@@ -9,7 +9,7 @@
  */
 function publications_get_bibtex(ElggObject $publication) {
 	
-	if (empty($publication) || ($publication->getSubtype() !== 'publication')) {
+	if (empty($publication) || !($publication instanceof Publication)) {
 		return false;
 	}
 	

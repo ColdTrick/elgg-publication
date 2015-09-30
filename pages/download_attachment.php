@@ -6,7 +6,7 @@ if (empty($guid)) {
 }
 
 $entity = get_entity($guid);
-if (empty($entity) || !elgg_instanceof($entity, "object", "publication")) {
+if (empty($entity) || !($entity instanceof Publication)) {
 	forward(REFERER);
 }
 

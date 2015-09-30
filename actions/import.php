@@ -42,7 +42,7 @@ foreach ($entries as $entry) {
 	//get all current publication and check for duplication
 	$options = [
 		'types' => 'object',
-		'subtypes'=>'publication',
+		'subtypes' => Publication::SUBTYPE,
 		'limit'=> false
 	];
 	$all_pubs = new ElggBatch('elgg_get_entities', $options);

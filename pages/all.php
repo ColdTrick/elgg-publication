@@ -23,7 +23,7 @@ if (publications_bibtex_enabled()) {
 $title = elgg_echo('publication:everyone');
 $listing = elgg_list_entities([
 	'type' => 'object',
-	'subtype' => 'publication',
+	'subtype' => Publication::SUBTYPE,
 	'no_results' => elgg_echo("notfound"),
 ]);
 

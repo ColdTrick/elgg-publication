@@ -15,7 +15,7 @@ $title = elgg_echo('publication:add');
 $guid = (int) get_input('guid');
 if (!empty($guid)) {
 	$entity = get_entity($guid);
-	if (empty($entity) || !elgg_instanceof($entity, 'object', 'publication') || !$entity->canEdit()) {
+	if (empty($entity) || !($entity instanceof Publication) || !$entity->canEdit()) {
 		register_error(elgg_echo('InvalidParameterException:GUIDNotFound', [$guid]));
 		forward('publications/all');
 	}

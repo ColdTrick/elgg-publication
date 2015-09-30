@@ -42,7 +42,7 @@ switch ($download_type) {
 	case 'all':
 		$options = [
 			'type' => 'object',
-			'subtype' => 'publication',
+			'subtype' => Publication::SUBTYPE,
 			'limit' => false
 		];
 		

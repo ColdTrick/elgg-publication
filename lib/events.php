@@ -36,7 +36,7 @@ function publication_login_check($event, $object_type, $object) {
 	
 	$exauthor_name = $object->exauthor_name;
 	$pub = get_entity($object->firstpublication);
-	if (empty($pub) || ($pub->getSubtype() !== 'publication')) {
+	if (empty($pub) || !($pub instanceof Publication)) {
 		return;
 	}
 	
