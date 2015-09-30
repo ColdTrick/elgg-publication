@@ -14,7 +14,7 @@ elgg_push_breadcrumb($title);
 // build page
 $page_data = elgg_view_layout("content", [
 	"title" => $title,
-	"content" => elgg_view("publication/forms/import"),
+	"content" => elgg_view_form("publication/import"),
 	"filter" => false
 ]);
 

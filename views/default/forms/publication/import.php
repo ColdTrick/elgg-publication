@@ -8,8 +8,4 @@ $form_body .= elgg_view("input/submit", [
 	"value" => elgg_echo("import")
 ]);
 
-echo elgg_view("input/form", [
-	"action" => "action/publications/import",
-	"body" => $form_body,
-	"enctype" => "multipart/form-data"
-]);
+echo $form_body;

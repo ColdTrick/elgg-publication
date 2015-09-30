@@ -19,13 +19,6 @@ function publication_init() {
 	// register vendor classes for autoload
 	elgg_register_classes(dirname(__FILE__) . '/vendors/bibtex/');
 	
-	// extend the page menu
-	elgg_register_plugin_hook_handler('register', 'menu:page', 'publication_register_menu_page');
-	
-	// register some additional actions
-	elgg_register_action('publications/import', dirname(__FILE__) . '/actions/import.php');
-	elgg_register_action('publications/export', dirname(__FILE__) . '/actions/export.php');
-	
 	// extend javascript
 	elgg_extend_view('js/elgg', 'js/publications/site');
 	elgg_extend_view('css/elgg', 'css/publications/site');
@@ -54,6 +47,7 @@ function publication_init() {
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'publication_register_menu_owner_block');
 	elgg_register_plugin_hook_handler('register', 'menu:filter', 'publication_register_menu_filter');
+	elgg_register_plugin_hook_handler('register', 'menu:page', 'publication_register_menu_page');
 // 	elgg_register_plugin_hook_handler('action','register','publication_custom_register');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'publication_write_permission_check');
 	
@@ -69,6 +63,9 @@ function publication_init() {
 	elgg_register_action('publication/edit', dirname(__FILE__) . '/actions/edit.php');
 	elgg_register_action('publications/delete', dirname(__FILE__) . '/actions/delete.php');
 // 	elgg_register_action('publications/invite', dirname(__FILE__) . '/actions/invite.php');
+	
+	elgg_register_action('publication/import', dirname(__FILE__) . '/actions/import.php');
+	elgg_register_action('publications/export', dirname(__FILE__) . '/actions/export.php');
 	
 }
 
