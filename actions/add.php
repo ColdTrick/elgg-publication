@@ -73,8 +73,7 @@ switch ($type) {
 		break;
 }
 
-$publication = new ElggObject();
-$publication->subtype = "publication";
+$publication = new Publication();
 $publication->owner_guid = elgg_get_logged_in_user_guid();
 $publication->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 $publication->access_id = $access;
