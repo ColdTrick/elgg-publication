@@ -8,7 +8,7 @@
  * @link http://grc.ucalgary.ca/
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $entity = elgg_extract("entity", $vars);
 
@@ -54,7 +54,7 @@ if ($entity) {
 	$title = "";
 	$type = "book";
 	$abstract = "";
-	$authors = array();
+	$authors = [];
 	$attachment_guid = '';
 	$attachment_file = '';
 	$year = '';
@@ -66,76 +66,128 @@ if ($entity) {
 	$promotion = '';
 }
 
-if (!in_array($type, array("book", "article_book", "article_journal"))) {
+if (!in_array($type, ["book", "article_book", "article_journal"])) {
 	$type = "article_book";
 }
 
 // set the required variables
-$type_options = array(
-		"book" => elgg_echo("publications:type:book"),
-		"article_book" => elgg_echo("publications:type:article_book"),
-		"article_journal" => elgg_echo("publications:type:article_journal")
-		);
+$type_options = [
+	"book" => elgg_echo("publications:type:book"),
+	"article_book" => elgg_echo("publications:type:article_book"),
+	"article_journal" => elgg_echo("publications:type:article_journal")
+];
 $type_label = elgg_echo('publication:type');
-$type_dropdown = elgg_view("input/dropdown", array('name'=>'type', 'value' => $type, 'onchange'=>"elgg.publications.draw_custom_fields($(this).val(),'$guid')",'options_values' => $type_options));
+$type_dropdown = elgg_view("input/select", [
+	'name'=>'type',
+	'value' => $type,
+	'onchange' => "elgg.publications.draw_custom_fields($(this).val(),'$guid')",
+	'options_values' => $type_options
+]);
 
 $title_label = elgg_echo('title');
-$title_textbox = elgg_view('input/text', array('name' => 'publicationtitle', 'value' => $title));
+$title_textbox = elgg_view('input/text', [
+	'name' => 'publicationtitle',
+	'value' => $title
+]);
 
 $year_label = elgg_echo('publication:year');
-
-$year_input = elgg_view('input/text', array('name' => 'year', 'value' => $year));
+$year_input = elgg_view('input/text', [
+	'name' => 'year',
+	'value' => $year
+]);
 
 $abstract_label = elgg_echo('publication:abstract');
-$abstract_textarea = elgg_view('input/longtext', array('name' => 'publicationabstract', 'value' => $abstract));
+$abstract_textarea = elgg_view('input/longtext', [
+	'name' => 'publicationabstract',
+	'value' => $abstract
+]);
 
-$submit_input = elgg_view('input/submit', array('name' => 'submit', 'value' => elgg_echo('publish')));
+$submit_input = elgg_view('input/submit', [
+	'name' => 'submit',
+	'value' => elgg_echo('publish')
+]);
 
-$authors_input = elgg_view('publication/authorentry', array('authors' => $authors));
+$authors_input = elgg_view('publication/authorentry', [
+	'authors' => $authors
+]);
 
-if(strtolower(elgg_get_plugin_setting('toggleattachment','publications')) !== 'off'){
+if (strtolower(elgg_get_plugin_setting('toggleattachment','publications')) !== 'off') {
 	$attachment_title = elgg_echo('publication:attachment:title');
-	$attachment_name = elgg_view('input/text',array('id'=>'attachment_name','name'=>'attachment_name','value'=>$attachment_file,'disabled'=>true));
-	$attachment_hidden = elgg_view('input/hidden',array('id'=>'attachment_guid','name' => 'attachment_guid','value'=>$attachment_guid));
-	$attachment = elgg_view('publication/embed/link',array('name'=>'pubattachment'));
+	$attachment_name = elgg_view('input/text', [
+		'id' => 'attachment_name',
+		'name' => 'attachment_name',
+		'value' => $attachment_file,
+		'disabled' => true
+	]);
+	$attachment_hidden = elgg_view('input/hidden', [
+		'id'=>'attachment_guid',
+		'name' => 'attachment_guid',
+		'value' => $attachment_guid
+	]);
+	$attachment = elgg_view('publication/embed/link', [
+		'name' => 'pubattachment'
+	]);
 }
 
 $entity_hidden = '';
 if ($entity) {
-	$entity_hidden .= elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
+	$entity_hidden .= elgg_view('input/hidden', [
+		'name' => 'guid',
+		'value' => $guid
+	]);
 }
 
-$entity_hidden .= elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_entity()->getGUID()));
+$entity_hidden .= elgg_view('input/hidden', [
+	'name' => 'container_guid',
+	'value' => elgg_get_page_owner_entity()->getGUID()
+]);
 
-$access = "<label>" . elgg_echo("access") . "</label><br />" . elgg_view("input/access", array("name" => "access_id", "value" => $access_id));
+$access = "<label>" . elgg_echo("access") . "</label><br />";
+$access .= elgg_view("input/access", [
+	"name" => "access_id",
+	"value" => $access_id
+]);
 
 $required_text = elgg_echo("publications:forms:required");
 $required_hint = elgg_echo("publications:forms:required:hint");
 $authors_label = elgg_echo('publication:forms:authors');
 
 $attachment_label = elgg_echo("publication:attachment");
-$attachment_input = elgg_view("input/file", array("name" => "attachment"));
+$attachment_input = elgg_view("input/file", [
+	"name" => "attachment"
+]);
 $attachment_input .= "<div class='elgg-subtext'>" . elgg_echo("publication:attachment:instruction") . "</div>";
 
 //common optional fields across all types
 
 $keywords_label = elgg_echo('publication:keywords');
 
-$keywords_input = elgg_view('input/tags', array('name' => 'publicationkeywords', 'value' => $keywords));
+$keywords_input = elgg_view('input/tags', [
+	'name' => 'publicationkeywords',
+	'value' => $keywords
+]);
 $keywords_input.= "<div class='elgg-subtext'>" . elgg_echo("publication:keywords:instruction") . "</div>";
 
 
 $uri_label = elgg_echo('publication:uri');
-
-$uri_input = elgg_view('input/text', array('name' => 'uri', 'value' => $uri));
+$uri_input = elgg_view('input/text', [
+	'name' => 'uri',
+	'value' => $uri
+]);
 
 $translation_label = elgg_echo('publication:translation');
-
-$translation_input = elgg_view('input/checkbox', array('name' => 'translation', 'value' => '1', 'checked' => ($translation == true)));
+$translation_input = elgg_view('input/checkbox', [
+	'name' => 'translation',
+	'value' => '1',
+	'checked' => ($translation == true)
+]);
 
 $promotion_label = elgg_echo('publication:promotion');
-
-$promotion_input = elgg_view('input/checkbox', array('name' => 'promotion', 'value' => '1', 'checked' => ($promotion == true)));
+$promotion_input = elgg_view('input/checkbox', [
+	'name' => 'promotion',
+	'value' => '1',
+	'checked' => ($promotion == true)
+]);
 
 $form_body = <<<EOT
 		<div>
@@ -192,4 +244,9 @@ $form_body = <<<EOT
 		</div>
 EOT;
 
-echo elgg_view('input/form', array('action' => "action/$action", 'body' => $form_body, "enctype" => "multipart/form-data", "class" => "publications-add"));
+echo elgg_view('input/form', [
+	'action' => "action/$action",
+	'body' => $form_body,
+	"enctype" => "multipart/form-data",
+	"class" => "publications-add"
+]);

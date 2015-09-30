@@ -15,28 +15,28 @@ $destination = $id . "_autocomplete_results";
 	<?php
 		if (!empty($value)) {
 			if (!is_array($value)) {
-				$value = array($value);
+				$value = $value);
 			}
 
 			// make sure we can see all users
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 
-			foreach($value as $v) {
+			foreach ($value as $v) {
 				echo "<div class='" . $destination . "_result'>";
 
 				if (is_numeric($v)) {
 					// existing user
 					if ($user = get_user($v)) {
-						echo elgg_view("input/hidden", array("name" => $name . "[]", "value" => $v));
-						echo elgg_view("input/hidden", array("name" => $name . "_order[]", "value" => $v));
+						echo elgg_view("input/hidden", ["name" => $name . "[]", "value" => $v]);
+						echo elgg_view("input/hidden", ["name" => $name . "_order[]", "value" => $v]);
 						echo elgg_view_entity_icon($user, "tiny");
 						echo '<span class="author">' . $user->name . '</span>';
 					}
 				} else {
 					// free text user
-					echo elgg_view("input/hidden", array("name" => $name . "_text[]", "value" => $v));
-					echo elgg_view("input/hidden", array("name" => $name . "_order[]", "value" => $v));
+					echo elgg_view("input/hidden", ["name" => $name . "_text[]", "value" => $v]);
+					echo elgg_view("input/hidden", ["name" => $name . "_order[]", "value" => $v]);
 					echo $v;
 				}
 

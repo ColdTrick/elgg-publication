@@ -9,24 +9,23 @@
 
 $guid = (int) get_input('guid');
 
-if ($entity = get_entity($guid)) {
-	$content = elgg_view_entity($entity, array("full_view" => true));
-	$title = $entity->title;
-	$content .= elgg_view_comments($entity);
-} else {
-	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", array($guid)));
-	forward("publications/all");
-}
+elgg_entity_gatekeeper($guid, 'object', 'publication');
+$entity = get_entity($guid);
+
+$title = $entity->title;
+
+$content = elgg_view_entity($entity);
+$content .= elgg_view_comments($entity);
 
 if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
-	elgg_register_menu_item("title", array(
-			"name" => "bibtex_export",
-			"text" => elgg_echo("publication:export"),
-			"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
-			"is_action" => true,
-			"class" => "elgg-button elgg-button-action",
-			"confirm" => elgg_echo("publication:export:confirm:single")
-	));
+	elgg_register_menu_item("title", [
+		"name" => "bibtex_export",
+		"text" => elgg_echo("publication:export"),
+		"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
+		"is_action" => true,
+		"class" => "elgg-button elgg-button-action",
+		"confirm" => elgg_echo("publication:export:confirm:single")
+	]);
 }
 
 $page_owner_entity = elgg_get_page_owner_entity();
@@ -39,11 +38,11 @@ if ($page_owner_entity instanceof ElggGroup) {
 elgg_push_breadcrumb($title);
 
 // build page
-$page_data = elgg_view_layout("content", array(
+$page_data = elgg_view_layout("content", [
 	"title" => $title,
 	"content" => $content,
 	"filter" => false
-));
+]);
 
 // display the page
 echo elgg_view_page($title, $page_data);

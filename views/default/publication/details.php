@@ -10,20 +10,25 @@ $type = $entity->pubtype;
 $authors = $entity->authors;
 $authors = explode(',', $authors);
 
-if(!(is_array($authors))) {
-	$authors = array($authors);
+if (!(is_array($authors))) {
+	$authors = [$authors];
 }
 
-if (!in_array($type, array("book", "article_book", "article_journal"))) {
+if (!in_array($type, ["book", "article_book", "article_journal"])) {
 	$type = "article_book";
 }
 
-foreach($authors as $author){
-	if(!ctype_digit($author)) {
-		$authors_content .= elgg_view('publication/authorinvite', array('exauthor' => $author, 'publication_guid' => $entity->getGUID(), 'canedit' => $entity->canEdit()));
+foreach ($authors as $author) {
+	if (!ctype_digit($author)) {
+		$authors_content .= elgg_view('publication/authorinvite', [
+			'exauthor' => $author,
+			'publication_guid' => $entity->getGUID(),
+			'canedit' => $entity->canEdit()
+		]);
 	} else {
-		if ($user = get_entity($author)) {
-			$authors_content .= elgg_view_entity($user, array("full_view" => false));
+		$user = get_entity($author);
+		if (!empty($user)) {
+			$authors_content .= elgg_view_entity($user, ["full_view" => false]);
 		}
 	}
 }
@@ -42,19 +47,24 @@ switch ($type) {
 			$book_editors = $entity->book_editors;
 			$book_editors = explode(',', $book_editors);
 			$book_editors_content = "";
-			if(!is_array($book_editors)) {
-				$book_editors = array($book_editors);
+			if (!is_array($book_editors)) {
+				$book_editors = [$book_editors];
 			}
 			
 			foreach ($book_editors as $book_editor) {
 				if (is_numeric($book_editor)) {
 					// existing user
-					if ($user = get_user($book_editor)) {
-						$book_editors_content .= elgg_view_entity($user, array("full_view" => false));
+					$user = get_user($book_editor);
+					if (!empty($user)) {
+						$book_editors_content .= elgg_view_entity($user, ["full_view" => false]);
 					}
 				} else {
 					// free text editor
-					$book_editors_content .= elgg_view('publication/authorinvite', array('exauthor' => $book_editor, 'publication_guid' => $entity->getGUID(), 'canedit' => $entity->canEdit()));
+					$book_editors_content .= elgg_view('publication/authorinvite', [
+						'exauthor' => $book_editor,
+						'publication_guid' => $entity->getGUID(),
+						'canedit' => $entity->canEdit()
+					]);
 				}
 			}
 			
@@ -85,11 +95,11 @@ switch ($type) {
 }
 
 if ($entity->uri) {
-	$details .= "<tr><td><label>" . elgg_echo('publication:uri') . ":</label></td><td>" . elgg_view("output/url", array("value" => $entity->uri)) . "</td></tr>";
+	$details .= "<tr><td><label>" . elgg_echo('publication:uri') . ":</label></td><td>" . elgg_view("output/url", ["href" => $entity->uri]) . "</td></tr>";
 }
 
 /* Client specific data */
-if($entity->translation) {
+if ($entity->translation) {
 	$details .= "<tr><td colspan='2'><label>" . elgg_echo('publications:details:translation') . "</label></td></tr>";
 }
 
@@ -99,9 +109,11 @@ if ($entity->promotion) {
 
 $details .= "</table>";
 
-if(!empty($entity->attachment)){
-	if ($attachment = get_entity($entity->attachment)) {
-		$details .= '<label>' .elgg_echo('publication:attachment:title'). ":</label> ". elgg_view("output/url", array("href" => $attachment->getUrl(), "text" => $attachment->title)) . "<br /><br />";
+if (!empty($entity->attachment)) {
+	$attachment = get_entity($entity->attachment);
+	if (!empty($attachment)) {
+		$details .= '<label>' .elgg_echo('publication:attachment:title'). ":</label> ";
+		$details .= elgg_view("output/url", ["href" => $attachment->getURL(), "text" => $attachment->title]) . "<br /><br />";
 	}
 }
 
@@ -110,11 +122,16 @@ if ($authors) {
 }
 
 if ($entity->description) {
-	echo elgg_view_module("info", elgg_echo('publication:abstract'), elgg_view('output/longtext', array('value' => $entity->description)));
+	echo elgg_view_module("info", elgg_echo('publication:abstract'), elgg_view('output/longtext', ['value' => $entity->description]));
 }
 
-if ($attached_file = $entity->attached_file) {
-	$download_link = elgg_view("output/url", array("text" => elgg_echo("publications:details:attachment:download"), "href" => "publications/download_attachment/" . $entity->getGUID(), "class" => "elgg-button elgg-button-action"));
+$attached_file = $entity->attached_file;
+if (!empty($attached_file)) {
+	$download_link = elgg_view("output/url", [
+		"text" => elgg_echo("publications:details:attachment:download"),
+		"href" => "publications/download_attachment/{$entity->getGUID()}",
+		"class" => "elgg-button elgg-button-action"
+	]);
 	echo elgg_view_module("info", elgg_echo('publication:attachment:title'), $download_link);
 }
 

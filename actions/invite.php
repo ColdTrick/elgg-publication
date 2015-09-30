@@ -9,48 +9,69 @@
 
 $emails = get_input('emails');
 $emailmessage = get_input('emailmessage');
+$author = get_input('author');
 
-if($author = get_input('author')){
+if (!empty($author)) {
 	$publication = get_input('publication');
 }
 
-if(empty($emails)){
+if (empty($emails)) {
 	register_error('No email addresses specified');
 	forward(REFERER);
 }
 
-$emails = explode("\n",$emails);
+$emails = explode("\n", $emails);
 
 global $CONFIG;
 
-if (sizeof($emails)) {
-	foreach($emails as $email) {
-		$email = trim($email);
-		if (!empty($email)) {
-			$link = $CONFIG->wwwroot . 'account/register.php?friend_guid=' . $_SESSION['guid'] . '&invitecode=' . generate_invite_code($_SESSION['user']->username);
-			if($author && $publication){
-				$author = urlencode($author);
-				$link .= "&author=".$author."&publication=".$publication;
-			}
-			$message = sprintf(elgg_echo('invitefriends:email'),$CONFIG->site->name,$_SESSION['user']->name,$emailmessage,$link);
-			$site = $CONFIG->site;
-			if (($site) && (isset($site->email)))
-				$from = $site->email;
-			else if (isset($from->url)){
-				$breakdown = parse_url($from->url);
-				$from = 'noreply@' . $breakdown['host'];
-			}
-			else // If all else fails, use the domain of the site.
-				$from = 'noreply@' . get_site_domain($CONFIG->site_guid);
-			$headers = "From: \"{$CONFIG->site->name}\" <{$CONFIG->site->email}>\r\n"
-			. "Content-Type: text/plain; charset=UTF-8; format=flowed\r\n"
-			. "MIME-Version: 1.0\r\n"
-			. "Content-Transfer-Encoding: 8bit\r\n";
-			mail($email, sprintf(elgg_echo('invitefriends:subject'), $CONFIG->site->name),wordwrap($message), $headers);
-		}
-	}
-	system_message(elgg_echo('invitefriends:success'));
-} else {
+if (empty($emails)) {
 	register_error(elgg_echo('invitefriends:failure'));
+	forward(REFERER);
 }
+
+$user = elgg_get_logged_in_user_entity();
+$site = elgg_get_site_entity();
+
+if (isset($site->email)) {
+	$from = $site->email;
+} else {
+	$from = 'noreply@' . $site->getDomain();
+}
+
+$from = "{$site->name} <{$from}>";
+
+$base_link_attributes = [
+	'friend_guid' => $user->getGUID(),
+	'invitecode' => generate_invite_code($user->username),
+];
+
+foreach ($emails as $email) {
+	$email = trim($email);
+	if (empty($email)) {
+		continue;
+	}
+	
+	$link_attributes = $base_link_attributes;
+	
+	if (!empty($author) && !empty($publication)) {
+		$author = urlencode($author);
+		$link_attributes['author'] = $author;
+		$link_attributes['publication'] = $publication;
+	}
+	
+	$link = elgg_normalize_url('account/register.php');
+	$link = elgg_http_add_url_query_elements($link, $link_attributes);
+	
+	$subject = elgg_echo('invitefriends:subject', [$site->name]);
+	$message = elgg_echo('invitefriends:email', [
+		$site->name,
+		$user->name,
+		$emailmessage,
+		$link
+	]);
+	
+	elgg_send_email($from, $email, $subject, $message);
+}
+
+system_message(elgg_echo('invitefriends:success'));
 forward(REFERER);

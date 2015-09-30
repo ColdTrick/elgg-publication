@@ -19,57 +19,54 @@ if ($full) {
 	$container = $entity->getContainerEntity();
 	
 	$owner_icon = elgg_view_entity_icon($owner, 'tiny');
-	$owner_link = elgg_view('output/url', array(
-			'href' => "publications/owner/$owner->username",
-			'text' => $owner->name,
-			'is_trusted' => true,
-	));
-	$author_text = elgg_echo('byline', array($owner_link));
+	$owner_link = elgg_view('output/url', [
+		'href' => "publications/owner/$owner->username",
+		'text' => $owner->name,
+		'is_trusted' => true,
+	]);
+	$author_text = elgg_echo('byline', [$owner_link]);
 	$date = elgg_view_friendly_time($entity->time_created);
 	
 	// The "on" status changes for comments, so best to check for !Off
+	$comments_link = '';
 	if ($entity->comments_on != 'Off') {
 		$comments_count = $entity->countComments();
 		//only display if there are commments
 		if ($comments_count != 0) {
 			$text = elgg_echo("comments") . " ($comments_count)";
-			$comments_link = elgg_view('output/url', array(
-					'href' => $entity->getURL() . '#comments',
-					'text' => $text,
-					'is_trusted' => true,
-			));
-		} else {
-			$comments_link = '';
+			$comments_link = elgg_view('output/url', [
+				'href' => $entity->getURL() . '#comments',
+				'text' => $text,
+				'is_trusted' => true,
+			]);
 		}
-	} else {
-		$comments_link = '';
 	}
 	
-	$metadata = elgg_view_menu('entity', array(
-			'entity' => $vars['entity'],
-			'handler' => 'publications',
-			'sort_by' => 'priority',
-			'class' => 'elgg-menu-hz',
-	));
+	$metadata = elgg_view_menu('entity', [
+		'entity' => $vars['entity'],
+		'handler' => 'publications',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	]);
 	
 	$subtitle = "$author_text $date $comments_link";
 		
 	$body = elgg_view('publication/details', $vars);
 
-	$params = array(
+	$params = [
 		'entity' => $entity,
 		'title' => false,
 		'metadata' => $metadata,
 		'subtitle' => $subtitle,
-	);
+	];
 	$params = $params + $vars;
 	$summary = elgg_view('object/elements/summary', $params);
 
-	echo elgg_view('object/elements/full', array(
-			'summary' => $summary,
-			'icon' => $owner_icon,
-			'body' => $body,
-	));
+	echo elgg_view('object/elements/full', [
+		'summary' => $summary,
+		'icon' => $owner_icon,
+		'body' => $body,
+	]);
 
 } else {
 	// brief view

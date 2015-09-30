@@ -38,190 +38,140 @@ if (empty($author_guids) && empty($author_text)) {
 	forward(REFERER);
 }
 
-if (!in_array($type, array("book", "article_book", "article_journal"))) {
-
+if (!in_array($type, ["book", "article_book", "article_journal"])) {
 	$type = "article_book";
-
 }
 
-if ($publication = get_entity($guid)) {
-	if (($publication->getSubtype() == "publication") && $publication->canEdit()) {
+if (empty($title) || empty($type)) {
+	register_error(elgg_echo("publication:blank"));
+	forward(REFERER);
+}
 
-		//files
-
-		if($file_contents = get_uploaded_file("attachment")){
-
-			$fh = new ElggFile();
-
-			$fh->owner_guid = $publication->getGUID();
-
-			$file_name = $_FILES["attachment"]["name"];
-
-			$mime = $_FILES["attachment"]["type"];
-
-			$fh->setFilename($file_name);
-
-
-
-			if($fh->open("write")){
-
-				$fh->write($file_contents);
-
-				$fh->close();
-
-
-
-				$publication->attached_file = $file_name;
-
-				$publication->attached_file_mime_type = $mime;
-
-			}
-
+switch ($type) {
+	case "article_book":
+		if (empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to) || (empty($book_editors_guids) && empty($book_editors_text))) {
+			register_error(elgg_echo("publication:blankdefault"));
+			forward(REFERER);
 		}
-
-		$tagarray = string_to_tag_array($keywords);
-
-		if (empty($title) || empty($type)) {
-			register_error(elgg_echo("publication:blank"));
+		
+		break;
+	case "article_journal":
+		if (empty($journaltitle) || empty($number) || empty($page_from) || empty($page_to)) {
+			register_error(elgg_echo("publication:blankdefault"));
+			forward(REFERER);
+		}
+		
+		break;
+	case "book":
+	default:
+		if (empty($publish_location) || empty($publisher) || empty($pages)) {
+			register_error(elgg_echo("publication:blankdefault"));
 			forward(REFERER);
 		}
 
-		switch($type) {
+		break;
+}
 
-			case "article_book":
-
-				if(empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to) || (empty($book_editors_guids) && empty($book_editors_text))) {
-
-					register_error(elgg_echo("publication:blankdefault"));
-
-					forward(REFERER);
-
-				}
-
-
-
-				break;
-
-			case "article_journal":
-
-				if(empty($journaltitle) || empty($number) || empty($page_from) || empty($page_to)) {
-
-					register_error(elgg_echo("publication:blankdefault"));
-
-					forward(REFERER);
-
-				}
-
-
-
-				break;
-
-			case "book":
-
-			default:
-
-				if(empty($publish_location) || empty($publisher) || empty($pages)) {
-
-					register_error(elgg_echo("publication:blankdefault"));
-
-					forward(REFERER);
-
-				}
-
-
-
-				break;
-
-		}
-
-		$publication->access_id = $access;
-		$publication->title = $title;
-		$publication->description = $abstract;
-		if (!$publication->save()) {
-			register_error(elgg_echo("publication:error"));
-			forward(REFERER);
-		}
-
-		$publication->tags = $tagarray;
-
-		$publication->uri = $uri;
-		$publication->year = $year;
-		$publication->pubtype = $type;
-		$publication->journaltitle = $journaltitle;
-		$publication->booktitle = $booktitle;
-		$publication->publisher = $publisher;
-		$publication->publish_location = $publish_location;
-		$publication->number = $number;
-		$publication->pages = $pages;
-		$publication->page_from = $page_from;
-		$publication->page_to = $page_to;
-		$publication->translation = $translation;
-		$publication->promotion = $promotion;
-
-		$publication->clearRelationships();
-		// save authors
-		if (!empty($author_guids)) {
-			foreach ($author_guids as $author) {
-				add_entity_relationship($publication->getGUID(), 'author', $author);
-			}
-		}
-		
-		if (!empty($author_guids) && !empty($author_text)) {
-			$pauthors = array_merge($author_guids, $author_text);
-		} elseif (!empty($author_guids)) {
-			$pauthors  = $author_guids;
-		} elseif (!empty($author_text)) {
-			$pauthors = $author_text;
-		} else {
-			$pauthors = array();
-		}
-		$pauthors = implode(',', $authors_order);
-		$publication->authors = $pauthors;
-
-		// save book editors
-		if (!empty($book_editors_guids)) {
-
-			foreach ($book_editors_guids as $book_editor) {
-
-				add_entity_relationship($publication->getGUID(), 'book_editor', $book_editor);
-
-			}
-
-		}
-
-		
-		if (!empty($book_editors_guids) && !empty($book_editors_text)) {
-
-			$pbook_editors = array_merge($book_editors_guids, $book_editors_text);
-
-		} elseif (!empty($book_editors_guids)) {
-
-			$pbook_editors  = $book_editors_guids;
-
-		} elseif (!empty($book_editors_text)) {
-
-			$pbook_editors = $book_editors_text;
-
-		} else {
-
-			$pbook_editors = array();
-
-		}
-
-		$pbook_editors = implode(',', $pbook_editors);
-
-		$publication->book_editors = $pbook_editors;
-		
-		system_message(elgg_echo("publication:posted"));
-		
-		/* todo: activate add_to_river on settings */
-		#add_to_river('river/object/publication/update','update',$_SESSION['user']->guid,$publication->guid);
-		
-
-		forward($publication->getURL());
-	}
-} else {
-	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", array($guid)));
-
+$publication = get_entity($guid);
+if (empty($publication)) {
+	register_error(elgg_echo("InvalidParameterException:GUIDNotFound", [$guid]));
 	forward("publications/all");
 }
+
+if (($publication->getSubtype() !== "publication") || $publication->canEdit()) {
+	forward("publications/all");
+}
+
+// files
+$file_contents = get_uploaded_file("attachment");
+if (!empty($file_contents)) {
+	
+	$fh = new ElggFile();
+	$fh->owner_guid = $publication->getGUID();
+	$file_name = $_FILES["attachment"]["name"];
+	$mime = $_FILES["attachment"]["type"];
+	$fh->setFilename($file_name);
+	
+	if ($fh->open("write")) {
+		$fh->write($file_contents);
+		$fh->close();
+		
+		$publication->attached_file = $file_name;
+		$publication->attached_file_mime_type = $mime;
+	}
+}
+
+$tagarray = string_to_tag_array($keywords);
+
+$publication->access_id = $access;
+$publication->title = $title;
+$publication->description = $abstract;
+if (!$publication->save()) {
+	register_error(elgg_echo("publication:error"));
+	forward(REFERER);
+}
+
+$publication->tags = $tagarray;
+
+$publication->uri = $uri;
+$publication->year = $year;
+$publication->pubtype = $type;
+$publication->journaltitle = $journaltitle;
+$publication->booktitle = $booktitle;
+$publication->publisher = $publisher;
+$publication->publish_location = $publish_location;
+$publication->number = $number;
+$publication->pages = $pages;
+$publication->page_from = $page_from;
+$publication->page_to = $page_to;
+$publication->translation = $translation;
+$publication->promotion = $promotion;
+
+$publication->clearRelationships();
+
+// save authors
+if (!empty($author_guids)) {
+	foreach ($author_guids as $author) {
+		add_entity_relationship($publication->getGUID(), 'author', $author);
+	}
+}
+
+if (!empty($author_guids) && !empty($author_text)) {
+	$pauthors = array_merge($author_guids, $author_text);
+} elseif (!empty($author_guids)) {
+	$pauthors  = $author_guids;
+} elseif (!empty($author_text)) {
+	$pauthors = $author_text;
+} else {
+	$pauthors = [];
+}
+$pauthors = implode(',', $authors_order);
+$publication->authors = $pauthors;
+
+// save book editors
+if (!empty($book_editors_guids)) {
+	foreach ($book_editors_guids as $book_editor) {
+		add_entity_relationship($publication->getGUID(), 'book_editor', $book_editor);
+	}
+}
+
+if (!empty($book_editors_guids) && !empty($book_editors_text)) {
+	$pbook_editors = array_merge($book_editors_guids, $book_editors_text);
+} elseif (!empty($book_editors_guids)) {
+	$pbook_editors  = $book_editors_guids;
+} elseif (!empty($book_editors_text)) {
+	$pbook_editors = $book_editors_text;
+} else {
+	$pbook_editors = [];
+}
+
+$pbook_editors = implode(',', $pbook_editors);
+
+$publication->book_editors = $pbook_editors;
+
+system_message(elgg_echo("publication:posted"));
+
+/* todo: activate add_to_river on settings */
+#add_to_river('river/object/publication/update','update',$_SESSION['user']->guid,$publication->guid);
+
+forward($publication->getURL());

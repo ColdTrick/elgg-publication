@@ -11,7 +11,7 @@ $guid = (int) get_input('guid');
 
 $publication = get_entity($guid);
 if ($publication->getSubtype() == "publication" && $publication->canEdit()) {
-	$owner = get_entity($publication->getOwner());
+	$owner = $publication->getOwnerEntity();
 	if ($publication->delete()) {
 		system_message(elgg_echo("publication:deleted"));
 	} else {
