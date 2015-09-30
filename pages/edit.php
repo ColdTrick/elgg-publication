@@ -43,9 +43,9 @@ $form_vars = [
 	'class' => 'publications-add',
 ];
 if (empty($entity)) {
-	$form_vars['action'] = 'action/publication/add';
+	$form_vars['action'] = 'action/publications/add';
 }
-$form = elgg_view_form('publication/edit', $form_vars, ['entity' => $entity]);
+$form = elgg_view_form('publications/edit', $form_vars, ['entity' => $entity]);
 
 // build page
 $page_data = elgg_view_layout('content', [
