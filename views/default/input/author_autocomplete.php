@@ -15,7 +15,7 @@ $destination = $id . "_autocomplete_results";
 	<?php
 		if (!empty($value)) {
 			if (!is_array($value)) {
-				$value = $value);
+				$value = [$value];
 			}
 
 			// make sure we can see all users
