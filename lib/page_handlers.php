@@ -43,7 +43,7 @@ function publication_page_handler($page) {
 			include(dirname(dirname(__FILE__)) . "/pages/view.php");
 			break;
 		case "import":
-			if (elgg_get_plugin_setting("enable_bibtex", "publications") !== "yes") {
+			if (!publications_bibtex_enabled()) {
 				return false;
 			}
 			

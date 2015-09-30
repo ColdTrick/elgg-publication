@@ -17,7 +17,7 @@ $title = $entity->title;
 $content = elgg_view_entity($entity);
 $content .= elgg_view_comments($entity);
 
-if (elgg_get_plugin_setting("enable_bibtex", "publications") == "yes") {
+if (publications_bibtex_enabled()) {
 	elgg_register_menu_item("title", [
 		"name" => "bibtex_export",
 		"text" => elgg_echo("publication:export"),

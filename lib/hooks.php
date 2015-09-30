@@ -86,6 +86,10 @@ function publication_register_menu_page($hook, $type, $return_value, $params) {
 		return;
 	}
 	
+	if (!publications_bibtex_enabled()) {
+		return;
+	}
+	
 	// 	import
 	$return_value[] = ElggMenuItem::factory([
 		"name" => "bibtex_import",

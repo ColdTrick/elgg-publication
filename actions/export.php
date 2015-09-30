@@ -1,5 +1,10 @@
 <?php
 
+if (!publications_bibtex_enabled()) {
+	register_error(elgg_echo('publication:error:bibtext:enabled'));
+	forward(REFERER);
+}
+
 $download_type = get_input('type');
 $output = '';
 

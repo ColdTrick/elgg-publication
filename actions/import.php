@@ -1,5 +1,10 @@
 <?php
 
+if (!publications_bibtex_enabled()) {
+	register_error(elgg_echo('publication:error:bibtext:enabled'));
+	forward(REFERER);
+}
+
 // Get input data
 $data = get_uploaded_file("bibtex_import");
 if (empty($data)) {

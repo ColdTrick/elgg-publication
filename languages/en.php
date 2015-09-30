@@ -138,4 +138,6 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:notfound' => "Sorry; we could not find the specified publication.",
 	'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	'publications:seeall' => "See all publications from",
+	
+	'publication:error:bibtext:enabled' => "BibTex support is not enabled, the feature you're trying to use is not allowed.",
 ];

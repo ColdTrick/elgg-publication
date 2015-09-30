@@ -91,3 +91,23 @@ function publications_get_bibtex(ElggObject $publication) {
 
 	return $result;
 }
+
+/**
+ * Check if BibTex support is enabled
+ *
+ * @return bool
+ */
+function publications_bibtex_enabled() {
+	static $enabled;
+	
+	if (!isset($enabled)) {
+		$enabled = false;
+		
+		$plugin_settings = elgg_get_plugin_setting('enable_bibtex', 'publications');
+		if ($plugin_settings === 'yes') {
+			$enabled = true;
+		}
+	}
+	
+	return $enabled;
+}

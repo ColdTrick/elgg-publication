@@ -2,6 +2,11 @@
 
 elgg_gatekeeper();
 
+if (!publications_bibtex_enabled()) {
+	register_error(elgg_echo('publication:error:bibtext:enabled'));
+	forward(REFERER);
+}
+
 $title = elgg_echo('publication:import');
 
 elgg_push_breadcrumb($title);
