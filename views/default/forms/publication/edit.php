@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package Elggi
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html GNU Public License version 2
@@ -7,8 +6,6 @@
  * @author Tingxi Tan, Grid Research Centre [txtan@cpsc.ucalgary.ca]
  * @link http://grc.ucalgary.ca/
  */
-
-elgg_gatekeeper();
 
 $entity = elgg_extract("entity", $vars);
 
@@ -244,9 +241,4 @@ $form_body = <<<EOT
 		</div>
 EOT;
 
-echo elgg_view('input/form', [
-	'action' => "action/$action",
-	'body' => $form_body,
-	"enctype" => "multipart/form-data",
-	"class" => "publications-add"
-]);
+echo $form_body;

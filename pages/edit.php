@@ -11,27 +11,25 @@ elgg_gatekeeper();
 	
 $entity = false;
 $title = elgg_echo('publication:add');
-$form_view = "publication/forms/edit";
 
 $guid = (int) get_input('guid');
 if (!empty($guid)) {
 	$entity = get_entity($guid);
-	if (empty($entity) || !elgg_instanceof($entity, "object", "publication") || !$entity->canEdit()) {
-		register_error(elgg_echo("InvalidParameterException:GUIDNotFound", [$guid]));
-		forward("publications/all");
+	if (empty($entity) || !elgg_instanceof($entity, 'object', 'publication') || !$entity->canEdit()) {
+		register_error(elgg_echo('InvalidParameterException:GUIDNotFound', [$guid]));
+		forward('publications/all');
 	}
 		
 	$title = elgg_echo('publication:edit', [$entity->title]);
-	$form_view = "publication/forms/edit";
 	
 	elgg_set_page_owner_guid($entity->getContainerGUID());
 }
 
 $page_owner_entity = elgg_get_page_owner_entity();
 if ($page_owner_entity instanceof ElggGroup) {
-	elgg_push_breadcrumb($page_owner_entity->name, "publications/group/" . $page_owner_entity->getGUID());
+	elgg_push_breadcrumb($page_owner_entity->name, 'publications/group/' . $page_owner_entity->getGUID());
 } else {
-	elgg_push_breadcrumb($page_owner_entity->name, "publications/owner/" . $page_owner_entity->username);
+	elgg_push_breadcrumb($page_owner_entity->name, 'publications/owner/' . $page_owner_entity->username);
 }
 
 if ($entity) {
@@ -40,13 +38,20 @@ if ($entity) {
 
 elgg_push_breadcrumb($title);
 
-$form = elgg_view($form_view, ['entity' => $entity]);
+$form_vars = [
+	'enctype' => 'multipart/form-data',
+	'class' => 'publications-add',
+];
+if (empty($entity)) {
+	$form_vars['action'] = 'action/publication/add';
+}
+$form = elgg_view_form('publication/edit', $form_vars, ['entity' => $entity]);
 
 // build page
-$page_data = elgg_view_layout("content", [
-	"title" => $title,
-	"content" => $form,
-	"filter" => false
+$page_data = elgg_view_layout('content', [
+	'title' => $title,
+	'content' => $form,
+	'filter' => false
 ]);
 
 // display the page

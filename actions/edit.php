@@ -78,7 +78,7 @@ if (empty($publication)) {
 	forward("publications/all");
 }
 
-if (($publication->getSubtype() !== "publication") || $publication->canEdit()) {
+if (($publication->getSubtype() !== "publication") || !$publication->canEdit()) {
 	forward("publications/all");
 }
 

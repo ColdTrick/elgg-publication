@@ -65,8 +65,8 @@ function publication_init() {
 	elgg_register_event_handler('create', 'user', 'publication_create_user');
 	
 	// Register actions
-	elgg_register_action('publications/add', dirname(__FILE__) . '/actions/add.php');
-	elgg_register_action('publications/edit', dirname(__FILE__) . '/actions/edit.php');
+	elgg_register_action('publication/add', dirname(__FILE__) . '/actions/add.php');
+	elgg_register_action('publication/edit', dirname(__FILE__) . '/actions/edit.php');
 	elgg_register_action('publications/delete', dirname(__FILE__) . '/actions/delete.php');
 // 	elgg_register_action('publications/invite', dirname(__FILE__) . '/actions/invite.php');
 	
