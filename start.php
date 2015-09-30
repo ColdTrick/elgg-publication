@@ -30,10 +30,8 @@ function publication_init() {
 	elgg_register_widget_type('publications', elgg_echo('publications:widget'), elgg_echo('publications:widget:description'));
 	
 	// Register granular notification for this type
-	register_notification_object('object', 'publication', elgg_echo('publication:newpost'));
-	
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'publication_notify_message');
+	elgg_register_notification_event('object', Publication::SUBTYPE, ['create']);
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:' . Publication::SUBTYPE, ['\ColdTrick\Publications\Notifications', 'createPublication']);
 	
 	// Register entity type for search
 	elgg_register_entity_type('object', Publication::SUBTYPE);

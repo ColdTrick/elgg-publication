@@ -140,40 +140,6 @@ function publication_write_permission_check($hook, $type, $return_value, $params
 }
 
 /**
- * Custom message when a publication is created
- *
- * @param string $hook         the name of the hook
- * @param string $type         the type of the hook
- * @param string $return_value current return value
- * @param array  $params       supplied params
- *
- * @return void|string
- */
-function publication_notify_message($hook, $type, $return_value, $params) {
-	$result = $returnvalue;
-	
-	if (empty($params) || !is_array($params)) {
-		return;
-	}
-	
-	$entity = elgg_extract("entity", $params);
-	$method = elgg_extract("method", $params);
-	
-	if (empty($entity) || !($entity instanceof Publication)) {
-		return;
-	}
-	
-	$owner = $entity->getOwnerEntity();
-	$title = $entity->title;
-	
-	if ($method == "sms") {
-		return $owner->name . ' via publication: ' . $title;
-	} elseif ($method == "email") {
-		return $owner->name . ' via publication: ' . $title . "\n\n" . $entity->description . "\n\n" . $entity->getURL();
-	}
-}
-
-/**
  * Disable commenting on publications
  *
  * @param string $hook         the name of the hook

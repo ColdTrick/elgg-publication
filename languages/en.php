@@ -94,7 +94,6 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:yourfriends' => "Your contacts' latest publications",
 	'publication:everyone' => "All site publications",
 	'publication:new' => "New publication",
-	'publication:newpost'=>'New Publication on your community',
 	'publication:via' => "added a new publication titled",
 	'publication:read' => "Read publication",
 	'publications:add' => "Add a publication",
@@ -140,4 +139,14 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publications:seeall' => "See all publications from",
 	
 	'publication:error:bibtext:enabled' => "BibTex support is not enabled, the feature you're trying to use is not allowed.",
+	
+	// notifications
+	'publication:notification:create:subject' => "A new publication \"%s\" was created",
+	'publication:notification:create:summary' => "New publication \"%s\"",
+	'publication:notification:create:body' => "Hi,
+
+%s created a new publication \"%s\".
+
+To view the publication click the link:
+%s",
 ];
