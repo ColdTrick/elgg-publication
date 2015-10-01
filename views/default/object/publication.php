@@ -51,7 +51,7 @@ if ($full) {
 	
 	$subtitle = "$author_text $date $comments_link";
 		
-	$body = elgg_view('publication/details', $vars);
+	$body = elgg_view('publications/details', $vars);
 
 	$params = [
 		'entity' => $entity,
@@ -71,7 +71,7 @@ if ($full) {
 } else {
 	// brief view
 
-	$list_body = elgg_view('publication/references', $vars);
+	$list_body = elgg_view('publications/references', $vars);
 
 	echo elgg_view_image_block(null, $list_body);
 }

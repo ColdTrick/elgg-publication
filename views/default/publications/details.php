@@ -20,7 +20,7 @@ if (!in_array($type, ["book", "article_book", "article_journal"])) {
 
 foreach ($authors as $author) {
 	if (!ctype_digit($author)) {
-		$authors_content .= elgg_view('publication/authorinvite', [
+		$authors_content .= elgg_view('publications/authorinvite', [
 			'exauthor' => $author,
 			'publication_guid' => $entity->getGUID(),
 			'canedit' => $entity->canEdit()
@@ -60,7 +60,7 @@ switch ($type) {
 					}
 				} else {
 					// free text editor
-					$book_editors_content .= elgg_view('publication/authorinvite', [
+					$book_editors_content .= elgg_view('publications/authorinvite', [
 						'exauthor' => $book_editor,
 						'publication_guid' => $entity->getGUID(),
 						'canedit' => $entity->canEdit()

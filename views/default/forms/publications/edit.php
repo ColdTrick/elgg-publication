@@ -108,7 +108,7 @@ $submit_input = elgg_view('input/submit', [
 	'value' => elgg_echo('publish')
 ]);
 
-$authors_input = elgg_view('publication/authorentry', [
+$authors_input = elgg_view('publications/authorentry', [
 	'authors' => $authors
 ]);
 
@@ -124,9 +124,6 @@ if (strtolower(elgg_get_plugin_setting('toggleattachment','publications')) !== '
 		'id'=>'attachment_guid',
 		'name' => 'attachment_guid',
 		'value' => $attachment_guid
-	]);
-	$attachment = elgg_view('publication/embed/link', [
-		'name' => 'pubattachment'
 	]);
 }
 

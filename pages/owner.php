@@ -52,7 +52,7 @@ $listing .= elgg_view_module("info", elgg_echo('publication:catalogued:your'), $
 
 $sidebar = "";
 if (elgg_is_logged_in() && ($page_owner_entity instanceof ElggUser)) {
-	$sidebar .= elgg_view("publication/import");
+	$sidebar .= elgg_view_form("publications/import");
 }
 
 // build page
