@@ -14,33 +14,20 @@ $abstract = get_input('publicationabstract');
 $access = (int) get_input('access_id');
 
 $keywords = get_input('publicationkeywords');
+
 $author_guids = get_input('authors');
-$author_text = get_input("authors_text");
-$authors_order = get_input("authors_order");
+$authors_order = get_input('authors_order');
+
+$data = (array) get_input('data', []);
+
 $uri = get_input('uri');
 $type = get_input('type');
 $year = get_input('year');
-$journaltitle = get_input('journaltitle');
-$publisher = get_input('publisher');
-$publish_location = get_input('publish_location');
-$booktitle = get_input('booktitle');
-$number = get_input('number');
-$pages = get_input('pages');
-$page_from = get_input('page_from');
-$page_to = get_input('page_to');
 $translation = get_input('translation');
 $promotion = get_input('promotion');
-$book_editors_guids = get_input("book_editors");
 
-$book_editors_text = get_input("book_editors_text");
-
-if (empty($title) || empty($type)) {
-	register_error(elgg_echo("publication:blank"));
-	forward(REFERER);
-}
-
-if (empty($author_guids) && empty($author_text)) {
-	register_error(elgg_echo("publication:blankauthors"));
+if (empty($title) || empty($type) || empty($authors_order) || empty($year)) {
+	register_error(elgg_echo('publication:blank'));
 	forward(REFERER);
 }
 
@@ -50,41 +37,23 @@ if (!in_array($type, $types)) {
 	forward(REFERER);
 }
 
-switch ($type) {
-	case "article_book":
-		if (empty($booktitle) || empty($publish_location) || empty($publisher) || empty($page_from) || empty($page_to) || (empty($book_editors_guids) && empty($book_editors_text))) {
-			register_error(elgg_echo("publication:blankdefault"));
-			forward(REFERER);
-		}
-		
-		break;
-	case "article_journal":
-		if (empty($journaltitle) || empty($number) || empty($page_from) || empty($page_to)) {
-			register_error(elgg_echo("publication:blankdefault"));
-			forward(REFERER);
-		}
-		
-		break;
-	case "book":
-	default:
-		if (empty($publish_location) || empty($publisher) || empty($pages)) {
-			register_error(elgg_echo("publication:blankdefault"));
-			forward(REFERER);
-		}
-
-		break;
+// allow the validation of custom type data
+$input_validation = elgg_trigger_plugin_hook("input_validation:$type", 'publications', [], true);
+if ($input_validation !== true) {
+	// input validation failed, errors should be set by the plugin hook
+	forward(REFERER);
 }
 
 $new_entity = true;
 if (!empty($guid)) {
 	$publication = get_entity($guid);
 	if (empty($publication)) {
-		register_error(elgg_echo("InvalidParameterException:GUIDNotFound", [$guid]));
-		forward("publications/all");
+		register_error(elgg_echo('InvalidParameterException:GUIDNotFound', [$guid]));
+		forward('publications/all');
 	}
 	
 	if (!($publication instanceof Publication) || !$publication->canEdit()) {
-		forward("publications/all");
+		forward('publications/all');
 	}
 	
 	$new_entity = false;
@@ -97,7 +66,7 @@ if (!empty($guid)) {
 	$publication->description = $abstract;
 	
 	if (!$publication->save()) {
-		register_error(elgg_echo("publication:error"));
+		register_error(elgg_echo('publication:error'));
 		forward(REFERER);
 	}
 }
@@ -108,27 +77,18 @@ $publication->access_id = $access;
 $publication->title = $title;
 $publication->description = $abstract;
 if (!$publication->save()) {
-	register_error(elgg_echo("publication:error"));
+	register_error(elgg_echo('publication:error'));
 	forward(REFERER);
 }
 
 $publication->tags = $tagarray;
-
 $publication->uri = $uri;
 $publication->year = $year;
 $publication->pubtype = $type;
-$publication->journaltitle = $journaltitle;
-$publication->booktitle = $booktitle;
-$publication->publisher = $publisher;
-$publication->publish_location = $publish_location;
-$publication->number = $number;
-$publication->pages = $pages;
-$publication->page_from = $page_from;
-$publication->page_to = $page_to;
 $publication->translation = $translation;
 $publication->promotion = $promotion;
 
-$publication->clearRelationships();
+$publication->deleteRelationships('author');
 
 // save authors
 if (!empty($author_guids)) {
@@ -137,49 +97,28 @@ if (!empty($author_guids)) {
 	}
 }
 
-if (!empty($author_guids) && !empty($author_text)) {
-	$pauthors = array_merge($author_guids, $author_text);
-} elseif (!empty($author_guids)) {
-	$pauthors  = $author_guids;
-} elseif (!empty($author_text)) {
-	$pauthors = $author_text;
-} else {
-	$pauthors = [];
-}
 $pauthors = implode(',', $authors_order);
 $publication->authors = $pauthors;
 
-// save book editors
-if (!empty($book_editors_guids)) {
-	foreach ($book_editors_guids as $book_editor) {
-		add_entity_relationship($publication->getGUID(), 'book_editor', $book_editor);
-	}
+// save custom data
+foreach ($data as $key => $value) {
+	$publication->$key = $value;
 }
 
-if (!empty($book_editors_guids) && !empty($book_editors_text)) {
-	$pbook_editors = array_merge($book_editors_guids, $book_editors_text);
-} elseif (!empty($book_editors_guids)) {
-	$pbook_editors  = $book_editors_guids;
-} elseif (!empty($book_editors_text)) {
-	$pbook_editors = $book_editors_text;
-} else {
-	$pbook_editors = [];
-}
-
-$pbook_editors = implode(',', $pbook_editors);
-$publication->book_editors = $pbook_editors;
+// trigger event to save other custom data
+elgg_trigger_event('save:data', 'publications', $publication);
 
 // files
-$file_contents = get_uploaded_file("attachment");
+$file_contents = get_uploaded_file('attachment');
 if (!empty($file_contents)) {
 
 	$fh = new ElggFile();
 	$fh->owner_guid = $publication->getGUID();
-	$file_name = $_FILES["attachment"]["name"];
-	$mime = $_FILES["attachment"]["type"];
+	$file_name = $_FILES['attachment']['name'];
+	$mime = $_FILES['attachment']['type'];
 	$fh->setFilename($file_name);
 
-	if ($fh->open("write")) {
+	if ($fh->open('write')) {
 		$fh->write($file_contents);
 		$fh->close();
 
@@ -200,7 +139,7 @@ if ($new_entity) {
 	]);
 }
 
-system_message(elgg_echo("publication:posted"));
+system_message(elgg_echo('publication:posted'));
 
 /* todo: activate add_to_river on settings */
 #add_to_river('river/object/publication/update','update',$_SESSION['user']->guid,$publication->guid);

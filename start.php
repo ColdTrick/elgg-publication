@@ -23,6 +23,9 @@ function publication_init() {
 	elgg_extend_view('js/elgg', 'js/publications/site');
 	elgg_extend_view('css/elgg', 'css/publications/site');
 	
+	// ajax views
+	elgg_register_ajax_view('publications/publication/custom_fields');
+	
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('publications', 'publication_page_handler');
 	
@@ -45,6 +48,17 @@ function publication_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'publication_register_menu_page');
 // 	elgg_register_plugin_hook_handler('action','register','publication_custom_register');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'publication_write_permission_check');
+	
+	// custom publication types
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeBook']);
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticleBook']);
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticleJournal']);
+	
+	elgg_register_plugin_hook_handler('input_validation:book', 'publications', ['\ColdTrick\Publications\Types', 'validateInputBook']);
+	elgg_register_plugin_hook_handler('input_validation:article_book', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticleBook']);
+	elgg_register_plugin_hook_handler('input_validation:article_journal', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticleJournal']);
+	
+	elgg_register_event_handler('save:data', 'publications', ['\ColdTrick\Publications\Types', 'saveArticleBookAuthors']);
 	
 	// register event handlers
 	elgg_register_event_handler('login', 'user', 'publication_login_check');

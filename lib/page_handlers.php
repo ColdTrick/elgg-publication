@@ -21,9 +21,6 @@ function publication_page_handler($page) {
 		case "add":
 			include(dirname(dirname(__FILE__)) . "/pages/edit.php");
 			break;
-		case "custom_fields":
-			include(dirname(dirname(__FILE__)) . "/pages/custom_fields.php");
-			break;
 		case "download_attachment":
 			if (isset($page[1])) {
 				set_input("guid", $page[1]);

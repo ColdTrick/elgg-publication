@@ -150,4 +150,5 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 
 To view the publication click the link:
 %s",
+	
 ];

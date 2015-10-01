@@ -121,5 +121,9 @@ function publications_bibtex_enabled() {
  */
 function publications_get_types() {
 	
-	return ['book', 'article_book', 'article_journal'];
+	$params = [
+		'user' => elgg_get_logged_in_user_entity(),
+	];
+	
+	return elgg_trigger_plugin_hook('register:types', 'publications', $params, []);
 }

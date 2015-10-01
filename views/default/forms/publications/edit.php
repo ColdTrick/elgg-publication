@@ -9,6 +9,8 @@
 
 $entity = elgg_extract("entity", $vars);
 
+elgg_require_js('elgg/spinner');
+
 if ($entity) {
 	$guid = $entity->getGUID();
 	
@@ -49,7 +51,7 @@ if ($entity) {
 	$guid = '';
 	
 	$title = "";
-	$type = "book";
+	$type = "";
 	$abstract = "";
 	$authors = [];
 	$attachment_guid = '';
@@ -64,9 +66,6 @@ if ($entity) {
 }
 
 $types = publications_get_types();
-if (!in_array($type, $types)) {
-	$type = "article_book";
-}
 
 // set the required variables
 $type_options = [];
@@ -81,20 +80,22 @@ $type_label = elgg_echo('publication:type');
 $type_dropdown = elgg_view("input/select", [
 	'name' => 'type',
 	'value' => $type,
-	'onchange' => "elgg.publications.draw_custom_fields($(this).val(),'$guid')",
-	'options_values' => $type_options
+	'options_values' => $type_options,
+	'id' => 'publication-type-selector'
 ]);
 
 $title_label = elgg_echo('title');
 $title_textbox = elgg_view('input/text', [
 	'name' => 'publicationtitle',
-	'value' => $title
+	'value' => $title,
+	'required' => true,
 ]);
 
 $year_label = elgg_echo('publication:year');
 $year_input = elgg_view('input/text', [
 	'name' => 'year',
-	'value' => $year
+	'value' => $year,
+	'required' => true,
 ]);
 
 $abstract_label = elgg_echo('publication:abstract');
@@ -212,9 +213,6 @@ $form_body = <<<EOT
 			<label>$type_label</label><br/>
 			$type_dropdown
 		</div>
-		<script type='text/javascript'>
-			elgg.publications.draw_custom_fields('$type','$guid');
-		</script>
 		<div id='pub_custom_fields'></div>
 		<div>
 			<label>$keywords_label</label><br/>
@@ -240,6 +238,9 @@ $form_body = <<<EOT
 			$entity_hidden
 			$submit_input
 		</div>
+		<script type='text/javascript'>
+			elgg.publications.change_type();
+		</script>
 EOT;
 
 echo $form_body;
