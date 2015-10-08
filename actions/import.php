@@ -6,88 +6,152 @@ if (!publications_bibtex_enabled()) {
 }
 
 // Get input data
-$data = get_uploaded_file("bibtex_import");
+$data = get_uploaded_file('bibtex_import');
 if (empty($data)) {
-	register_error(elgg_echo("publication:bibtex:fileerror"));
+	register_error(elgg_echo('publication:bibtex:fileerror'));
 	forward(REFERER);
 }
 
-// parse BibTex file
-$parse = new PARSEENTRIES();
-$parse->loadBibtexString($data);
-$parse->extractEntries();
+$forward_to_edit = (bool) get_input('forward_to_edit', 1);
 
-list($preamble, $strings, $entries, $undefinedStrings) = $parse->returnArrays();
-
+$entries = \AudioLabs\BibtexParser\BibtexParser::parse_string($data);
 if (empty($entries)) {
 	register_error(elgg_echo('publication:bibtex:blank'));
 	forward(REFERER);
 }
 
-foreach ($entries as $entry) {
-	$found_name = false;
-	$authors = [];
-	$creator = new PARSECREATORS();
-	$creatorArray = $creator->parse($entry['author']);
-	foreach ($creatorArray as $author) {
-		$name = "";
-		foreach ($author as $a) {
-			$name .= trim($a) . " ";
-		}
-		$name = trim($name);
-		$authors[] = $name;
-	}
-	$authors = implode(',',$authors);
+$dbprefix = elgg_get_config('dbprefix');
+$exists_options = [
+	'type' => 'object',
+	'subtype' => Publication::SUBTYPE,
+	'count' => true,
+	'joins' => ["JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid"],
+];
 
-	//get all current publication and check for duplication
-	$options = [
-		'types' => 'object',
-		'subtypes' => Publication::SUBTYPE,
-		'limit'=> false
-	];
-	$all_pubs = new ElggBatch('elgg_get_entities', $options);
-	foreach ($all_pubs as $cpubs) {
-		if ($cpubs->title == $entry['title']) {
-			$found_name = true;
-			break;
-		}
+$entity_attributes = [
+	'guid',
+	'type',
+	'subtype',
+	'owner_guid',
+	'site_guid',
+	'container_guid',
+	'access_id',
+	'time_created',
+	'time_updated',
+	'last_action',
+	'enabled',
+	'title',
+	'description',
+];
+$processed_entry_fields = [
+	'raw',
+	'type',
+	'title',
+	'reference',
+	'lines',
+	'pages',
+	'author',
+	'journal',
+];
+
+// a bibtex file can have multiple entries
+$count = 0;
+$duplicates = 0;
+$forward_url = REFERER;
+foreach ($entries as $entry) {
+	
+	$type = elgg_extract('type', $entry);
+	
+	// check if publication already exists in the system
+	$title = elgg_extract('title', $entry);
+	if (empty($title)) {
+		// no title, can't continue
+		continue;
 	}
 	
-	if (empty($found_name) && !empty($entry['title'])) {
-		$publication = new ElggObject();
-		$publication->subtype = "publication";
-		$publication->owner_guid = elgg_get_logged_in_user_guid();
-		$publication->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
-		$publication->access_id = ACCESS_LOGGED_IN;
-		$publication->title = $entry['title'];
-		$publication->description = $entry['abstract'];
-		$publication->save();
-		$publication->pubtype = strtoupper($entry['bibtexEntryType']);
-		
-		$tagarray = string_to_tag_array($entry['keywords']);
-		if (is_array($tagarray)) {
-			$publication->tags = $tagarray;
-		}
-		
-		$publication->authors = $authors;
-		$skip_keys = [
-			'author',
-			'keywords',
-			'type',
-			'abstract',
-			'title',
-			'bibtexEntryType',
-		];
-		
-		foreach ($entry as $key => $value) {
-			if (in_array($key, $skip_keys)) {
-				continue;
-			}
-			
-			$publication->$key = $value;
-		}
+	$exists_options['wheres'] = ['oe.title = "' . sanitize_string($title) . '"'];
+	if (elgg_get_entities($exists_options)) {
+		// this item already exitst
+		$duplicates++;
+		continue;
 	}
+	
+	$publication = new Publication();
+	$publication->access_id = ACCESS_LOGGED_IN;
+	$publication->title = $title;
+	$publication->description = elgg_extract('reference', $entry);
+	if (!$publication->save()) {
+		// unable to save
+		continue;
+	}
+	
+	// set forwarding
+	$count++;
+	if ($forward_to_edit) {
+		$forward_url = "publications/edit/{$publication->getGUID()}";
+	} else {
+		$forward_url = $publication->getURL();
+	}
+	
+	// start handling some custom fields
+	$pages = elgg_extract('pages', $entry);
+	if (is_array($pages)) {
+		$publication->page_from = elgg_extract('start', $pages);
+		$publication->page_to = elgg_extract('end', $pages);
+	} else {
+		$publication->page_from = $pages;
+	}
+	
+	$authors = elgg_extract('author', $entry);
+	if (!empty($authors)) {
+		$new_authors = [];
+		foreach ($authors as $author) {
+			$new_authors[] = str_ireplace(',', '', $author);
+		}
+		
+		$publication->authors = implode(',', $new_authors);
+	}
+	
+	$journal = elgg_extract('journal', $entry);
+	if (!empty($journal)) {
+		$publication->journaltitle = $journal;
+	}
+	
+	// handle all other fields from the bibtex file
+	foreach ($entry as $field_name => $field_value) {
+		
+		if (in_array($field_name, $entity_attributes)) {
+			// reserved entity attributes
+			continue;
+		}
+		
+		if (in_array($field_name, $processed_entry_fields)) {
+			// already handled this custom
+			continue;
+		}
+		
+		$publication->$field_name = $field_value;
+	}
+	
+	$publication->save();
 }
 
-system_message("BibTex imported sucessfully");
-forward("publications/all");
+if (empty($count) && empty($duplicates)) {
+	// no imports, no duplicates
+	register_error(elgg_echo('publication:action:import:error:none'));
+	forward(REFERER);
+} elseif ($count === 1) {
+	// single imported
+	system_message(elgg_echo('publication:action:import:success:single'));
+	forward($forward_url);
+} else {
+	// multiple imports
+	if (!empty($count) && !empty($duplicates)) {
+		system_message(elgg_echo('publication:action:import:success:multiple_duplicates', [$count, $duplicates]));
+	} elseif (!empty($count)) {
+		system_message(elgg_echo('publication:action:import:success:multiple', [$count]));
+	} elseif (!empty($duplicates)) {
+		system_message(elgg_echo('publication:action:import:success:duplicates', [$duplicates]));
+	}
+	forward('publications/all');
+}

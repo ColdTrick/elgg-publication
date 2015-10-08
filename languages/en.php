@@ -151,4 +151,12 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 To view the publication click the link:
 %s",
 	
+	'publication:import:forward' => "After uploading go to the edit page",
+	'publication:import:forward:description' => "Only works if a single publication was imported",
+	
+	'publication:action:import:error:none' => "No publications where imported",
+	'publication:action:import:success:single' => "The publication was imported",
+	'publication:action:import:success:multiple_duplicates' => "Imported %s publications and found %s publications already in the system",
+	'publication:action:import:success:multiple' => "Imported %s publications",
+	'publication:action:import:success:duplicates' => "No publications imported and found %s publications already in the system",
 ];

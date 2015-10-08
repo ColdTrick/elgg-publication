@@ -12,10 +12,10 @@ $title = elgg_echo('publication:import');
 elgg_push_breadcrumb($title);
 
 // build page
-$page_data = elgg_view_layout("content", [
-	"title" => $title,
-	"content" => elgg_view_form("publications/import"),
-	"filter" => false
+$page_data = elgg_view_layout('content', [
+	'title' => $title,
+	'content' => elgg_view_form('publications/import', ['enctype' => 'multipart/form-data']),
+	'filter' => false
 ]);
 
 // display the page

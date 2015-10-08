@@ -6,7 +6,11 @@
 }
 
 .publications-authors_autocomplete_results_result {
-	cursor:move;
+	cursor: move;
+}
+
+.publications-authors_autocomplete_results_result .elgg-icon {
+	cursor: pointer;
 }
 
 #publications-authors_autocomplete_results.ui-sortable {

@@ -18,14 +18,14 @@ $content = elgg_view_entity($entity);
 $content .= elgg_view_comments($entity);
 
 if (publications_bibtex_enabled()) {
-	elgg_register_menu_item("title", [
-		"name" => "bibtex_export",
-		"text" => elgg_echo("publication:export"),
-		"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
-		"is_action" => true,
-		"class" => "elgg-button elgg-button-action",
-		"confirm" => elgg_echo("publication:export:confirm:single")
-	]);
+// 	elgg_register_menu_item("title", [
+// 		"name" => "bibtex_export",
+// 		"text" => elgg_echo("publication:export"),
+// 		"href" => "action/publications/export?type=single&guid=" . $entity->getGUID(),
+// 		"is_action" => true,
+// 		"class" => "elgg-button elgg-button-action",
+// 		"confirm" => elgg_echo("publication:export:confirm:single")
+// 	]);
 }
 
 $page_owner_entity = elgg_get_page_owner_entity();

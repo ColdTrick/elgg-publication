@@ -40,7 +40,7 @@ $destination = $id . "_autocomplete_results";
 					echo $v;
 				}
 
-				echo "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+				echo elgg_view_icon('delete-alt', ['class' => 'mlm']);
 				echo "</div>";
 			}
 
