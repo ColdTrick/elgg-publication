@@ -8,7 +8,7 @@ elgg.publications.draw_custom_fields = function(type, guid) {
 	require(['elgg/spinner'], function(spinner) {
 
 		spinner.start();
-		console.log(guid);
+		
 		elgg.get('ajax/view/publications/publication/custom_fields', {
 			data: {
 				type: type,
@@ -24,9 +24,9 @@ elgg.publications.draw_custom_fields = function(type, guid) {
 
 elgg.publications.change_type = function () {
 	
-	var val = $('#publication-type-selector').val();
+	var val = $('#publications-type-selector').val();
 	var guid = $('.elgg-form-publications-edit input[name="guid"]').val();
-	console.log(guid);
+	
 	elgg.publications.draw_custom_fields(val, guid);
 };
 

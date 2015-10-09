@@ -11,236 +11,114 @@ $entity = elgg_extract("entity", $vars);
 
 elgg_require_js('elgg/spinner');
 
-if ($entity) {
-	$guid = $entity->getGUID();
+// default field config
+$field_config = [
+	'title' => [],
+	'author' => [
+		'required' => true,
+	],
+	'year' => [],
+	'note' => [],
+	'attachment' => [],
+	'type_selector' => [],
+];
+
+if ($entity instanceof Publication) {
+	$access_id = (int) $entity->access_id;
+	$tags = $entity->tags;
 	
-	$type = $entity->pubtype;
-	$title = $entity->title;
-
-	$abstract = $entity->description;
-	if (empty($abstract)) {
-		$abstract = "";
-	}
-
-	$access_id = $entity->access_id;
-	$highlight = 'default';
-	$authors = $entity->authors;
-	$authors = explode(',',$authors);
-	$attachment_guid = $entity->attachment;
-	$year = $entity->year;
-	$keywords = $entity->tags;
-
 	$uri = $entity->uri;
-	$translation = $entity->translation;
-	$promotion = $entity->promotion;
-
-	if ($attachment_guid) {
-		$attachment_entity = get_entity($attachment_guid);
-		if ($attachment_entity) {
-			$attachment_file = $attachment_entity->title;
-		} else {
-			$attachment_guid = '';
-			$attachment_file = '';
-		}
-	} else {
-		$attachment_file = '';
-	}
-
+	$translation = (int) $entity->translation;
+	$promotion = (int) $entity->promotion;
+	
 } else {
 	$access_id = null;
-	$guid = '';
+	$tags = '';
 	
-	$title = "";
-	$type = "";
-	$abstract = "";
-	$authors = [];
-	$attachment_guid = '';
-	$attachment_file = '';
-	$year = '';
-	$keywords = '';
-
 	$uri = '';
-	$translation = '';
-
-	$promotion = '';
+	$translation = 0;
+	$promotion = 0;
 }
 
-$types = publications_get_types();
-
-// set the required variables
-$type_options = [];
-foreach ($types as $type_option) {
-	$label = $type_option;
-	if (elgg_language_key_exists("publications:type:{$type_option}")) {
-		$label = elgg_echo("publications:type:{$type_option}");
-	}
-	$type_options[$type_option] = $label;
-}
-$type_label = elgg_echo('publication:type');
-$type_dropdown = elgg_view("input/select", [
-	'name' => 'type',
-	'value' => $type,
-	'options_values' => $type_options,
-	'id' => 'publication-type-selector'
-]);
-
-$title_label = elgg_echo('title');
-$title_textbox = elgg_view('input/text', [
-	'name' => 'publicationtitle',
-	'value' => $title,
-	'required' => true,
-]);
-
-$year_label = elgg_echo('publication:year');
-$year_input = elgg_view('input/text', [
-	'name' => 'year',
-	'value' => $year,
-	'required' => true,
-]);
-
-$abstract_label = elgg_echo('publication:abstract');
-$abstract_textarea = elgg_view('input/longtext', [
-	'name' => 'publicationabstract',
-	'value' => $abstract
-]);
-
-$submit_input = elgg_view('input/submit', [
-	'name' => 'submit',
-	'value' => elgg_echo('publish')
-]);
-
-$authors_input = elgg_view('publications/authorentry', [
-	'authors' => $authors
-]);
-
-if (strtolower(elgg_get_plugin_setting('toggleattachment','publications')) !== 'off') {
-	$attachment_title = elgg_echo('publication:attachment:title');
-	$attachment_name = elgg_view('input/text', [
-		'id' => 'attachment_name',
-		'name' => 'attachment_name',
-		'value' => $attachment_file,
-		'disabled' => true
-	]);
-	$attachment_hidden = elgg_view('input/hidden', [
-		'id'=>'attachment_guid',
-		'name' => 'attachment_guid',
-		'value' => $attachment_guid
-	]);
+// default fields
+foreach ($field_config as $input_type => $settings) {
+	$settings = $settings + $vars;
+	echo elgg_view("input/publications/{$input_type}", $settings);
 }
 
-$entity_hidden = '';
-if ($entity) {
-	$entity_hidden .= elgg_view('input/hidden', [
-		'name' => 'guid',
-		'value' => $guid
-	]);
-}
-
-$entity_hidden .= elgg_view('input/hidden', [
-	'name' => 'container_guid',
-	'value' => elgg_get_page_owner_entity()->getGUID()
-]);
-
-$access = "<label>" . elgg_echo("access") . "</label><br />";
-$access .= elgg_view("input/access", [
-	"name" => "access_id",
-	"value" => $access_id
-]);
-
-$required_text = elgg_echo("publications:forms:required");
-$required_hint = elgg_echo("publications:forms:required:hint");
-$authors_label = elgg_echo('publication:forms:authors');
-
-$attachment_label = elgg_echo("publication:attachment");
-$attachment_input = elgg_view("input/file", [
-	"name" => "attachment"
-]);
-$attachment_input .= "<div class='elgg-subtext'>" . elgg_echo("publication:attachment:instruction") . "</div>";
-
-//common optional fields across all types
-
-$keywords_label = elgg_echo('publication:keywords');
-
+// additional (non-BibTex) fields
+// tags
+$keywords_label = elgg_format_element('label' , ['for' => 'publications-tags'], elgg_echo('publication:keywords'));
 $keywords_input = elgg_view('input/tags', [
-	'name' => 'publicationkeywords',
-	'value' => $keywords
+	'id' => 'publications-tags',
+	'name' => 'tags',
+	'value' => $tags,
 ]);
 $keywords_input.= "<div class='elgg-subtext'>" . elgg_echo("publication:keywords:instruction") . "</div>";
+echo elgg_format_element('div', [], $keywords_label . $keywords_input);
 
-
-$uri_label = elgg_echo('publication:uri');
+// uri
+$uri_label = elgg_format_element('label', ['for' => 'publications-uri'], elgg_echo('publication:uri'));
 $uri_input = elgg_view('input/text', [
-	'name' => 'uri',
-	'value' => $uri
+	'id' => 'publications-uri',
+	'name' => 'data[uri]',
+	'value' => $uri,
 ]);
+echo elgg_format_element('div', [], $uri_label . $uri_input);
 
-$translation_label = elgg_echo('publication:translation');
+// translation
 $translation_input = elgg_view('input/checkbox', [
-	'name' => 'translation',
-	'value' => '1',
-	'checked' => ($translation == true)
+	'name' => 'data[translation]',
+	'value' => 1,
+	'checked' => ($translation == true),
+	'label' => elgg_echo('publication:translation'),
 ]);
+$translation_input .= '<br />';
 
-$promotion_label = elgg_echo('publication:promotion');
+// promotion
 $promotion_input = elgg_view('input/checkbox', [
-	'name' => 'promotion',
-	'value' => '1',
-	'checked' => ($promotion == true)
+	'name' => 'data[promotion]',
+	'value' => 1,
+	'checked' => ($promotion == true),
+	'label' => elgg_echo('publication:promotion'),
 ]);
+echo elgg_format_element('div', [], $translation_input . $promotion_input);
 
-$form_body = <<<EOT
-		<div>
-			<label>$title_label<span class='elgg-quiet mls'>$required_text</span></label><br />
-            $title_textbox
-		</div>
-		<div>
-			<label>$authors_label<span class='elgg-quiet mls'>$required_text</span></label>
-			$authors_input
-		</div>
-		<div>
-			<label>$year_label<span class='elgg-quiet mls'>$required_text</span></label><br/>
-			$year_input
-		</div>
-		<div>
-			<label>$abstract_label</label><br />
-            $abstract_textarea
-		</div>
-		<div>
-			<label>$attachment_label</label><br />
-            $attachment_input
-		</div>
-		<div>
-			<label>$type_label</label><br/>
-			$type_dropdown
-		</div>
-		<div id='pub_custom_fields'></div>
-		<div>
-			<label>$keywords_label</label><br/>
-			$keywords_input
-		</div>
-		<div>
-			<label>$uri_label</label><br/>
-			$uri_input
-		</div>
-		<div>
-			$translation_input <label>$translation_label</label>
-		</div>
-		<div>
-			$promotion_input <label>$promotion_label</label>
-		</div>
-		<div>
-			$access
-		</div>
-		<div class="hint">
-			$required_hint
-		</div>
-		<div>
-			$entity_hidden
-			$submit_input
-		</div>
-		<script type='text/javascript'>
-			elgg.publications.change_type();
-		</script>
-EOT;
+// access
+$access_label = elgg_format_element('label', ['for' => 'publications-access'], elgg_echo("access"));
+$access_input = '<br />';
+$access_input .= elgg_view('input/access', [
+	'id' => 'publications-access',
+	'name' => 'access_id',
+	'value' => $access_id,
+	'type' => 'object',
+	'subtype' => Publication::SUBTYPE,
+	'entity' => $entity,
+]);
+echo elgg_format_element('div', [], $access_label . $access_input);
 
-echo $form_body;
+// required hint
+$required_hint = elgg_echo("publications:forms:required:hint");
+echo elgg_format_element('div', ['class' => 'hint'], $required_hint);
+
+// footer
+$footer = elgg_view('input/hidden', [
+	'name' => 'container_guid',
+	'value' => elgg_get_page_owner_guid(),
+]);
+if ($entity instanceof Publication) {
+	$footer .= elgg_view('input/hidden', [
+		'name' => 'guid',
+		'value' => $entity->getGUID(),
+	]);
+}
+$footer .= elgg_view('input/submit', [
+	'name' => 'submit',
+	'value' => elgg_echo('publish'),
+]);
+echo elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
+
+?>
+<script type='text/javascript'>
+	elgg.publications.change_type();
+</script>

@@ -1,57 +1,83 @@
 <?php
+/**
+ * Show an author input field
+ *
+ * @uses $vars['name'] (optional) the name for the input
+ * @uses $vars['id'] (optional) the ID for the javascript
+ * @uses $vars['value'] (optional) the current values
+ * @uses $vars['entity'] when editing an entity the values will be auto extracted
+ */
 
-$name = elgg_extract("name", $vars); // input name of the selected user
-$id = elgg_extract("id", $vars);
-$minChars = elgg_extract("minChars", $vars, 3);
 
-$value = elgg_extract("value", $vars);
+$entity = elgg_extract('entity', $vars);
 
-$destination = $id . "_autocomplete_results";
+$default_value = [elgg_get_logged_in_user_guid()];
+if ($entity instanceof Publication) {
+	$default_value = explode(',', $entity->authors);
+}
 
-?>
-<input type="text" id="<?php echo $id; ?>_autocomplete" class="elgg-input elgg-input-autocomplete" />
-<div class="elgg-subtext mbs"><?php echo elgg_echo("publications:form:author:input:info"); ?></div>
-<div id="<?php echo $destination; ?>">
-	<?php
-		if (!empty($value)) {
-			if (!is_array($value)) {
-				$value = [$value];
+$name = elgg_extract('name', $vars, 'authors'); // input name of the selected user
+$id = elgg_extract('id', $vars, 'publications-authors');
+$minChars = elgg_extract('minChars', $vars, 3);
+
+$value = elgg_extract('value', $vars, $default_value);
+
+$destination = "{$id}_autocomplete_results";
+
+// build form elements
+$label_text = elgg_extract('label', $vars, elgg_echo('publication:forms:authors'));
+if (elgg_extract('required', $vars, false)) {
+	$label_text .= elgg_format_element('span', ['class' => 'elgg-quiet mls'], elgg_echo('publications:forms:required'));
+}
+$label = elgg_format_element('label', ['for' => "{$id}_autocomplete"], $label_text);
+
+$input = elgg_view('input/text', [
+	'id' => "{$id}_autocomplete",
+	'class' => 'elgg-input elgg-input-autocomplete',
+]);
+
+$info = elgg_format_element('div', ['class' => 'elgg-subtext mbs'], elgg_echo('publications:form:author:input:info'));
+
+$current_values = '';
+if (!empty($value)) {
+	if (!is_array($value)) {
+		$value = [$value];
+	}
+
+	// make sure we can see all users
+	$hidden = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
+
+	foreach ($value as $v) {
+		$current_value = '';
+		
+		if (is_numeric($v)) {
+			// existing user
+			if ($user = get_user($v)) {
+				$current_value .= elgg_view('input/hidden', ['name' => "{$name}[]", 'value' => $v]);
+				$current_value .= elgg_view('input/hidden', ['name' => "{$name}_order[]", 'value' => $v]);
+				$current_value .= elgg_view_entity_icon($user, 'tiny');
+				$current_value .= elgg_format_element('span', ['class' => 'author'], $user->name);
 			}
-
-			// make sure we can see all users
-			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
-
-			foreach ($value as $v) {
-				echo "<div class='" . $destination . "_result'>";
-
-				if (is_numeric($v)) {
-					// existing user
-					if ($user = get_user($v)) {
-						echo elgg_view("input/hidden", ["name" => $name . "[]", "value" => $v]);
-						echo elgg_view("input/hidden", ["name" => $name . "_order[]", "value" => $v]);
-						echo elgg_view_entity_icon($user, "tiny");
-						echo '<span class="author">' . $user->name . '</span>';
-					}
-				} else {
-					// free text user
-					echo elgg_view("input/hidden", ["name" => $name . "_text[]", "value" => $v]);
-					echo elgg_view("input/hidden", ["name" => $name . "_order[]", "value" => $v]);
-					echo $v;
-				}
-
-				echo elgg_view_icon('delete-alt', ['class' => 'mlm']);
-				echo "</div>";
-			}
-
-			// restore hidden settings
-			access_show_hidden_entities($hidden);
+		} else {
+			// free text user
+			$current_value .= elgg_view('input/hidden', ['name' => "{$name}_text[]", 'value' => $v]);
+			$current_value .= elgg_view('input/hidden', ['name' => "{$name}_order[]", 'value' => $v]);
+			$current_value .= $v;
 		}
-	?>
-</div>
 
-<div class="clearfloat"></div>
+		$current_value .= elgg_view_icon('delete-alt', ['class' => 'mlm']);
+		// add to list
+		$current_values .= elgg_format_element('div', ['class' => "{$destination}_result"], $current_value);
+	}
 
+	// restore hidden settings
+	access_show_hidden_entities($hidden);
+}
+$result_wrapper = elgg_format_element('div', ['id' => $destination], $current_values);
+
+echo elgg_format_element('div', [], $label . $input . $info . $result_wrapper);
+?>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -147,7 +173,11 @@ $destination = $id . "_autocomplete_results";
 					autocompleteActive = false;
 					return false;
 				},
-				autoFocus: false
+				autoFocus: false,
+				messages: {
+			        noResults: '',
+			        results: function() {}
+			    }
 			}).data( "ui-autocomplete" )._renderItem = function( ul, item ) {
 				var list_body = "";
 				list_body += item.content;

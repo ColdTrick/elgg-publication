@@ -33,7 +33,7 @@ echo elgg_format_element('div', [], $book_title_input);
 
 // book editors
 $book_editors_input = elgg_format_element('label', ['for' => 'publications-book-editors'], elgg_echo('publication:book_editors') . $required);
-$book_editors_input .= elgg_view('input/author_autocomplete', [
+$book_editors_input .= elgg_view('input/publications/author', [
 	'name' => 'book_editors',
 	'value' => $book_editors,
 	'id' => 'publications-book-editors'

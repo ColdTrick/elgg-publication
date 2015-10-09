@@ -10,21 +10,18 @@
 $guid = (int) get_input('guid');
 
 $title = get_input('publicationtitle');
-$abstract = get_input('publicationabstract');
 $access = (int) get_input('access_id');
 
-$keywords = get_input('publicationkeywords');
+$tags = get_input('tags');
+$tags = string_to_tag_array($tags);
 
 $author_guids = get_input('authors');
 $authors_order = get_input('authors_order');
 
 $data = (array) get_input('data', []);
 
-$uri = get_input('uri');
 $type = get_input('type');
 $year = get_input('year');
-$translation = get_input('translation');
-$promotion = get_input('promotion');
 
 if (empty($title) || empty($type) || empty($authors_order) || empty($year)) {
 	register_error(elgg_echo('publication:blank'));
@@ -63,7 +60,6 @@ if (!empty($guid)) {
 	$publication->container_guid = (int) get_input('container_guid', elgg_get_logged_in_user_guid());
 	$publication->access_id = $access;
 	$publication->title = $title;
-	$publication->description = $abstract;
 	
 	if (!$publication->save()) {
 		register_error(elgg_echo('publication:error'));
@@ -71,22 +67,16 @@ if (!empty($guid)) {
 	}
 }
 
-$tagarray = string_to_tag_array($keywords);
-
 $publication->access_id = $access;
 $publication->title = $title;
-$publication->description = $abstract;
 if (!$publication->save()) {
 	register_error(elgg_echo('publication:error'));
 	forward(REFERER);
 }
 
-$publication->tags = $tagarray;
-$publication->uri = $uri;
+$publication->tags = $tags;
 $publication->year = $year;
 $publication->pubtype = $type;
-$publication->translation = $translation;
-$publication->promotion = $promotion;
 
 $publication->deleteRelationships('author');
 
