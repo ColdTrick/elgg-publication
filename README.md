@@ -1,5 +1,10 @@
 # Publications
 
+[![Build Status](https://scrutinizer-ci.com/g/ColdTrick/elgg-publication/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/elgg-publication/build-status/master)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ColdTrick/elgg-publication/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ColdTrick/elgg-publication/?branch=master)
+[![Latest Stable Version](https://poser.pugx.org/coldtrick/publications/v/stable.svg)](https://packagist.org/packages/coldtrick/publications)
+[![License](https://poser.pugx.org/coldtrick/publications/license.svg)](https://packagist.org/packages/coldtrick/publications)
+
 This plugin provides functionality for users to share their publications.
 
 Upgraded for 1.8 by [ColdTrick IT Solutions][coldtrick_url]
