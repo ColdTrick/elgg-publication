@@ -10,13 +10,13 @@
 elgg_register_title_button();
 
 if (publications_bibtex_enabled()) {
-// 	elgg_register_menu_item("title", [
-// 		"name" => "bibtex_export",
-// 		"text" => elgg_echo("publication:export"),
-// 		"href" => "action/publications/export?type=all",
-// 		"is_action" => true,
-// 		"class" => "elgg-button elgg-button-action",
-// 		"confirm" => elgg_echo("publication:export:confirm:all")
+// 	elgg_register_menu_item('title', [
+// 		'name' => 'bibtex_export',
+// 		'text' => elgg_echo('publication:export'),
+// 		'href' => 'action/publications/export?type=all',
+// 		'is_action' => true,
+// 		'class' => 'elgg-button elgg-button-action',
+// 		'confirm' => elgg_echo('publication:export:confirm:all')
 // 	]);
 }
 
@@ -24,14 +24,14 @@ $title = elgg_echo('publication:everyone');
 $listing = elgg_list_entities([
 	'type' => 'object',
 	'subtype' => Publication::SUBTYPE,
-	'no_results' => elgg_echo("notfound"),
+	'no_results' => elgg_echo('notfound'),
 ]);
 
 // build page
-$page_data = elgg_view_layout("content", [
-	"title" => $title,
-	"content" => $listing,
-	"filter_context" => "all"
+$page_data = elgg_view_layout('content', [
+	'title' => $title,
+	'content' => $listing,
+	'filter_context' => 'all'
 ]);
 
 // display the page
