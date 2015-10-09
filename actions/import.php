@@ -64,6 +64,7 @@ foreach ($entries as $entry) {
 	
 	// check if publication already exists in the system
 	$title = elgg_extract('title', $entry);
+	$title = \AudioLabs\BibtexParser\BibtexParser::cleanup($title);
 	if (empty($title)) {
 		// no title, can't continue
 		continue;
@@ -95,6 +96,7 @@ foreach ($entries as $entry) {
 	
 	// start handling some custom fields
 	$pages = elgg_extract('pages', $entry);
+	$pages = \AudioLabs\BibtexParser\BibtexParser::cleanup($pages);
 	if (is_array($pages)) {
 		$publication->page_from = elgg_extract('start', $pages);
 		$publication->page_to = elgg_extract('end', $pages);
@@ -103,16 +105,18 @@ foreach ($entries as $entry) {
 	}
 	
 	$authors = elgg_extract('author', $entry);
+	$authors = \AudioLabs\BibtexParser\BibtexParser::cleanup($authors);
 	if (!empty($authors)) {
 		$new_authors = [];
 		foreach ($authors as $author) {
-			$new_authors[] = str_ireplace(',', '', $author);
+			$new_authors[] = trim(str_ireplace(',', '', $author), '"');
 		}
 		
 		$publication->authors = implode(',', $new_authors);
 	}
 	
 	$journal = elgg_extract('journal', $entry);
+	$journal = \AudioLabs\BibtexParser\BibtexParser::cleanup($journal);
 	if (!empty($journal)) {
 		$publication->journaltitle = $journal;
 	}
@@ -130,6 +134,7 @@ foreach ($entries as $entry) {
 			continue;
 		}
 		
+		$field_value = \AudioLabs\BibtexParser\BibtexParser::cleanup($field_value);
 		$publication->$field_name = $field_value;
 	}
 	
