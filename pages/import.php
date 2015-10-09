@@ -7,6 +7,8 @@ if (!publications_bibtex_enabled()) {
 	forward(REFERER);
 }
 
+elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+
 $title = elgg_echo('publication:import');
 
 elgg_push_breadcrumb($title);
