@@ -44,6 +44,7 @@ class Upgrade {
 			],
 		];
 		$entities = new \ElggBatch('elgg_get_entities_from_metadata', $options);
+		$entities->setIncrementOffset(false);
 		foreach ($entities as $entity) {
 			// convert article_book to inbook
 			$entity->pubtype = 'inbook';
@@ -73,6 +74,7 @@ class Upgrade {
 			],
 		];
 		$entities = new \ElggBatch('elgg_get_entities_from_metadata', $options);
+		$entities->setIncrementOffset(false);
 		foreach ($entities as $entity) {
 			// convert article_journal to article
 			$entity->pubtype = 'article';
