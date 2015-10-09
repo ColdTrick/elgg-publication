@@ -31,9 +31,9 @@ class Types {
 	 *
 	 * @return void|array
 	 */
-	public static function registerTypeArticleBook($hook, $type, $return_value, $params) {
+	public static function registerTypeInBook($hook, $type, $return_value, $params) {
 		
-		$return_value[] = 'article_book';
+		$return_value[] = 'inbook';
 		
 		return $return_value;
 	}
@@ -48,9 +48,9 @@ class Types {
 	 *
 	 * @return void|array
 	 */
-	public static function registerTypeArticleJournal($hook, $type, $return_value, $params) {
+	public static function registerTypeArticle($hook, $type, $return_value, $params) {
 		
-		$return_value[] = 'article_journal';
+		$return_value[] = 'article';
 		
 		return $return_value;
 	}
@@ -95,7 +95,7 @@ class Types {
 	 *
 	 * @return void|false
 	 */
-	public static function validateInputArticleBook($hook, $type, $return_value, $params) {
+	public static function validateInputInBook($hook, $type, $return_value, $params) {
 		
 		$data = (array) get_input('data', []);
 		
@@ -136,7 +136,7 @@ class Types {
 	 *
 	 * @return void|false
 	 */
-	public static function validateInputArticleJournal($hook, $type, $return_value, $params) {
+	public static function validateInputArticle($hook, $type, $return_value, $params) {
 		
 		$data = (array) get_input('data', []);
 		
@@ -176,7 +176,7 @@ class Types {
 		$entity->deleteRelationships('book_editor');
 		
 		$type = get_input('type');
-		if ($type !== 'article_book') {
+		if ($type !== 'inbook') {
 			return;
 		}
 		

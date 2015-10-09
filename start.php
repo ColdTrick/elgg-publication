@@ -50,18 +50,20 @@ function publication_init() {
 	
 	// custom publication types
 	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeBook']);
-	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticleBook']);
-	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticleJournal']);
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeInBook']);
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticle']);
 	
 	elgg_register_plugin_hook_handler('input_validation:book', 'publications', ['\ColdTrick\Publications\Types', 'validateInputBook']);
-	elgg_register_plugin_hook_handler('input_validation:article_book', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticleBook']);
-	elgg_register_plugin_hook_handler('input_validation:article_journal', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticleJournal']);
+	elgg_register_plugin_hook_handler('input_validation:inbook', 'publications', ['\ColdTrick\Publications\Types', 'validateInputInBook']);
+	elgg_register_plugin_hook_handler('input_validation:article', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticle']);
 	
 	elgg_register_event_handler('save:data', 'publications', ['\ColdTrick\Publications\Types', 'saveArticleBookAuthors']);
 	
 	// register event handlers
 	elgg_register_event_handler('login', 'user', 'publication_login_check');
-	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'upgrade']);
+	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'setClassHandler']);
+	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'updateArticleBook']);
+	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'updateArticleJournal']);
 	
 	// Make sure the publication initialisation function is called on initialisation
 	elgg_register_event_handler('pagesetup', 'system', 'publication_pagesetup');

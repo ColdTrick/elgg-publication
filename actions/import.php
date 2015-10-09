@@ -61,6 +61,7 @@ $forward_url = REFERER;
 foreach ($entries as $entry) {
 	
 	$type = elgg_extract('type', $entry);
+	$type = \AudioLabs\BibtexParser\BibtexParser::cleanup($type);
 	
 	// check if publication already exists in the system
 	$title = elgg_extract('title', $entry);
@@ -81,6 +82,7 @@ foreach ($entries as $entry) {
 	$publication->access_id = ACCESS_LOGGED_IN;
 	$publication->title = $title;
 	$publication->description = elgg_extract('reference', $entry);
+	$publication->pubtype = $type;
 	if (!$publication->save()) {
 		// unable to save
 		continue;
