@@ -95,6 +95,7 @@ foreach ($entries as $entry) {
 	}
 	
 	// start handling some custom fields
+	// start/end page
 	$pages = elgg_extract('pages', $entry);
 	$pages = \AudioLabs\BibtexParser\BibtexParser::cleanup($pages);
 	if (is_array($pages)) {
@@ -104,6 +105,7 @@ foreach ($entries as $entry) {
 		$publication->page_from = $pages;
 	}
 	
+	// authors
 	$authors = elgg_extract('author', $entry);
 	$authors = \AudioLabs\BibtexParser\BibtexParser::cleanup($authors);
 	if (!empty($authors)) {
@@ -114,7 +116,9 @@ foreach ($entries as $entry) {
 		
 		$publication->authors = implode(',', $new_authors);
 	}
+	$publication->addAuthor(elgg_get_logged_in_user_guid());
 	
+	// journal
 	$journal = elgg_extract('journal', $entry);
 	$journal = \AudioLabs\BibtexParser\BibtexParser::cleanup($journal);
 	if (!empty($journal)) {
