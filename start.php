@@ -18,9 +18,6 @@ elgg_register_event_handler('init', 'system', 'publication_init');
 
 function publication_init() {
 	
-	// register vendor classes for autoload
-	elgg_register_classes(dirname(__FILE__) . '/vendors/bibtex/');
-	
 	// extend javascript
 	elgg_extend_view('js/elgg', 'js/publications/site');
 	elgg_extend_view('css/elgg', 'css/publications/site');
