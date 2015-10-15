@@ -117,6 +117,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX File",
 	'publication:bibtex' => 'BibTeX File',
+	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
 	'publication:selectimport' => 'Select file',
 	'publication:group:tag' => "Tag a publication",
 	'publication:saveimport' => 'Import',
