@@ -57,8 +57,8 @@ if (!empty($attached_file)) {
 // type details
 $type = strtolower($entity->pubtype);
 $type_string = $type;
-if (elgg_language_key_exists('publications:type:$type')) {
-	$type_string = elgg_echo('publications:type:$type');
+if (elgg_language_key_exists("publications:type:$type")) {
+	$type_string = elgg_echo("publications:type:$type");
 }
 
 $details = '<table class="elgg-table mbm">';
