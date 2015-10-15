@@ -127,3 +127,22 @@ function publications_get_types() {
 	
 	return elgg_trigger_plugin_hook('register:types', 'publications', $params, []);
 }
+
+/**
+ * Wrapper function to sanitize the import-data from a Bibtex file
+ *
+ * @param mixed $input the input to sanitize
+ *
+ * @return array|string
+ */
+function publications_sanitize($input) {
+	
+	if (is_array($input)) {
+		return array_map('publications_sanitize', $input);
+	}
+	
+	$input = \AudioLabs\BibtexParser\BibtexParser::cleanup($input);
+	$input = trim($input, '\"');
+	
+	return $input;
+}
