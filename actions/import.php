@@ -118,7 +118,6 @@ foreach ($entries as $entry) {
 		
 		$publication->authors = implode(',', $new_authors);
 	}
-	$publication->addAuthor(elgg_get_logged_in_user_guid());
 	
 	// journal
 	$journal = elgg_extract('journal', $entry);
