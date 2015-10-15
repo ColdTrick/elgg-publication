@@ -10,32 +10,9 @@
 
 $entity = $vars['entity'];
 
-$type = $entity->pubtype;
+$type = strtolower($entity->pubtype);
 
 $contents = [];
-
-/* PUBLICATION TYPE */
-switch ($type) {
-	case "article_book":
-		$type_name = elgg_echo('publications:type:article_book');
-		break;
-	case "article_journal":
-		$type_name = elgg_echo('publications:type:article_journal');
-		break;
-	case "book":
-	default:
-		$type_name = elgg_echo('publications:type:book');
-		break;
-}
-
-$contents[] = '<span class="publication-type">' . $type_name . '</span>';
-
-/* TITLE */
-$contents[] = '<h3 class="publication-title">' . elgg_view("output/url", [
-	"href" => $entity->getURL(),
-	"text" => $entity->title,
-	"class" => "publications-list-title"
-]) . '</h3>';
 
 /* METADATA */
 $contents[] = '<ul class="publication-data">';

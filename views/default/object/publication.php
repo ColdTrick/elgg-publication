@@ -7,11 +7,21 @@
  * @link http://grc.ucalgary.ca/
  */
 
-$full = elgg_extract('full_view', $vars, FALSE);
-$entity = elgg_extract('entity', $vars, FALSE);
+$full = (bool) elgg_extract('full_view', $vars, false);
+$entity = elgg_extract('entity', $vars);
 
-if (!$entity) {
-	return TRUE;
+if (!($entity instanceof Publication)) {
+	return;
+}
+
+$entity_menu = '';
+if (!elgg_in_context('widgets')) {
+	$entity_menu = elgg_view_menu('entity', [
+		'entity' => $entity,
+		'handler' => 'publications',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	]);
 }
 
 if ($full) {
@@ -42,13 +52,6 @@ if ($full) {
 		}
 	}
 	
-	$metadata = elgg_view_menu('entity', [
-		'entity' => $vars['entity'],
-		'handler' => 'publications',
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	]);
-	
 	$subtitle = "$author_text $date $comments_link";
 		
 	$body = elgg_view('publications/details', $vars);
@@ -56,7 +59,7 @@ if ($full) {
 	$params = [
 		'entity' => $entity,
 		'title' => false,
-		'metadata' => $metadata,
+		'metadata' => $entity_menu,
 		'subtitle' => $subtitle,
 	];
 	$params = $params + $vars;
@@ -70,8 +73,22 @@ if ($full) {
 
 } else {
 	// brief view
-
-	$list_body = elgg_view('publications/references', $vars);
-
+	$excerpt = elgg_view('publications/references', $vars);
+	$pubtype = strtolower($entity->pubtype);
+	
+	$subtitle = '';
+	if (elgg_language_key_exists("publications:type:{$pubtype}")) {
+		$subtitle = elgg_echo("publications:type:{$pubtype}");
+	}
+	
+	$params = [
+		'entity' => $entity,
+		'metadata' => $entity_menu,
+		'subtitle' => $subtitle,
+		'content' => $excerpt,
+	];
+	$params = $params + $vars;
+	$list_body = elgg_view('object/elements/summary', $params);
+	
 	echo elgg_view_image_block(null, $list_body);
 }
