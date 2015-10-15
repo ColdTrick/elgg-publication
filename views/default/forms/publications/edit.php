@@ -23,21 +23,11 @@ $field_config = [
 	'type_selector' => [],
 ];
 
+$access_id = null;
+$tags = '';
 if ($entity instanceof Publication) {
 	$access_id = (int) $entity->access_id;
 	$tags = $entity->tags;
-	
-	$uri = $entity->uri;
-	$translation = (int) $entity->translation;
-	$promotion = (int) $entity->promotion;
-	
-} else {
-	$access_id = null;
-	$tags = '';
-	
-	$uri = '';
-	$translation = 0;
-	$promotion = 0;
 }
 
 // default fields
@@ -47,6 +37,8 @@ foreach ($field_config as $input_type => $settings) {
 }
 
 // additional (non-BibTex) fields
+echo elgg_view('publications/publication/edit/extend', $vars);
+
 // tags
 $keywords_label = elgg_format_element('label' , ['for' => 'publications-tags'], elgg_echo('publication:keywords'));
 $keywords_input = elgg_view('input/tags', [
@@ -56,33 +48,6 @@ $keywords_input = elgg_view('input/tags', [
 ]);
 $keywords_input.= "<div class='elgg-subtext'>" . elgg_echo("publication:keywords:instruction") . "</div>";
 echo elgg_format_element('div', [], $keywords_label . $keywords_input);
-
-// uri
-$uri_label = elgg_format_element('label', ['for' => 'publications-uri'], elgg_echo('publication:uri'));
-$uri_input = elgg_view('input/text', [
-	'id' => 'publications-uri',
-	'name' => 'data[uri]',
-	'value' => $uri,
-]);
-echo elgg_format_element('div', [], $uri_label . $uri_input);
-
-// translation
-$translation_input = elgg_view('input/checkbox', [
-	'name' => 'data[translation]',
-	'value' => 1,
-	'checked' => ($translation == true),
-	'label' => elgg_echo('publication:translation'),
-]);
-$translation_input .= '<br />';
-
-// promotion
-$promotion_input = elgg_view('input/checkbox', [
-	'name' => 'data[promotion]',
-	'value' => 1,
-	'checked' => ($promotion == true),
-	'label' => elgg_echo('publication:promotion'),
-]);
-echo elgg_format_element('div', [], $translation_input . $promotion_input);
 
 // access
 $access_label = elgg_format_element('label', ['for' => 'publications-access'], elgg_echo("access"));
