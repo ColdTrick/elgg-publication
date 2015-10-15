@@ -62,6 +62,7 @@ foreach ($entries as $entry) {
 	
 	$type = elgg_extract('type', $entry);
 	$type = publications_sanitize($type);
+	$type = strtolower($type);
 	
 	// check if publication already exists in the system
 	$title = elgg_extract('title', $entry);
