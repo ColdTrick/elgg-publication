@@ -49,6 +49,11 @@ if (!empty($value)) {
 	access_show_hidden_entities(true);
 
 	foreach ($value as $v) {
+		
+		if (empty($v)) {
+			continue;
+		}
+		
 		$current_value = '';
 		
 		if (is_numeric($v)) {
