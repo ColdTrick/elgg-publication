@@ -2,26 +2,20 @@
 
 $entity = elgg_extract('entity', $vars);
 
-
-$id = elgg_extract('id', $vars, 'publications-title');
-$name = elgg_extract('name', $vars, 'publicationtitle');
-
-$default_value = '';
+$value = '';
 if ($entity instanceof Publication) {
-	$default_value = $entity->title;
+	$value = $entity->publisher;
 }
 
-$value = elgg_extract('value', $vars, $default_value);
-
-$label_text = elgg_extract('label', $vars, elgg_echo('title'));
+$label_text = elgg_echo('publication:publisher');
 if (elgg_extract('required', $vars, true)) {
 	$label_text .= elgg_format_element('span', ['class' => 'elgg-quiet mls'], elgg_echo('publications:forms:required'));
 }
-$label = elgg_format_element('label', ['for' => $id], $label_text);
+$label = elgg_format_element('label', ['for' => 'publications-publisher'], $label_text);
 
 $params = [
-	'id' => $id,
-	'name' => $name,
+	'id' => 'publications-publisher',
+	'name' => 'data[publisher]',
 	'value' => $value,
 	'required' => (bool) elgg_extract('required', $vars, true),
 ];

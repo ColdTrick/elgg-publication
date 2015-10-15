@@ -55,7 +55,7 @@ elgg.publications.init = function(){
 		tolerance: "pointer"
 	});
 	
-	$('#publication-type-selector').on('change', elgg.publications.change_type);
+	$('#publications-type-selector').on('change', elgg.publications.change_type);
 };
 
 //register init hook

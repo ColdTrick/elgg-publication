@@ -70,9 +70,7 @@ class Types {
 		$data = (array) get_input('data', []);
 		
 		$required_fields = [
-			'publish_location',
 			'publisher',
-			'pages',
 		];
 		
 		foreach ($required_fields as $field) {
@@ -101,7 +99,6 @@ class Types {
 		
 		$required_fields = [
 			'booktitle',
-			'publish_location',
 			'publisher',
 			'page_from',
 			'page_to',
@@ -142,9 +139,7 @@ class Types {
 		
 		$required_fields = [
 			'journaltitle',
-			'number',
-			'page_from',
-			'page_to',
+			'volume',
 		];
 		
 		foreach ($required_fields as $field) {
@@ -176,7 +171,7 @@ class Types {
 		$entity->deleteRelationships('book_editor');
 		
 		$type = get_input('type');
-		if ($type !== 'inbook') {
+		if (!in_array($type, ['inbook', 'book'])) {
 			return;
 		}
 		

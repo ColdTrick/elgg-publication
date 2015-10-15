@@ -5,9 +5,9 @@
  * @uses $vars['name'] (optional) the name for the input
  * @uses $vars['id'] (optional) the ID for the javascript
  * @uses $vars['value'] (optional) the current values
+ * @uses $vars['label'] (optional) the label for the input
  * @uses $vars['entity'] when editing an entity the values will be auto extracted
  */
-
 
 $entity = elgg_extract('entity', $vars);
 
@@ -16,7 +16,7 @@ if ($entity instanceof Publication) {
 	$default_value = explode(',', $entity->authors);
 }
 
-$name = elgg_extract('name', $vars, 'authors'); // input name of the selected user
+$name = elgg_extract('name', $vars, 'authors');
 $id = elgg_extract('id', $vars, 'publications-authors');
 $minChars = elgg_extract('minChars', $vars, 3);
 
