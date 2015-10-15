@@ -6,16 +6,10 @@ $field_config = [
 	'author' => [
 		'required' => true,
 	],
-	'year' => [],
+	'year' => [
+		'required' => false,
+	],
 	'month' => [],
-	'journal' => [
-		'required' => true,
-	],
-	'volume' => [
-		'required' => true,
-	],
-	'number' => [],
-	'pages' => [],
 ];
 
 // default fields

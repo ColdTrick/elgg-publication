@@ -2,9 +2,6 @@
 
 $entity = elgg_extract('entity', $vars);
 
-$required_text = elgg_echo("publications:forms:required");
-$required = elgg_format_element('span', ['class' => ['elgg-quiet', 'mls']], $required_text);
-
 $booktitle = '';
 $book_editors = [];
 
@@ -15,13 +12,21 @@ if ($entity instanceof Publication) {
 
 // inbook field config
 $field_config = [
+	'title' => [],
 	'author' => [
+		'required' => true,
+	],
+	'year' => [],
+	'month' => [],
+	'editor' => [
+		'type' => 'author',
 		'name' => 'book_editors',
 		'value' => $book_editors,
 		'id' => 'publications-book-editors',
 		'label' => elgg_echo('publication:book_editors'),
 	],
-	'title' => [
+	'booktitle' => [
+		'type' => 'title',
 		'name' => 'data[booktitle]',
 		'value' => $booktitle,
 		'id' => 'publications-book-title',
@@ -38,11 +43,13 @@ $field_config = [
 	'series' => [],
 	'address' => [],
 	'edition' => [],
-	'month' => [],
 ];
 
 // default fields
 foreach ($field_config as $input_type => $settings) {
+	$input_type = elgg_extract('type', $settings, $input_type);
+	unset($settings['type']);
+	
 	$settings = $settings + $vars;
 	echo elgg_view("input/publications/{$input_type}", $settings);
 }

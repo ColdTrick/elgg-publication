@@ -13,14 +13,9 @@ elgg_require_js('elgg/spinner');
 
 // default field config
 $field_config = [
-	'title' => [],
-	'author' => [
-		'required' => true,
-	],
-	'year' => [],
+	'type_selector' => [],
 	'note' => [],
 	'attachment' => [],
-	'type_selector' => [],
 ];
 
 $access_id = null;

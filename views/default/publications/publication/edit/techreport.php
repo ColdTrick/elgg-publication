@@ -1,12 +1,5 @@
 <?php
 
-$entity = elgg_extract('entity', $vars);
-
-$book_editors = [];
-if ($entity instanceof Publication) {
-	$book_editors = explode(',', $entity->book_editors);
-}
-
 // book field config
 $field_config = [
 	'title' => [],
@@ -15,21 +8,11 @@ $field_config = [
 	],
 	'year' => [],
 	'month' => [],
-	'editor' => [
-		'type' => 'author',
-		'name' => 'book_editors',
-		'value' => $book_editors,
-		'id' => 'publications-book-editors',
-		'label' => elgg_echo('publication:book_editors'),
-	],
-	'publisher' => [
+	'institution' => [
 		'required' => true,
 	],
-	'volume' => [],
 	'number' => [],
-	'series' => [],
 	'address' => [],
-	'edition' => [],
 ];
 
 // default fields

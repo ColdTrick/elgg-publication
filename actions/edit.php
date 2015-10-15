@@ -15,15 +15,11 @@ $access = (int) get_input('access_id');
 $tags = get_input('tags');
 $tags = string_to_tag_array($tags);
 
-$author_guids = get_input('authors');
-$authors_order = get_input('authors_order');
-
 $data = (array) get_input('data', []);
 
 $type = get_input('type');
-$year = get_input('year');
 
-if (empty($title) || empty($type) || empty($authors_order) || empty($year)) {
+if (empty($title) || empty($type)) {
 	register_error(elgg_echo('publication:blank'));
 	forward(REFERER);
 }
@@ -35,7 +31,10 @@ if (!in_array($type, $types)) {
 }
 
 // allow the validation of custom type data
-$input_validation = elgg_trigger_plugin_hook("input_validation:$type", 'publications', [], true);
+$params = [
+	'type' => $type,
+];
+$input_validation = elgg_trigger_plugin_hook("input_validation:$type", 'publications', $params, true);
 if ($input_validation !== true) {
 	// input validation failed, errors should be set by the plugin hook
 	forward(REFERER);
@@ -75,20 +74,7 @@ if (!$publication->save()) {
 }
 
 $publication->tags = $tags;
-$publication->year = $year;
 $publication->pubtype = $type;
-
-$publication->deleteRelationships('author');
-
-// save authors
-if (!empty($author_guids)) {
-	foreach ($author_guids as $author) {
-		add_entity_relationship($publication->getGUID(), 'author', $author);
-	}
-}
-
-$pauthors = implode(',', $authors_order);
-$publication->authors = $pauthors;
 
 // save custom data
 foreach ($data as $key => $value) {

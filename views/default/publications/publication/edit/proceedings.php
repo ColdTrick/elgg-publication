@@ -1,21 +1,19 @@
 <?php
 
-// article field config
+// field config
 $field_config = [
 	'title' => [],
-	'author' => [
-		'required' => true,
-	],
+	'author' => [],
 	'year' => [],
 	'month' => [],
-	'journal' => [
-		'required' => true,
-	],
-	'volume' => [
-		'required' => true,
-	],
+	'volume' => [],
 	'number' => [],
-	'pages' => [],
+	'series' => [],
+	'address' => [],
+	'organization' => [],
+	'publisher' => [
+		'required' => false,
+	],
 ];
 
 // default fields

@@ -49,14 +49,20 @@ function publication_init() {
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'publication_write_permission_check');
 	
 	// custom publication types
-	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeBook']);
-	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeInBook']);
-	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeArticle']);
+	elgg_register_plugin_hook_handler('register:types', 'publications', ['\ColdTrick\Publications\Types', 'registerTypeBibTex']);
 	
+	elgg_register_plugin_hook_handler('all', 'publications', ['\ColdTrick\Publications\Types', 'validateRequiredAuthors']);
+	elgg_register_plugin_hook_handler('input_validation:article', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticle']);
 	elgg_register_plugin_hook_handler('input_validation:book', 'publications', ['\ColdTrick\Publications\Types', 'validateInputBook']);
 	elgg_register_plugin_hook_handler('input_validation:inbook', 'publications', ['\ColdTrick\Publications\Types', 'validateInputInBook']);
-	elgg_register_plugin_hook_handler('input_validation:article', 'publications', ['\ColdTrick\Publications\Types', 'validateInputArticle']);
+	elgg_register_plugin_hook_handler('input_validation:incollection', 'publications', ['\ColdTrick\Publications\Types', 'validateInputInCollection']);
+	elgg_register_plugin_hook_handler('input_validation:inproceedings', 'publications', ['\ColdTrick\Publications\Types', 'validateInputInProceedings']);
+	elgg_register_plugin_hook_handler('input_validation:mastersthesis', 'publications', ['\ColdTrick\Publications\Types', 'validateInputMastersThesis']);
+	elgg_register_plugin_hook_handler('input_validation:phdhesis', 'publications', ['\ColdTrick\Publications\Types', 'validateInputPhdThesis']);
+	elgg_register_plugin_hook_handler('input_validation:proceedings', 'publications', ['\ColdTrick\Publications\Types', 'validateInputProceedings']);
+	elgg_register_plugin_hook_handler('input_validation:techreport', 'publications', ['\ColdTrick\Publications\Types', 'validateInputTechreport']);
 	
+	elgg_register_event_handler('save:data', 'publications', ['\ColdTrick\Publications\Types', 'saveArticleAuthors']);
 	elgg_register_event_handler('save:data', 'publications', ['\ColdTrick\Publications\Types', 'saveArticleBookAuthors']);
 	
 	// register event handlers

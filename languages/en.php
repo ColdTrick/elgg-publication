@@ -20,16 +20,28 @@ return [
 	'publications:list:mastersthesis' => "Masters Thesis, %s",
 	'publications:list:phdthesis' => "PhD Thesis, %s",
 	'publications:list:inproceedings' => "Proceedings of the %s",
-	'publications:type:book' => "Book",
-	'publications:type:inbook' => "Article in a book",
-	'publications:type:article' => "Article in a journal/review",
 	'publications:details:attachment:download' => "Click to download attachment",
 	'publications:details:translation' => "Text is a translation",
 	'publications:details:promotion' => "Text is part of a promotion",
 	
 	'publication:forms:authors' => "Authors",
 	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
-
+	
+	// types
+	'publications:type:article' => "Article in a journal/review",
+	'publications:type:book' => "Book",
+	'publications:type:booklet' => "Booklet",
+	'publications:type:conference' => "Article in conference",
+	'publications:type:inbook' => "Article in a book",
+	'publications:type:incollection' => "A book in a collection",
+	'publications:type:inproceedings' => "Article in conference",
+	'publications:type:manual' => "Technical documentation",
+	'publications:type:mastersthesis' => "Master's thesis",
+	'publications:type:phdthesis' => "Ph.D. thesis",
+	'publications:type:proceedings' => "Proceedings of a conference",
+	'publications:type:techreport' => "Report published by a school or other institution",
+	'publications:type:unpublished' => "A document not formally published",
+	
 	// old keys
 	'publication:keywords' => "Keywords",
 	'publication:keywords:instruction' => "",
@@ -76,6 +88,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:series' => "Series",
 	'publication:address' => "Address",
 	'publication:organization' => "Organization",
+	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
 	'publication:type_field' => "Type",
 	'publication' => "Publication",

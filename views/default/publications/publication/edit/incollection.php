@@ -2,12 +2,15 @@
 
 $entity = elgg_extract('entity', $vars);
 
+$booktitle = '';
 $book_editors = [];
+
 if ($entity instanceof Publication) {
+	$booktitle = $entity->booktitle;
 	$book_editors = explode(',', $entity->book_editors);
 }
 
-// book field config
+// field config
 $field_config = [
 	'title' => [],
 	'author' => [
@@ -22,12 +25,17 @@ $field_config = [
 		'id' => 'publications-book-editors',
 		'label' => elgg_echo('publication:book_editors'),
 	],
-	'publisher' => [
-		'required' => true,
+	'booktitle' => [
+		'type' => 'title',
+		'name' => 'data[booktitle]',
+		'value' => $booktitle,
+		'id' => 'publications-book-title',
+		'label' => elgg_echo('publication:booktitle'),
 	],
 	'volume' => [],
 	'number' => [],
 	'series' => [],
+	'pages' => [],
 	'address' => [],
 	'edition' => [],
 ];
