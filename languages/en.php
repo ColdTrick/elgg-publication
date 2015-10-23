@@ -73,8 +73,6 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:year' => "Year",
 	'publication:booktitle' => "Title of book",
 	'publication:book_editors' => "Book editors",
-	'publication:translation' => "Is your text a translation?",
-	'publication:promotion' => "Is it part of a promotion?",
 	'publication:journaltitle' => "Title of journal/review",
 	'publication:journal' => "Journal",
 	'publication:publisher' => "Publishing company",
