@@ -16,13 +16,15 @@ elgg.publications.draw_custom_fields = function(type, guid) {
 			},
 			success: function(data) {
 				$('#pub_custom_fields').html(data);
+				// re-init sortable
+				elgg.publications.init_author_sortable();
 			},
 			complete: spinner.stop
 		});
 	});
 };
 
-elgg.publications.change_type = function () {
+elgg.publications.change_type = function() {
 	
 	var val = $('#publications-type-selector').val();
 	var guid = $('.elgg-form-publications-edit input[name="guid"]').val();
@@ -30,7 +32,15 @@ elgg.publications.change_type = function () {
 	elgg.publications.draw_custom_fields(val, guid);
 };
 
-elgg.publications.init = function(){
+elgg.publications.init_author_sortable = function() {
+	$("#publications-authors_autocomplete_results").sortable({
+		containment: "parent",
+		axis: "y",
+		tolerance: "pointer"
+	});
+};
+
+elgg.publications.init = function() {
 	$(".publications-add").submit(function() {
 		var result = true;
 		
@@ -47,12 +57,6 @@ elgg.publications.init = function(){
 		}
 		
 		return result;
-	});
-	
-	$("#publications-authors_autocomplete_results").sortable({
-		containment: "parent",
-		axis: "y",
-		tolerance: "pointer"
 	});
 	
 	$('#publications-type-selector').on('change', elgg.publications.change_type);

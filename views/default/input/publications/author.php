@@ -113,7 +113,7 @@ echo elgg_format_element('div', [], $label . $input . $info . $result_wrapper);
 						result += $(this).val();
 						result += "</span>";
 
-						result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+						result += '<?php echo elgg_view_icon('delete-alt', ['class' => 'mlm']); ?>';
 						result += "</div>";
 
 						$('#<?php echo $destination; ?>').append(result);
