@@ -164,5 +164,6 @@ if (empty($count) && empty($duplicates)) {
 	} elseif (!empty($duplicates)) {
 		system_message(elgg_echo('publication:action:import:success:duplicates', [$duplicates]));
 	}
-	forward('publications/all');
+	$user = elgg_get_logged_in_user_entity();
+	forward("publications/owner/{$user->username}");
 }
