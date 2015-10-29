@@ -71,7 +71,7 @@ function publication_register_menu_owner_block($hook, $type, $return_value, $par
 }
 
 /**
- * Add a menu item in the sidebar to the import page
+ * Add a menu item in the title to the import page
  *
  * @param string         $hook         the name of the hook
  * @param string         $type         the type of the hook
@@ -80,7 +80,7 @@ function publication_register_menu_owner_block($hook, $type, $return_value, $par
  *
  * @return void|ElggMenuItem[]
  */
-function publication_register_menu_page($hook, $type, $return_value, $params) {
+function publication_register_menu_title($hook, $type, $return_value, $params) {
 	
 	if (!elgg_is_logged_in() || !elgg_in_context("publications")) {
 		return;
@@ -96,6 +96,7 @@ function publication_register_menu_page($hook, $type, $return_value, $params) {
 		"text" => elgg_echo("publication:import"),
 		"href" => "publications/import",
 		"section" => "bibtex",
+		"class" => "elgg-button elgg-button-action",
 	]);
 	
 	return $return_value;
