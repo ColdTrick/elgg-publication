@@ -116,7 +116,7 @@ function publication_register_menu_title($hook, $type, $return_value, $params) {
 		"text" => elgg_echo("publication:import"),
 		"href" => "publications/import",
 		"section" => "bibtex",
-		"class" => "elgg-button elgg-button-action",
+		"link_class" => "elgg-button elgg-button-action",
 	]);
 	
 	return $return_value;
