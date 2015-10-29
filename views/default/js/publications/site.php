@@ -43,17 +43,24 @@ elgg.publications.init_author_sortable = function() {
 elgg.publications.init = function() {
 	$(".publications-add").submit(function() {
 		var result = true;
+		var msg = '';
 		
-		if(result && ($(this).find("#publications-authors_autocomplete_results").html().trim() == "")) {
-			alert(elgg.echo("publications:forms:required:alert"));
+		var authors_mandatory = $('label[for="publications-authors_autocomplete"] span.elgg-quiet').length;
+		if (authors_mandatory && $(this).find("#publications-authors_autocomplete_results").html().trim() == "") {
+			msg = msg + elgg.echo("publications:forms:required:alert") + '\n';
 			$("#publications-authors_autocomplete").focus();
 			result = false;
 		}
 		
-		if(result && $(this).find("#publications-book-editors_autocomplete_results").length && ($(this).find("#publications-book-editors_autocomplete_results").html().trim() == "")) {
-			alert(elgg.echo("publications:forms:required:alert"));
+		var editors_mandatory = $('label[for="publications-book-editors_autocomplete"] span.elgg-quiet').length;
+		if (editors_mandatory && $(this).find("#publications-book-editors_autocomplete_results").html().trim() == "") {
+			msg = msg + elgg.echo("publications:forms:required:alert") + '\n';
 			$("#publications-book-editors_autocomplete").focus();
 			result = false;
+		}
+		
+		if (!result) {
+			alert(msg);
 		}
 		
 		return result;
