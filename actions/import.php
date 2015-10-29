@@ -82,7 +82,7 @@ foreach ($entries as $entry) {
 	$publication = new Publication();
 	$publication->access_id = ACCESS_LOGGED_IN;
 	$publication->title = $title;
-	$publication->description = elgg_extract('reference', $entry);
+	$publication->bibtext_reference = elgg_extract('reference', $entry);
 	$publication->pubtype = $type;
 	if (!$publication->save()) {
 		// unable to save
