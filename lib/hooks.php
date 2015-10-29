@@ -17,9 +17,29 @@ function publication_register_menu_filter($hook, $type, $return_value, $params) 
 	}
 	
 	foreach ($return_value as $index => $menu_item) {
-		if ($menu_item->getName() == "friend") {
-			unset($return_value[$index]);
+		
+		switch ($menu_item->getName()) {
+			case 'friend':
+				unset($return_value[$index]);
+				break;
+			case 'mine':
+				$menu_item->setText(elgg_echo('publications:menu:filter:mine'));
+				break;
 		}
+	}
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if (!($page_owner instanceof ElggUser)) {
+		$page_owner = elgg_get_logged_in_user_entity();
+	}
+	
+	if ($page_owner instanceof ElggUser) {
+		$return_value[] = ElggMenuItem::factory([
+			'name' => 'author',
+			'text' => elgg_echo('publications:menu:filter:author'),
+			'href' => "publications/author/{$page_owner->username}",
+			'priority' => 300,
+		]);
 	}
 	
 	return $return_value;

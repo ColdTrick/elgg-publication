@@ -12,7 +12,7 @@ if (!($page_owner_entity instanceof ElggUser)) {
 	forward(REFERER);
 }
 
-$title = elgg_echo('publication:user', [$page_owner_entity->name]);
+$title = elgg_echo('publication:user:author', [$page_owner_entity->name]);
 
 elgg_register_title_button();
 
@@ -32,17 +32,20 @@ elgg_push_breadcrumb($page_owner_entity->name);
 $options = [
 	'type' => 'object',
 	'subtype' => Publication::SUBTYPE,
-	'owner_guid' => $page_owner_entity->getGUID(),
+	'relationship' => 'author',
+	'relationship_guid' => $page_owner_entity->getGUID(),
+	'inverse_relationship' => true,
+	'full_view' => false,
 	'no_results' => elgg_echo('notfound'),
 ];
 
-$listing = elgg_list_entities($options);
+$listing = elgg_list_entities_from_relationship($options);
 
 // build page
 $page_data = elgg_view_layout('content', [
 	'title' => $title,
 	'content' => $listing,
-	'filter_context' => 'mine',
+	'filter_context' => 'author',
 ]);
 
 // display the page

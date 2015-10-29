@@ -18,6 +18,12 @@ function publication_page_handler($page) {
 		case "owner":
 			include(dirname(dirname(__FILE__)) . "/pages/owner.php");
 			break;
+		case "author":
+			if (isset($page[1])) {
+				set_input('username', $page[1]);
+			}
+			include(dirname(dirname(__FILE__)) . "/pages/author.php");
+			break;
 		case "add":
 			include(dirname(dirname(__FILE__)) . "/pages/edit.php");
 			break;
