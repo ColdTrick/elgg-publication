@@ -10,7 +10,7 @@
 elgg_gatekeeper();
 	
 $entity = false;
-$title = elgg_echo('publication:add');
+$title = elgg_echo('publications:add');
 
 $guid = (int) get_input('guid');
 if (!empty($guid)) {
