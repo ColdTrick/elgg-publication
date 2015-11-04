@@ -110,6 +110,21 @@ function publication_register_menu_title($hook, $type, $return_value, $params) {
 		return;
 	}
 	
+	
+	$add_found = false;
+	foreach ($return_value as $menu_item) {
+		if ($menu_item->getName() !== 'add') {
+			continue;
+		}
+		
+		$add_found = true;
+		break;
+	}
+	
+	if (!$add_found) {
+		return;
+	}
+	
 	// 	import
 	$return_value[] = ElggMenuItem::factory([
 		"name" => "import",
