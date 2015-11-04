@@ -26,6 +26,8 @@ return [
 
 	'publications:menu:filter:mine' => "Erstellt",
 	'publications:menu:filter:author' => "Verfasst",
+
+	'publications:add' => "Publikation hinzufügen",
 	
 	// types
 	'publications:type:article' => "Zeitungs- oder Zeitschriftenartikel",
@@ -80,7 +82,6 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:user:author' => "%s's verfasste Publikationen",
 	'publication:modify' => 'Externe Autoren-Einladungen',
 	'publication:everyone' => "Alle Publikationen dieses Portals",
-	'publication:add' => "Publikation hinzufügen",
 	'publication:export' => "Als BibTeX-Datei exportieren",
 	'publication:export:confirm:all' => "Möchten Sie alle Publikationen als BibTeX-Datei exportieren?",
 	'publication:export:confirm:user' => "Möchten Sie alle Publikationen von %s als BibTeX-File exportieren?",

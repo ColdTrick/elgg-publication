@@ -26,7 +26,9 @@ return [
 	
 	'publications:menu:filter:mine' => "Created",
 	'publications:menu:filter:author' => "Authored",
-	
+
+	'publications:add' => "Add a publication",
+
 	// types
 	'publications:type:article' => "Article in a journal/review",
 	'publications:type:book' => "Book",
@@ -81,7 +83,6 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:modify' => 'External Authors Invititation: ',
 	
 	'publication:everyone' => "All site publications",
-	'publication:add' => "Add a publication",
 	'publication:export' => "Export to BibTeX File",
 	'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
 	'publication:export:confirm:user' => "Do you want to export all %s's publications as a BibTeX file?",
