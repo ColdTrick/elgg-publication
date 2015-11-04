@@ -111,7 +111,7 @@ function publication_register_menu_title($hook, $type, $return_value, $params) {
 	}
 	
 	// 	import
-	$return_value[ElggMenuItem] = ElggMenuItem::factory([
+	$return_value[] = ElggMenuItem::factory([
 		"name" => "import",
 		"text" => elgg_echo("publication:import"),
 		"href" => "publications/import",
