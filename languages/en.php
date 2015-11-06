@@ -24,7 +24,7 @@ return [
 	'publication:forms:authors' => "Authors",
 	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
 	
-	'publications:menu:filter:mine' => "Created",
+	'publications:menu:filter:mine' => "Mine",
 	'publications:menu:filter:author' => "Authored",
 
 	'publications:add' => "Add a publication",
@@ -78,7 +78,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:organization' => "Organization",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
-	'publication:user' => "%s's created publications",
+	'publication:user' => "%s's publications",
 	'publication:user:author' => "%s's authored publications",
 	'publication:modify' => 'External Authors Invititation: ',
 	

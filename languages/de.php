@@ -24,7 +24,7 @@ return [
 	'publication:forms:authors' => "Autoren",
 	'publications:form:author:input:info' => "Geben Sie die ersten Buchstaben eines Autors ein und wählen Sie den vorgeschlagenen Autor aus der Dropdown-Liste aus oder fügen Sie einen neuen hinzu. Eingabetaste drücken, um den Autor der Publikation hinzuzufügen.",
 
-	'publications:menu:filter:mine' => "Erstellt",
+	'publications:menu:filter:mine' => "Meine",
 	'publications:menu:filter:author' => "Verfasst",
 
 	'publications:add' => "Publikation hinzufügen",
