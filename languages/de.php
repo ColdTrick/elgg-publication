@@ -27,6 +27,10 @@ return [
 	'publications:menu:filter:mine' => "Meine",
 	'publications:menu:filter:author' => "Verfasst",
 
+	'publications:select:all' => 'Zeige alle',
+	'publications:select:owned' => 'Publikationen, die ich hochgeladen habe',
+	'publications:select:assigned' => 'Publikationen, denen ich als Autor zugeordnet bin',
+
 	'publications:add' => "Publikation hinzufügen",
 	
 	// types

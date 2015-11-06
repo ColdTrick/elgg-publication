@@ -27,6 +27,10 @@ return [
 	'publications:menu:filter:mine' => "Mine",
 	'publications:menu:filter:author' => "Authored",
 
+	'publications:select:all' => 'Show all',
+	'publications:select:owned' => 'Publications i have uploaded',
+	'publications:select:assigned' => 'Publications i am assigned',
+
 	'publications:add' => "Add a publication",
 
 	// types

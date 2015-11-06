@@ -16,3 +16,8 @@
 #publications-authors_autocomplete_results.ui-sortable {
 	padding: 10px 0;
 }
+
+.publications-layout .elgg-input-dropdown {
+	float: right;
+	margin: 10px 0;
+}

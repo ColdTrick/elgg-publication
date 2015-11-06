@@ -67,7 +67,19 @@ elgg.publications.init = function() {
 	});
 	
 	$('#publications-type-selector').on('change', elgg.publications.change_type);
+
+	$('#publications-filter-selector').change(function() {
+		var url = window.location.href;
+		if (window.location.search.length) {
+			url = url.substring(0, url.indexOf('?'));
+		}
+		url += '?' + $(this).val();
+		elgg.forward(url);
+	});
+
+
 };
+
 
 //register init hook
 elgg.register_hook_handler("init", "system", elgg.publications.init);
