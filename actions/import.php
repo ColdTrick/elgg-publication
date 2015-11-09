@@ -158,11 +158,11 @@ if (empty($count) && empty($duplicates)) {
 } else {
 	// multiple imports
 	if (!empty($count) && !empty($duplicates)) {
-		system_message(elgg_echo('publication:action:import:success:multiple_duplicates', [$count, $duplicates]));
+		register_error(elgg_echo('publication:action:import:success:multiple_duplicates', [$count, $duplicates]));
 	} elseif (!empty($count)) {
 		system_message(elgg_echo('publication:action:import:success:multiple', [$count]));
 	} elseif (!empty($duplicates)) {
-		system_message(elgg_echo('publication:action:import:success:duplicates', [$duplicates]));
+		register_error(elgg_echo('publication:action:import:success:duplicates', [$duplicates]));
 	}
 	$user = elgg_get_logged_in_user_entity();
 	forward("publications/owner/{$user->username}");
