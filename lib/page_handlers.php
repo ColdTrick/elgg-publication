@@ -9,6 +9,9 @@ function publication_page_handler($page) {
 		case "all":
 			include(dirname(dirname(__FILE__)) . "/pages/all.php");
 			break;
+		case "friends":
+			include(dirname(dirname(__FILE__)) . "/pages/friends.php");
+			break;
 		case "group":
 			if (isset($page[1])) {
 				set_input("guid", $page[1]);

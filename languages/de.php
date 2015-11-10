@@ -24,8 +24,12 @@ return [
 	'publication:forms:authors' => "Autoren",
 	'publications:form:author:input:info' => "Geben Sie die ersten Buchstaben eines Autors ein und wählen Sie den vorgeschlagenen Autor aus der Dropdown-Liste aus oder fügen Sie einen neuen hinzu. Eingabetaste drücken, um den Autor der Publikation hinzuzufügen.",
 
-	'publications:menu:filter:mine' => "Erstellt",
+	'publications:menu:filter:mine' => "Meine",
 	'publications:menu:filter:author' => "Verfasst",
+
+	'publications:select:all' => 'Zeige alle',
+	'publications:select:owned' => 'Publikationen, die ich hochgeladen habe',
+	'publications:select:assigned' => 'Publikationen, denen ich als Autor zugeordnet bin',
 
 	'publications:add' => "Publikation hinzufügen",
 	
@@ -78,7 +82,8 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:organization' => "Organisation",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Ausgabe",
-	'publication:user' => "%s's Publikationen",
+	'publication:user' => "Publikationen von %s",
+	'publication:friends' => "Publikationen meiner Freunde",
 	'publication:user:author' => "%s's verfasste Publikationen",
 	'publication:modify' => 'Externe Autoren-Einladungen',
 	'publication:everyone' => "Alle Publikationen dieses Portals",

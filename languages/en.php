@@ -24,8 +24,12 @@ return [
 	'publication:forms:authors' => "Authors",
 	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
 	
-	'publications:menu:filter:mine' => "Created",
+	'publications:menu:filter:mine' => "Mine",
 	'publications:menu:filter:author' => "Authored",
+
+	'publications:select:all' => 'View all',
+	'publications:select:owned' => 'Publications i have uploaded',
+	'publications:select:assigned' => 'Publications i am assigned',
 
 	'publications:add' => "Add a publication",
 
@@ -78,7 +82,8 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:organization' => "Organization",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
-	'publication:user' => "%s's created publications",
+	'publication:user' => "%s's publications",
+	'publication:friends' => "Publications of my friends",
 	'publication:user:author' => "%s's authored publications",
 	'publication:modify' => 'External Authors Invititation: ',
 	
@@ -87,7 +92,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
 	'publication:export:confirm:user' => "Do you want to export all %s's publications as a BibTeX file?",
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
-	'publication:import' => "Import BibTeX File",
+	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX File',
 	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
 	'publication:edit' => "Edit a publication",

@@ -43,7 +43,7 @@ function publication_init() {
 	
 	// register plugin hooks
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'publication_register_menu_owner_block');
-	elgg_register_plugin_hook_handler('register', 'menu:filter', 'publication_register_menu_filter');
+//	elgg_register_plugin_hook_handler('register', 'menu:filter', 'publication_register_menu_filter');
 	elgg_register_plugin_hook_handler('register', 'menu:title', 'publication_register_menu_title');
 // 	elgg_register_plugin_hook_handler('action','register','publication_custom_register');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'publication_write_permission_check');
