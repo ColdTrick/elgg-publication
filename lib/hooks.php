@@ -19,9 +19,9 @@ function publication_register_menu_filter($hook, $type, $return_value, $params) 
 	foreach ($return_value as $index => $menu_item) {
 		
 		switch ($menu_item->getName()) {
-			case 'friend':
-				unset($return_value[$index]);
-				break;
+// 			case 'friend':
+// 				unset($return_value[$index]);
+// 				break;
 			case 'mine':
 				$menu_item->setText(elgg_echo('publications:menu:filter:mine'));
 				break;

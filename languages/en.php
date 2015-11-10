@@ -80,6 +80,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:edition' => "Edition",
 	'publication:user' => "%s's created publications",
 	'publication:user:author' => "%s's authored publications",
+	'publication:friends' => "Friends' publications",
 	'publication:modify' => 'External Authors Invititation: ',
 	
 	'publication:everyone' => "All site publications",
