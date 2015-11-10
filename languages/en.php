@@ -15,7 +15,7 @@ return [
 	'river:update:object:publication' => "%s updated a publication titled %s",
 	
 	// new keys
-	'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
+	'publications:settings:enable_bibtex' => "Enable BibTeX import and export features",
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* required fields",
 	'publications:forms:required:alert' => "Please fill out all required fields.",
@@ -90,12 +90,12 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX file',
-	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
+	'publication:bibtex:description' => 'Here you can upload a BibTeX file, so all publications will be imported into this site.',
 	'publication:edit' => "Edit a publication",
 	'publication:abstract' => "Abstract",
 	'publication:details' => "Details",
-	'publication:bibtex:fileerror' => 'BibTex file not found',
-	'publication:bibtex:blank' => 'BibTex file has no entries',
+	'publication:bibtex:fileerror' => 'BibTeX file not found',
+	'publication:bibtex:blank' => 'BibTeX file has no entries',
 	'publication:enablepublication' => 'Enable group publication',
 	'publication:group' => 'Group publications',
 	'publication:river:posted' => "%s posted",
@@ -110,7 +110,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	'publications:seeall' => "See all publications from",
 	
-	'publication:error:bibtext:enabled' => "BibTex support is not enabled, the feature you're trying to use is not allowed.",
+	'publication:error:bibtext:enabled' => "BibTeX support is not enabled, the feature you're trying to use is not allowed.",
 	
 	// notifications
 	'publication:notification:create:subject' => "A new publication \"%s\" was created",

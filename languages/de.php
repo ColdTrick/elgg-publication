@@ -15,7 +15,7 @@ return [
 	'river:update:object:publication' => "%s aktualisierte eine Publikation mit dem Titel %s",
 
 	// new keys
-	'publications:settings:enable_bibtex' => "Aktiviere BibTex Import- und Exportfunktionen",
+	'publications:settings:enable_bibtex' => "Aktiviere BibTeX Import- und Exportfunktionen",
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* Benötigte Felder",
 	'publications:forms:required:alert' => "Bitte füllen Sie alle erforderlichen Felder aus.",
@@ -93,12 +93,12 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:export:confirm:single' => "Möchten Sie diese Publikation als BibTeX-Datei exportieren?",
 	'publication:import' => "BibTeX-Datei importieren",
 	'publication:bibtex' => 'BibTeX-Datei',
-	'publication:bibtex:description' => 'Hier können Sie eine Bibtex-Datei hochladen, um Ihre Publikationsliste auf diese Plattform zu importieren.',
+	'publication:bibtex:description' => 'Hier können Sie eine BibTeX-Datei hochladen, um Ihre Publikationsliste auf diese Plattform zu importieren.',
 	'publication:edit' => "Eine Publikation bearbeiten",
 	'publication:abstract' => "Zusammenfassung",
 	'publication:details' => "Details",
-	'publication:bibtex:fileerror' => 'BibTex-Datei nicht gefunden',
-	'publication:bibtex:blank' => 'BibTex-Datei hat keine Einträge',
+	'publication:bibtex:fileerror' => 'BibTeX-Datei nicht gefunden',
+	'publication:bibtex:blank' => 'BibTeX-Datei hat keine Einträge',
 	'publication:enablepublication' => 'Aktivieren Publikationen für Gruppen',
 	'publication:group' => 'Gruppe Publikationen',
 	'publication:river:posted' => "%s schreib",	
@@ -113,7 +113,7 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:notdeleted' => "Diese Publikation konnte nicht gelöscht werden.",
 	'publications:seeall' => "Alle Publikationen ansehen von",
 	
-	'publication:error:bibtext:enabled' => "BibTex-Unterstützung ist nicht aktiviert. Die Funktion, die Sie verwenden möchten, ist nicht erlaubt.",
+	'publication:error:bibtext:enabled' => "BibTeX-Unterstützung ist nicht aktiviert. Die Funktion, die Sie verwenden möchten, ist nicht erlaubt.",
 	
 	// notifications
 	'publication:notification:create:subject' => "Eine neue Publikation \"%s\" wurde veröffentlicht",
