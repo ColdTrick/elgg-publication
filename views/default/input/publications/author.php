@@ -171,7 +171,7 @@ echo elgg_format_element('div', [], $label . $input . $info . $result_wrapper);
 					result += ui.item.content;
 					result += "</span>";
 
-					result += "<span class='elgg-icon elgg-icon-delete-alt'></span>";
+					result += '<?php echo elgg_view_icon('delete-alt'); ?>';
 					result += "</div>";
 
 					$('#<?php echo $destination; ?>').append(result);

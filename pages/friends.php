@@ -21,7 +21,7 @@ if (publications_bibtex_enabled()) {
 }
 
 $owner = elgg_get_page_owner_entity();
-if (!$owner) {
+if (!($owner instanceof ElggUser)) {
 	forward(REFERER);
 }
 
@@ -32,10 +32,9 @@ $options = array(
 	'subtype' => Publication::SUBTYPE,
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
-	'relationship_join_on' => 'container_guid',	
+	'relationship_join_on' => 'container_guid',
 	'no_results' => elgg_echo('notfound'),
-	// 'preload_owners' => true,
-	// 'preload_containers' => true,
+	'preload_owners' => true,
 );
 
 $listing = elgg_list_entities_from_relationship($options);

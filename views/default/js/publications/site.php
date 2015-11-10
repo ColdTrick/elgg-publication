@@ -33,7 +33,7 @@ elgg.publications.change_type = function() {
 };
 
 elgg.publications.init_author_sortable = function() {
-	$("#publications-authors_autocomplete_results").sortable({
+	$("#publications-authors_autocomplete_results, #publications-book-editors_autocomplete_results").sortable({
 		containment: "parent",
 		axis: "y",
 		tolerance: "pointer"
