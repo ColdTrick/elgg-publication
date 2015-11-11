@@ -81,7 +81,7 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:series' => "Reihe",
 	'publication:organization' => "Organisation",
 	'publication:institution' => "Institution",
-	'publication:edition' => "Ausgabe",
+	'publication:edition' => "Auflage",
 	'publication:user' => "Publikationen von %s",
 	'publication:friends' => "Publikationen meiner Freunde",
 	'publication:user:author' => "%s's verfasste Publikationen",
