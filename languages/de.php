@@ -65,7 +65,7 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 
 ",
 	'publication:additionalmsg' => "\"[Text über Ihre Plattform]\"",
-	'publication:volume' => "Jahrgang",
+	'publication:volume' => "Band Nr.",
 	'publication:number' => "Ausgabe Nr.",
 	'publication:month'=> "Monat",
 	'publication:page_from' => "Seite von",
