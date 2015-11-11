@@ -25,6 +25,9 @@ if (!($owner instanceof ElggUser)) {
 	forward(REFERER);
 }
 
+elgg_push_breadcrumb($owner->name, "publications/owner/$owner->username");
+elgg_push_breadcrumb(elgg_echo('friends'));
+
 $title = elgg_echo('publication:friends');
 
 $options = array(
