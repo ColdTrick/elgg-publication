@@ -27,3 +27,7 @@
 	float: right;
 	margin: 10px 0;
 }
+
+.publications-layout .elgg-module-info {
+	clear: both;
+}
