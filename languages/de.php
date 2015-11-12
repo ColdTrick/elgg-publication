@@ -86,7 +86,7 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:friends' => "Publikationen meiner Freunde",
 	'publication:user:author' => "%s's verfasste Publikationen",
 	'publication:modify' => 'Externe Autoren-Einladungen',
-	'publication:everyone' => "Alle Publikationen dieses Portals",
+	'publication:everyone' => "Alle Publikationen",
 	'publication:export' => "Als BibTeX-Datei exportieren",
 	'publication:export:confirm:all' => "Möchten Sie alle Publikationen als BibTeX-Datei exportieren?",
 	'publication:export:confirm:user' => "Möchten Sie alle Publikationen von %s als BibTeX-File exportieren?",
