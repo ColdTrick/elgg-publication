@@ -34,10 +34,10 @@ return [
 	'publications:add' => "Publikation hinzufügen",
 	
 	// types
-	'publications:type:article' => "Zeitungs- oder Zeitschriftenartikel",
+	'publications:type:article' => "Artikel in einer Fachzeitschrift",
 	'publications:type:book' => "Buch",
-	'publications:type:booklet' => "Gebundenes Druckwerk",
-	'publications:type:conference' => "Wissenschaftliche Konferenz",
+	'publications:type:booklet' => "Heft",
+	'publications:type:conference' => "Konferenzbeitrag",
 	'publications:type:inbook' => "Teil eines Buches",
 	'publications:type:incollection' => "Buch in einem Sammelband",
 	'publications:type:inproceedings' => "Artikel in einem Konferenzband",
