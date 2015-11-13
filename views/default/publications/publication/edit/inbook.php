@@ -33,8 +33,9 @@ $field_config = [
 		'label' => elgg_echo('publication:booktitle'),
 	],
 	'pages' => [
-		'required' => true,
+		'required' => false,
 	],
+	'chapter' => [],
 	'publisher' => [
 		'required' => true,
 	],
