@@ -50,7 +50,8 @@ if($viewer != $page_owner_entity->getGUID()) {
 	$filter = 'mine';
 	$selector = get_input('publications-filter');
 
-	$listing = elgg_view('publications/filter', array('selector' => $selector));
+	// $listing = elgg_view('publications/filter', array('selector' => $selector));
+	$listing = "";
 
 	switch($selector) {
 		case "owned":
