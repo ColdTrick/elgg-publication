@@ -29,81 +29,28 @@ if (publications_bibtex_enabled()) {
 
 elgg_push_breadcrumb($page_owner_entity->name);
 
+$dbprefix = elgg_get_config('dbprefix');
+$options = [
+	'type' => 'object',
+	'subtype' => Publication::SUBTYPE,
+	'wheres' => [
+		"(e.owner_guid = {$page_owner_entity->getGUID()} OR e.guid IN (
+			SELECT guid_one
+			FROM {$dbprefix}entity_relationships
+			WHERE guid_two = {$page_owner_entity->getGUID()}
+			AND relationship IN ('author', 'book_editor')
+		))"
+	],
+	'no_results' => elgg_echo('notfound'),
+];
 
-// filter context
-$viewer = elgg_get_logged_in_user_guid();
-
-if($viewer != $page_owner_entity->getGUID()) {
-	$filter = '';
-	
-	// todo: view publicatoins they owned AND assigned
-	
-	$options = [
-		'type' => 'object',
-		'subtype' => Publication::SUBTYPE,
-		'owner_guid' => $page_owner_entity->getGUID(),
-		'no_results' => elgg_echo('notfound'),
-	];
-
-	$listing = elgg_list_entities($options);
-} else {
-	$filter = 'mine';
-	$selector = get_input('publications-filter');
-
-	// $listing = elgg_view('publications/filter', array('selector' => $selector));
-	$listing = "";
-
-	switch($selector) {
-		case "owned":
-			/* publications i owned */
-			$options = [
-				'type' => 'object',
-				'subtype' => Publication::SUBTYPE,
-				'no_results' => elgg_echo('notfound'),
-
-				'owner_guid' => $page_owner_entity->getGUID(),
-			];
-			$listing.= elgg_list_entities($options);
-			break;
-		
-		case "assigned":
-			/* publication i assigned */
-			$options = [
-				'type' => 'object',
-				'subtype' => Publication::SUBTYPE,
-				'no_results' => elgg_echo('notfound'),
-
-				'relationship' => 'author',
-				'relationship_guid' => $page_owner_entity->getGUID(),
-				'inverse_relationship' => true,
-				'full_view' => false
-			];
-			$listing.= elgg_list_entities_from_relationship($options);
-			break;
-	
-		default:
-			/* publications i owned and assigned */
-			
-			// todo: view publicatoins they owned AND assigned
-
-			$options = [				
-				'type' => 'object',
-				'subtype' => Publication::SUBTYPE,
-				'no_results' => elgg_echo('notfound'),
-
-				'owner_guid' => $page_owner_entity->getGUID(),
-			];
-			$listing.= elgg_list_entities($options);
-			break;
-	}
-}
+$listing = elgg_list_entities($options);
 
 // build page
 $page_data = elgg_view_layout('content', [
 	'title' => $title,
 	'content' => $listing,
-	'filter_context' => $filter,
-	'class' => 'publications-layout',
+	'filter_context' => 'mine',
 ]);
 
 // display the page

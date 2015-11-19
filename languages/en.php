@@ -15,7 +15,7 @@ return [
 	'river:update:object:publication' => "%s updated a publication titled %s",
 	
 	// new keys
-	'publications:settings:enable_bibtex' => "Enable BibTeX import and export features",
+	'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* required fields",
 	'publications:forms:required:alert' => "Please fill out all required fields.",
@@ -24,13 +24,6 @@ return [
 	'publication:forms:authors' => "Authors",
 	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
 	
-	'publications:menu:filter:mine' => "Mine",
-	'publications:menu:filter:author' => "Authored",
-
-	'publications:select:all' => 'View all',
-	'publications:select:owned' => 'Publications i have uploaded',
-	'publications:select:assigned' => 'Publications i am assigned',
-
 	'publications:add' => "Add a publication",
 
 	// types
@@ -40,7 +33,7 @@ return [
 	'publications:type:conference' => "Article in conference",
 	'publications:type:inbook' => "Article in a book",
 	'publications:type:incollection' => "A book in a collection",
-	'publications:type:inproceedings' => "Article in conference proceedings",
+	'publications:type:inproceedings' => "Article in conference",
 	'publications:type:manual' => "Technical documentation",
 	'publications:type:mastersthesis' => "Master's thesis",
 	'publications:type:phdthesis' => "Ph.D. thesis",
@@ -70,7 +63,6 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:month'=> "Month",
 	'publication:page_from' => "Page from",
 	'publication:page_to' => "Page to",
-	'publication:chapter' => "Chapter",
 	'publication:year' => "Year",
 	'publication:booktitle' => "Title of book",
 	'publication:book_editors' => "Book editors",
@@ -83,24 +75,24 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:organization' => "Organization",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
-	'publication:user' => "%s's publications",
+	'publication:user' => "%s's created publications",
 	'publication:user:author' => "%s's authored publications",
 	'publication:friends' => "Friends' publications",
 	'publication:modify' => 'External Authors Invititation: ',
 	
-	'publication:everyone' => "All publications",
+	'publication:everyone' => "All site publications",
 	'publication:export' => "Export to BibTeX file",
 	'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
 	'publication:export:confirm:user' => "Do you want to export all %s's publications as a BibTeX file?",
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX file',
-	'publication:bibtex:description' => 'Here you can upload a BibTeX file, so all publications will be imported into this site.',
+	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
 	'publication:edit' => "Edit a publication",
 	'publication:abstract' => "Abstract",
 	'publication:details' => "Details",
-	'publication:bibtex:fileerror' => 'BibTeX file not found',
-	'publication:bibtex:blank' => 'BibTeX file has no entries',
+	'publication:bibtex:fileerror' => 'BibTex file not found',
+	'publication:bibtex:blank' => 'BibTex file has no entries',
 	'publication:enablepublication' => 'Enable group publication',
 	'publication:group' => 'Group publications',
 	'publication:river:posted' => "%s posted",
@@ -115,7 +107,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	'publications:seeall' => "See all publications from",
 	
-	'publication:error:bibtext:enabled' => "BibTeX support is not enabled, the feature you're trying to use is not allowed.",
+	'publication:error:bibtext:enabled' => "BibTex support is not enabled, the feature you're trying to use is not allowed.",
 	
 	// notifications
 	'publication:notification:create:subject' => "A new publication \"%s\" was created",

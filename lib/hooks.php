@@ -1,51 +1,6 @@
 <?php
 
 /**
- * Remove the friends tab from the filter menu (only for publications)
- *
- * @param string         $hook         the name of the hook
- * @param string         $type         the type of the hook
- * @param ElggMenuItem[] $return_value current return value
- * @param array          $params       supplied params
- *
- * @return void|ElggMenuItem[]
- */
-function publication_register_menu_filter($hook, $type, $return_value, $params) {
-	
-	if (!elgg_in_context("publications")) {
-		return;
-	}
-	
-	foreach ($return_value as $index => $menu_item) {
-		
-		switch ($menu_item->getName()) {
-// 			case 'friend':
-// 				unset($return_value[$index]);
-// 				break;
-			case 'mine':
-				$menu_item->setText(elgg_echo('publications:menu:filter:mine'));
-				break;
-		}
-	}
-	
-	$page_owner = elgg_get_page_owner_entity();
-	if (!($page_owner instanceof ElggUser)) {
-		$page_owner = elgg_get_logged_in_user_entity();
-	}
-	
-	if ($page_owner instanceof ElggUser) {
-		$return_value[] = ElggMenuItem::factory([
-			'name' => 'author',
-			'text' => elgg_echo('publications:menu:filter:author'),
-			'href' => "publications/author/{$page_owner->username}",
-			'priority' => 300,
-		]);
-	}
-	
-	return $return_value;
-}
-
-/**
  *	Add a menu item to the owner block to the publications
  *
  * @param string         $hook         the name of the hook
