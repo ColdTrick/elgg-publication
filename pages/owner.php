@@ -29,10 +29,18 @@ if (publications_bibtex_enabled()) {
 
 elgg_push_breadcrumb($page_owner_entity->name);
 
+$dbprefix = elgg_get_config('dbprefix');
 $options = [
 	'type' => 'object',
 	'subtype' => Publication::SUBTYPE,
-	'owner_guid' => $page_owner_entity->getGUID(),
+	'wheres' => [
+		"(e.owner_guid = {$page_owner_entity->getGUID()} OR e.guid IN (
+			SELECT guid_one
+			FROM {$dbprefix}entity_relationships
+			WHERE guid_two = {$page_owner_entity->getGUID()}
+			AND relationship IN ('author', 'book_editor')
+		))"
+	],
 	'no_results' => elgg_echo('notfound'),
 ];
 

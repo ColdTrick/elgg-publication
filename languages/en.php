@@ -24,9 +24,6 @@ return [
 	'publication:forms:authors' => "Authors",
 	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
 	
-	'publications:menu:filter:mine' => "Created",
-	'publications:menu:filter:author' => "Authored",
-
 	'publications:add' => "Add a publication",
 
 	// types
