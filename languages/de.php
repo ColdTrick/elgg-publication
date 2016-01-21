@@ -22,7 +22,7 @@ return [
 	'publications:details:attachment:download' => "Anhang laden",
 
 	'publication:forms:authors' => "Autoren",
-	'publications:form:author:input:info' => "Geben Sie die ersten Buchstaben eines Autors ein und wählen Sie den vorgeschlagenen Autor aus der Dropdown-Liste aus oder fügen Sie einen neuen hinzu. Eingabetaste drücken, um den Autor der Publikation hinzuzufügen.",
+	'publications:form:author:input:info' => "Geben Sie die ersten Buchstaben des Namens eines Autors ein und wählen Sie den vorgeschlagenen Namen aus der Dropdown-Liste aus oder fügen einen neuen hinzu. Drücken Sie die Eingabetaste, um den Autor hinzuzufügen.",
 
 	'publications:menu:filter:mine' => "Meine",
 	'publications:menu:filter:author' => "Verfasst",
@@ -38,7 +38,7 @@ return [
 	'publications:type:book' => "Buch",
 	'publications:type:booklet' => "Heft",
 	'publications:type:conference' => "Konferenzbeitrag",
-	'publications:type:inbook' => "Teil eines Buches",
+	'publications:type:inbook' => "Beitrag in einem Buch",
 	'publications:type:incollection' => "Buch in einem Sammelband",
 	'publications:type:inproceedings' => "Artikel in einem Konferenzband",
 	'publications:type:manual' => "Technische Dokumentation",
@@ -131,7 +131,7 @@ Um die Publikation anzuzeigen, klicken Sie auf den folgenden Link:
 	
 	'publication:action:import:error:none' => "Es wurden keine Publikationen importiert",
 	'publication:action:import:success:single' => "Die Publikation(en) wurden importiert",
-	'publication:action:import:success:multiple_duplicates' => "%s Publikationen importiert, %s Publikationen bereits auf der Plattform vorhanden",
+	'publication:action:import:success:multiple_duplicates' => "%s Publikationen wurden importiert, %s Publikationen sind bereits auf der Plattform vorhanden",
 	'publication:action:import:success:multiple' => "%s Publikationen importiert",
-	'publication:action:import:success:duplicates' => "Keine Publikationen importiert, %s Publikationen bereits auf der Plattform vorhanden",
+	'publication:action:import:success:duplicates' => "Die Publikation(en) wurde(n) nicht importiert. Es sind bereits %s Publikationen auf der Plattform vorhanden",
 ];

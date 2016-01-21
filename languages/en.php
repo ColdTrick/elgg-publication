@@ -22,7 +22,7 @@ return [
 	'publications:details:attachment:download' => "Click to download attachment",
 	
 	'publication:forms:authors' => "Authors",
-	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
+	'publications:form:author:input:info' => "Type in the first few letters of the author’s name and select the suggested name from the dropdown list or simply add a new one. Press enter to add the author.",
 	
 	'publications:add' => "Add a publication",
 
@@ -32,14 +32,14 @@ return [
 	'publications:type:booklet' => "Booklet",
 	'publications:type:conference' => "Article in conference",
 	'publications:type:inbook' => "Article in a book",
-	'publications:type:incollection' => "A book in a collection",
-	'publications:type:inproceedings' => "Article in conference",
+	'publications:type:incollection' => "Book in an anthology",
+	'publications:type:inproceedings' => "Article in conference proceedings",
 	'publications:type:manual' => "Technical documentation",
-	'publications:type:mastersthesis' => "Master's thesis",
+	'publications:type:mastersthesis' => "Master’s or other final thesis (not Ph.D.)",
 	'publications:type:phdthesis' => "Ph.D. thesis",
-	'publications:type:proceedings' => "Proceedings of a conference",
-	'publications:type:techreport' => "Report published by a school or other institution",
-	'publications:type:unpublished' => "A document not formally published",
+	'publications:type:proceedings' => "Conference report",
+	'publications:type:techreport' => "Report published by a university or other institution",
+	'publications:type:unpublished' => "Document not formally published",
 	
 	// old keys
 	'publication:keywords' => "Keywords",
@@ -124,7 +124,7 @@ To view the publication click the link:
 	
 	'publication:action:import:error:none' => "No publications where imported",
 	'publication:action:import:success:single' => "The publication was imported",
-	'publication:action:import:success:multiple_duplicates' => "Imported %s publications and found %s publications already in the system",
+	'publication:action:import:success:multiple_duplicates' => "%s publications were imported, %s publications exists already on the system.",
 	'publication:action:import:success:multiple' => "Imported %s publications",
-	'publication:action:import:success:duplicates' => "No publications imported and found %s publications already in the system",
+	'publication:action:import:success:duplicates' => "The publication(s) is/are not imported. It/They already exist(s) %s times on the system.",
 ];
