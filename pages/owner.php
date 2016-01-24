@@ -41,10 +41,20 @@ $options = [
 			AND relationship IN ('author', 'book_editor')
 		))"
 	],
+	'order_by_metadata' => array (
+		'name'		=> 'year',
+		'direction'	=> 'DESC',
+		'as'		=> 'integer'
+		),
+	/* order by title */
+	/*
+	'joins' => array("INNER JOIN {$dbprefix}objects_entity o ON (e.guid = o.guid)"),
+	'order_by' => 'o.title',
+	*/
 	'no_results' => elgg_echo('notfound'),
 ];
 
-$listing = elgg_list_entities($options);
+$listing = elgg_list_entities_from_metadata($options);
 
 // build page
 $page_data = elgg_view_layout('content', [
