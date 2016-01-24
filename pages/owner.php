@@ -57,11 +57,24 @@ $options = [
 $listing = elgg_list_entities_from_metadata($options);
 
 // build page
-$page_data = elgg_view_layout('content', [
-	'title' => $title,
-	'content' => $listing,
-	'filter_context' => 'mine',
-]);
+
+// filter context
+$viewer = elgg_get_logged_in_user_guid();
+
+if($viewer == $page_owner_entity->getGUID()) {
+	$page_data = elgg_view_layout('content', [
+		'title' => $title,
+		'content' => $listing,
+		'filter_context' => 'mine',
+	]);
+
+} else {
+	$page_data = elgg_view_layout('content', [
+		'title' => $title,
+		'content' => $listing,
+		'filter_context' => false,
+	]);
+}
 
 // display the page
 echo elgg_view_page($title, $page_data);
