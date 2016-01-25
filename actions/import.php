@@ -14,7 +14,12 @@ if (empty($data)) {
 
 $forward_to_edit = (bool) get_input('forward_to_edit', 1);
 
-$entries = \AudioLabs\BibtexParser\BibtexParser::parse_string($data);
+// load lib
+publications_load_bibtex_browser();
+
+$parser = new BibDataBase();
+$parser->load($_FILES['bibtex_import']['tmp_name']);
+$entries = $parser->getEntries();
 if (empty($entries)) {
 	register_error(elgg_echo('publication:bibtex:blank'));
 	forward(REFERER);
@@ -44,13 +49,15 @@ $entity_attributes = [
 	'description',
 ];
 $processed_entry_fields = [
-	'raw',
-	'type',
+	'x-bibtex-type',
+	'key',
 	'title',
-	'reference',
+	'timestamp',
 	'lines',
 	'pages',
 	'author',
+	'_author',
+	'editor',
 	'journal',
 ];
 
@@ -58,15 +65,17 @@ $processed_entry_fields = [
 $count = 0;
 $duplicates = 0;
 $forward_url = REFERER;
-foreach ($entries as $entry) {
+foreach ($entries as $ref => $entry) {
 	
-	$type = elgg_extract('type', $entry);
-	$type = publications_sanitize($type);
+	if (!($entry instanceof BibEntry)) {
+		continue;
+	}
+	
+	$type = $entry->getType();
 	$type = strtolower($type);
 	
 	// check if publication already exists in the system
-	$title = elgg_extract('title', $entry);
-	$title = publications_sanitize($title);
+	$title = $entry->getTitle();
 	if (empty($title)) {
 		// no title, can't continue
 		continue;
@@ -82,7 +91,7 @@ foreach ($entries as $entry) {
 	$publication = new Publication();
 	$publication->access_id = ACCESS_LOGGED_IN;
 	$publication->title = $title;
-	$publication->bibtext_reference = elgg_extract('reference', $entry);
+	$publication->bibtext_reference = $ref;
 	$publication->pubtype = $type;
 	if (!$publication->save()) {
 		// unable to save
@@ -99,36 +108,53 @@ foreach ($entries as $entry) {
 	
 	// start handling some custom fields
 	// start/end page
-	$pages = elgg_extract('pages', $entry);
-	$pages = publications_sanitize($pages);
+	$pages = $entry->getPages();
 	if (is_array($pages)) {
-		$publication->page_from = elgg_extract('start', $pages);
-		$publication->page_to = elgg_extract('end', $pages);
+		$publication->page_from = elgg_extract('0', $pages);
+		$publication->page_to = elgg_extract('1', $pages);
 	} else {
 		$publication->page_from = $pages;
 	}
 	
 	// authors
-	$authors = elgg_extract('author', $entry);
-	$authors = publications_sanitize($authors);
+	$authors = $entry->getRawAuthors();
 	if (!empty($authors)) {
 		$new_authors = [];
 		foreach ($authors as $author) {
+			if (strtolower($author) === 'unknown') {
+				continue;
+			}
+			
 			$new_authors[] = trim(str_ireplace(',', '', $author), '"');
 		}
 		
 		$publication->authors = implode(',', $new_authors);
 	}
 	
+	// editors
+	$editors = $entry->getEditors();
+	if (!empty($editors)) {
+		$new_editors = [];
+		foreach ($editors as $editor) {
+			if (strtolower($editor) === 'unknown') {
+				continue;
+			}
+			
+			$new_editors[] = trim(str_ireplace(',', '', $editor), '"');
+		}
+		
+		$publication->book_editors = implode(',', $new_editors);
+	}
+	
 	// journal
-	$journal = elgg_extract('journal', $entry);
-	$journal = publications_sanitize($journal);
+	$journal = $entry->getField('journal');
 	if (!empty($journal)) {
 		$publication->journaltitle = $journal;
 	}
 	
 	// handle all other fields from the bibtex file
-	foreach ($entry as $field_name => $field_value) {
+	$other_fields = $entry->getFields();
+	foreach ($other_fields as $field_name => $field_value) {
 		
 		if (in_array($field_name, $entity_attributes)) {
 			// reserved entity attributes
@@ -140,7 +166,6 @@ foreach ($entries as $entry) {
 			continue;
 		}
 		
-		$field_value = publications_sanitize($field_value);
 		$publication->$field_name = $field_value;
 	}
 	

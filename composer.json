@@ -9,8 +9,7 @@
 		"issues": "https://github.com/ColdTrick/publications/issues"
 	},
 	"require": {
-		"composer/installers": "^1.0.8",
-		"audiolabs/bibtexparser": "dev-master"
+		"composer/installers": "^1.0.8"
 	},
 	"require-dev": {
 		"coldtrick/sniffs": "dev-master"
