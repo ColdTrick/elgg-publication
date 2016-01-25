@@ -129,20 +129,19 @@ function publications_get_types() {
 }
 
 /**
- * Wrapper function to sanitize the import-data from a Bibtex file
+ * Load the BibTex Browser library
  *
- * @param mixed $input the input to sanitize
- *
- * @return array|string
+ * @return void
  */
-function publications_sanitize($input) {
+function publications_load_bibtex_browser() {
+	static $once;
 	
-	if (is_array($input)) {
-		return array_map('publications_sanitize', $input);
+	if (isset($once)) {
+		return;
 	}
 	
-	$input = \AudioLabs\BibtexParser\BibtexParser::cleanup($input);
-	$input = trim($input, '\"');
+	// load it as a library
+	$_GET['library'] = 1;
 	
-	return $input;
+	require_once(elgg_get_plugins_path() . 'publications/vendors/bibtexbrowser/bibtexbrowser.php');
 }
