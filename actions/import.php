@@ -65,6 +65,10 @@ $processed_entry_fields = [
 $count = 0;
 $duplicates = 0;
 $forward_url = REFERER;
+
+// reverse array for better creation-date
+$entries = array_reverse($entries);
+
 foreach ($entries as $ref => $entry) {
 	
 	if (!($entry instanceof BibEntry)) {
