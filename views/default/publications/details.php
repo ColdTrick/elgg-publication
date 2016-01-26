@@ -73,6 +73,28 @@ if (elgg_view_exists("publications/publication/view/$type")) {
 	$details .= elgg_view("publications/publication/view/$type", $vars);
 }
 
+// default fields
+
+$details .= elgg_view("publications/publication/view/default", $vars);
+
+/*
+if ($entity->doi) {
+	echo '<tr>';
+	echo '<td><label>' . elgg_echo('publication:doi') . ':</label></td>';
+	echo '<td>' . $entity->doi . '</td>';
+	echo '</tr>';
+}
+
+if ($entity->uri) {
+	echo '<tr>';
+	echo '<td><label>' . elgg_echo('publication:uri') . ':</label></td>';
+	echo '<td>' . elgg_view('output/url', [
+		'href' => $entity->uri
+	]) . '</td>';
+	echo '</tr>';
+}
+*/
+
 // extending the results
 $details .= elgg_view('publications/publication/view/extend', $vars);
 

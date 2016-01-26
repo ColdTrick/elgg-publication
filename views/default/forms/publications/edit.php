@@ -14,6 +14,8 @@ elgg_require_js('elgg/spinner');
 // default field config
 $field_config = [
 	'type_selector' => [],
+	'doi' => [],
+	'url' => [],
 	'note' => [],
 	'attachment' => [],
 ];

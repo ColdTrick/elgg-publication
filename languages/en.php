@@ -75,11 +75,13 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:organization' => "Organization",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
+	'publication:url' => 'URL',
+	'publication:doi' => 'DOI',
+
 	'publication:user' => "%s's created publications",
 	'publication:user:author' => "%s's authored publications",
 	'publication:friends' => "Friends' publications",
-	'publication:modify' => 'External Authors Invititation: ',
-	
+	'publication:modify' => 'External Authors Invititation: ',	
 	'publication:everyone' => "All site publications",
 	'publication:export' => "Export to BibTeX file",
 	'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
