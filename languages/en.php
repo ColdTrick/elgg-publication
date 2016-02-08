@@ -14,8 +14,15 @@ return [
 	'river:create:object:publication' => "%s wrote a new publication titled %s",
 	'river:update:object:publication' => "%s updated a publication titled %s",
 	
-	// new keys
+	// settings
 	'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
+	'publications:settings:bibtex_import_behaviour' => "How to handle duplicate entries during BibTex import",
+	'publications:settings:bibtex_import_behaviour:skip' => "Skip entry",
+	'publications:settings:bibtex_import_behaviour:update' => "Update information",
+	'publications:settings:bibtex_import_behaviour:user_skip' => "User can choose (default: skip)",
+	'publications:settings:bibtex_import_behaviour:user_update' => "User can choose (default: update)",
+	
+	// forms
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* required fields",
 	'publications:forms:required:alert' => "Please fill out all required fields.",
@@ -87,6 +94,10 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX file',
+	'publication:bibtex:update' => 'Update existing publications with information from the BibTex file',
+	'publication:bibtex:skip:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be skipped.',
+	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTex file.',
+	'publication:bibtex:user_update:description' => 'Publications are matched on Title, if no match is found a new one will be created. If not checked matched publications will be skipped.',
 	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
 	'publication:edit' => "Edit a publication",
 	'publication:abstract' => "Abstract",
@@ -124,7 +135,7 @@ To view the publication click the link:
 	
 	'publication:action:import:error:none' => "No publications where imported",
 	'publication:action:import:success:single' => "The publication was imported",
-	'publication:action:import:success:multiple_duplicates' => "Imported %s publications and found %s publications already in the system",
-	'publication:action:import:success:multiple' => "Imported %s publications",
+	'publication:action:import:success:multiple_duplicates' => "Imported/updated %s publications and found %s publications already in the system",
+	'publication:action:import:success:multiple' => "Imported/updated %s publications",
 	'publication:action:import:success:duplicates' => "No publications imported and found %s publications already in the system",
 ];

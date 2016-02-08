@@ -6,6 +6,28 @@ $file .= elgg_view('input/file', [
 	'name' => 'bibtex_import',
 	'id' => 'publications-bibtext-import',
 ]);
+
+$import_behaviour = elgg_get_plugin_setting('bibtex_import_behaviour', 'publications', 'skip');
+switch ($import_behaviour) {
+	case 'update':
+		$file .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('publication:bibtex:update:description'));
+		break;
+	case 'user_skip':
+	case 'user_update':
+		$options = [
+			'name' => 'user_update_setting',
+			'value' => 'update',
+			'checked' => ($import_behaviour === 'user_update') ? true : false,
+			'label' => elgg_echo('publication:bibtex:update'),
+		];
+		$file .= elgg_view('input/checkbox', $options);
+		$file .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('publication:bibtex:user_update:description'));
+		break;
+	default:
+		$file .= elgg_format_element('div', ['class' => 'elgg-subtext'], elgg_echo('publication:bibtex:skip:description'));
+		break;
+}
+
 echo elgg_format_element('div', [], $file);
 
 // description
