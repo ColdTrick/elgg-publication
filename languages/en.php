@@ -26,6 +26,7 @@ return [
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* required fields",
 	'publications:forms:required:alert' => "Please fill out all required fields.",
+	'publications:forms:partial_required:alert' => "Please provide eighter an author or editor.",
 	'publications:details:attachment:download' => "Click to download attachment",
 	
 	'publication:forms:authors' => "Authors",

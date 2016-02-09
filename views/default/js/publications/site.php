@@ -45,20 +45,35 @@ elgg.publications.init = function() {
 		var result = true;
 		var msg = '';
 		
-		var authors_mandatory = $('label[for="publications-authors_autocomplete"] span.elgg-quiet').length;
-		if (authors_mandatory && $(this).find("#publications-authors_autocomplete_results").html().trim() == "") {
-			msg = msg + elgg.echo("publications:forms:required:alert") + '\n';
-			$("#publications-authors_autocomplete").focus();
+		// find required autocompletes
+		$(this).find('.elgg-input-autocomplete[data-required="1"]').each(function() {
+			var id = $(this).attr('id');
+			if ($('#' + id + '_results').html().trim() == "") {
+				msg = msg + elgg.echo("publications:forms:required:alert") + '\n';
+				$('#' + id).focus();
+				result = false;
+			}
+		});
+		
+		// find partial/shared required autocompletes
+		var partials = false;
+		var partials_filled = false;
+		
+		$(this).find('.elgg-input-autocomplete[data-partial-required="1"]').each(function() {
+			partials = true;
+			var id = $(this).attr('id');
+			if ($('#' + id + '_results').html().trim() != "") {
+				partials_filled = true;
+				return;
+			}
+		});
+		
+		if (partials && !partials_filled) {
+			msg = msg + elgg.echo("publications:forms:partial_required:alert") + '\n';
 			result = false;
 		}
 		
-		var editors_mandatory = $('label[for="publications-book-editors_autocomplete"] span.elgg-quiet').length;
-		if (editors_mandatory && $(this).find("#publications-book-editors_autocomplete_results").html().trim() == "") {
-			msg = msg + elgg.echo("publications:forms:required:alert") + '\n';
-			$("#publications-book-editors_autocomplete").focus();
-			result = false;
-		}
-		
+		// did we have errors
 		if (!result) {
 			alert(msg);
 		}
