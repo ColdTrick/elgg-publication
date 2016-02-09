@@ -102,9 +102,8 @@ function publication_register_menu_title($hook, $type, $return_value, $params) {
  * @return void|true
  */
 function publication_write_permission_check($hook, $type, $return_value, $params){
-	$result = $returnvalue;
 	
-	if (!empty($returnvalue)) {
+	if (!empty($return_value)) {
 		// already allowed
 		return;
 	}

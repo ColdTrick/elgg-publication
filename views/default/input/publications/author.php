@@ -18,7 +18,9 @@ if ($entity instanceof Publication) {
 
 $name = elgg_extract('name', $vars, 'authors');
 $id = elgg_extract('id', $vars, 'publications-authors');
-$minChars = elgg_extract('minChars', $vars, 3);
+$minChars = (int) elgg_extract('minChars', $vars, 3);
+$required = (bool) elgg_extract('required', $vars, false);
+$partial_required = (bool) elgg_extract('partial_required', $vars, false);
 
 $value = elgg_extract('value', $vars, $default_value);
 
@@ -26,7 +28,7 @@ $destination = "{$id}_autocomplete_results";
 
 // build form elements
 $label_text = elgg_extract('label', $vars, elgg_echo('publication:forms:authors'));
-if (elgg_extract('required', $vars, false)) {
+if ($required) {
 	$label_text .= elgg_format_element('span', ['class' => 'elgg-quiet mls'], elgg_echo('publications:forms:required'));
 }
 $label = elgg_format_element('label', ['for' => "{$id}_autocomplete"], $label_text);
@@ -34,6 +36,8 @@ $label = elgg_format_element('label', ['for' => "{$id}_autocomplete"], $label_te
 $input = elgg_view('input/text', [
 	'id' => "{$id}_autocomplete",
 	'class' => 'elgg-input elgg-input-autocomplete',
+	'data-required' => $required ? 1 : 0,
+	'data-partial-required' => $partial_required ? 1 : 0,
 ]);
 
 $info = elgg_format_element('div', ['class' => 'elgg-subtext mbs'], elgg_echo('publications:form:author:input:info'));

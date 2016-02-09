@@ -11,7 +11,7 @@ if ($entity instanceof Publication) {
 $field_config = [
 	'title' => [],
 	'author' => [
-		'required' => true,
+		'partial_required' => true,
 	],
 	'year' => [],
 	'month' => [],
@@ -21,6 +21,7 @@ $field_config = [
 		'value' => $book_editors,
 		'id' => 'publications-book-editors',
 		'label' => elgg_echo('publication:book_editors'),
+		'partial_required' => true,
 	],
 	'publisher' => [
 		'required' => true,

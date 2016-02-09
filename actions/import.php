@@ -14,6 +14,23 @@ if (empty($data)) {
 
 $forward_to_edit = (bool) get_input('forward_to_edit', 1);
 
+// import behaviour
+$import_behaviour = elgg_get_plugin_setting('bibtex_import_behaviour', 'publications', 'skip');
+// default: skip
+$skip_duplicates = true;
+switch ($import_behaviour) {
+	case 'update':
+		// always update
+		$skip_duplicates = false;
+		break;
+	case 'user_skip':
+	case 'user_update':
+		// user can shoose to update/skip
+		$user_update_setting = get_input('user_update_setting');
+		$skip_duplicates = ($user_update_setting !== 'update');
+		break;
+}
+
 // load lib
 publications_load_bibtex_browser();
 
@@ -66,10 +83,10 @@ $count = 0;
 $duplicates = 0;
 $forward_url = REFERER;
 
-// reverse array for better creation-date
-$entries = array_reverse($entries);
+$ia = elgg_set_ignore_access(true);
 
 foreach ($entries as $ref => $entry) {
+	$publication = false;
 	
 	if (!($entry instanceof BibEntry)) {
 		continue;
@@ -86,21 +103,36 @@ foreach ($entries as $ref => $entry) {
 	}
 	
 	$exists_options['wheres'] = ['oe.title = "' . sanitize_string($title) . '"'];
-	if (elgg_get_entities($exists_options)) {
+	$existing_count = elgg_get_entities($exists_options);
+	if (!empty($existing_count) && $skip_duplicates) {
 		// this item already exitst
 		$duplicates++;
 		continue;
+	} elseif (!empty($existing_count) && !$skip_duplicates) {
+		// fetch existing
+		$options = $exists_options;
+		$options['count'] = false;
+		
+		$publications = elgg_get_entities($options);
+		$publication = $publications[0];
+	} else {
+		// create new
+		$publication = new Publication();
+		$publication->access_id = ACCESS_LOGGED_IN;
+		$publication->title = $title;
+		if (!$publication->save()) {
+			// unable to save
+			continue;
+		}
 	}
 	
-	$publication = new Publication();
-	$publication->access_id = ACCESS_LOGGED_IN;
-	$publication->title = $title;
-	$publication->bibtext_reference = $ref;
-	$publication->pubtype = $type;
-	if (!$publication->save()) {
-		// unable to save
+	if (!($publication instanceof Publication)) {
+		// something went wrong
 		continue;
 	}
+	
+	$publication->bibtext_reference = $ref;
+	$publication->pubtype = $type;
 	
 	// set forwarding
 	$count++;
@@ -132,6 +164,9 @@ foreach ($entries as $ref => $entry) {
 			$new_authors[] = trim(str_ireplace(',', '', $author), '"');
 		}
 		
+		// filter duplicate authors (from previous import)
+		$new_authors = array_unique($new_authors);
+		
 		$publication->authors = implode(',', $new_authors);
 	}
 	
@@ -146,6 +181,9 @@ foreach ($entries as $ref => $entry) {
 			
 			$new_editors[] = trim(str_ireplace(',', '', $editor), '"');
 		}
+		
+		// filter duplicate editors (from previous import)
+		$new_editors = array_unique($new_editors);
 		
 		$publication->book_editors = implode(',', $new_editors);
 	}
@@ -175,6 +213,9 @@ foreach ($entries as $ref => $entry) {
 	
 	$publication->save();
 }
+
+// restore access
+elgg_set_ignore_access($ia);
 
 if (empty($count) && empty($duplicates)) {
 	// no imports, no duplicates

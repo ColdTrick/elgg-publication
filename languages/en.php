@@ -14,15 +14,23 @@ return [
 	'river:create:object:publication' => "%s wrote a new publication titled %s",
 	'river:update:object:publication' => "%s updated a publication titled %s",
 	
-	// new keys
+	// settings
 	'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
+	'publications:settings:bibtex_import_behaviour' => "How to handle duplicate entries during BibTex import",
+	'publications:settings:bibtex_import_behaviour:skip' => "Skip entry",
+	'publications:settings:bibtex_import_behaviour:update' => "Update information",
+	'publications:settings:bibtex_import_behaviour:user_skip' => "User can choose (default: skip)",
+	'publications:settings:bibtex_import_behaviour:user_update' => "User can choose (default: update)",
+	
+	// forms
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* required fields",
 	'publications:forms:required:alert' => "Please fill out all required fields.",
+	'publications:forms:partial_required:alert' => "Please provide eighter an author or editor.",
 	'publications:details:attachment:download' => "Click to download attachment",
 	
 	'publication:forms:authors' => "Authors",
-	'publications:form:author:input:info' => "Type in the first few letters of the author’s name and select the suggested name from the dropdown list or simply add a new one. Press enter to add the author.",
+	'publications:form:author:input:info' => "Type in the first letters of the author's name and select the suggested author from the dropdown list or simply add a new one. Hit enter to add the author of your publication.",
 	
 	'publications:add' => "Add a publication",
 
@@ -32,14 +40,14 @@ return [
 	'publications:type:booklet' => "Booklet",
 	'publications:type:conference' => "Article in conference",
 	'publications:type:inbook' => "Article in a book",
-	'publications:type:incollection' => "Book in an anthology",
-	'publications:type:inproceedings' => "Article in conference proceedings",
+	'publications:type:incollection' => "A book in a collection",
+	'publications:type:inproceedings' => "Article in conference",
 	'publications:type:manual' => "Technical documentation",
-	'publications:type:mastersthesis' => "Master’s or other final thesis (not Ph.D.)",
+	'publications:type:mastersthesis' => "Master's thesis",
 	'publications:type:phdthesis' => "Ph.D. thesis",
-	'publications:type:proceedings' => "Conference report",
-	'publications:type:techreport' => "Report published by a university or other institution",
-	'publications:type:unpublished' => "Document not formally published",
+	'publications:type:proceedings' => "Proceedings of a conference",
+	'publications:type:techreport' => "Report published by a school or other institution",
+	'publications:type:unpublished' => "A document not formally published",
 	
 	// old keys
 	'publication:keywords' => "Keywords",
@@ -75,13 +83,11 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:organization' => "Organization",
 	'publication:institution' => "Institution",
 	'publication:edition' => "Edition",
-	'publication:url' => 'URL',
-	'publication:doi' => 'DOI',
-
 	'publication:user' => "%s's created publications",
 	'publication:user:author' => "%s's authored publications",
 	'publication:friends' => "Friends' publications",
-	'publication:modify' => 'External Authors Invititation: ',	
+	'publication:modify' => 'External Authors Invititation: ',
+	
 	'publication:everyone' => "All site publications",
 	'publication:export' => "Export to BibTeX file",
 	'publication:export:confirm:all' => "Do you want to export all publications as a BibTeX file?",
@@ -89,6 +95,10 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX file',
+	'publication:bibtex:update' => 'Update existing publications with information from the BibTex file',
+	'publication:bibtex:skip:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be skipped.',
+	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTex file.',
+	'publication:bibtex:user_update:description' => 'Publications are matched on Title, if no match is found a new one will be created. If not checked matched publications will be skipped.',
 	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
 	'publication:edit' => "Edit a publication",
 	'publication:abstract' => "Abstract",
@@ -126,7 +136,7 @@ To view the publication click the link:
 	
 	'publication:action:import:error:none' => "No publications where imported",
 	'publication:action:import:success:single' => "The publication was imported",
-	'publication:action:import:success:multiple_duplicates' => "%s publications were imported, %s publications exists already on the system.",
-	'publication:action:import:success:multiple' => "Imported %s publications",
-	'publication:action:import:success:duplicates' => "The publication(s) is/are not imported. It/They already exist(s) %s times on the system.",
+	'publication:action:import:success:multiple_duplicates' => "Imported/updated %s publications and found %s publications already in the system",
+	'publication:action:import:success:multiple' => "Imported/updated %s publications",
+	'publication:action:import:success:duplicates' => "No publications imported and found %s publications already in the system",
 ];

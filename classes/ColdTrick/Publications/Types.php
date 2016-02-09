@@ -319,8 +319,6 @@ class Types {
 		
 		$required_types = [
 			'article',
-			'book',
-			'inbook',
 			'incollection',
 			'inproceedings',
 			'mastersthesis',
@@ -334,10 +332,48 @@ class Types {
 			return;
 		}
 		
-		$author_guids = get_input('authors');
-		$authors_text = get_input('authors_text');
+		$authors_order = get_input('authors_order');
 		
-		if (empty($author_guids) && empty($authors_text)) {
+		if (empty($authors_order)) {
+			register_error(elgg_echo('publication:blankdefault'));
+			return false;
+		}
+	}
+	
+	/**
+	 * Validate the presence of authors/editors for certain types
+	 *
+	 * @param string $hook         the name of the hook
+	 * @param string $type         the type of the hook
+	 * @param bool   $return_value current return value
+	 * @param array  $params       supplied params
+	 *
+	 * @return void|false
+	 */
+	public static function validateRequiredAuthorsEditors($hook, $type, $return_value, $params) {
+		
+		if (stristr($type, 'input_validation:') === false) {
+			return;
+		}
+		
+		if (empty($params) || !is_array($params)) {
+			return;
+		}
+		
+		$required_types = [
+			'book',
+			'inbook',
+		];
+		
+		$pubtype = elgg_extract('type', $params);
+		if (!in_array($pubtype, $required_types)) {
+			return;
+		}
+		
+		$authors_order = get_input('authors_order');
+		$book_editors_order = get_input('book_editors_order');
+		
+		if (empty($authors_order) && empty($book_editors_order)) {
 			register_error(elgg_echo('publication:blankdefault'));
 			return false;
 		}
@@ -352,7 +388,7 @@ class Types {
 	 *
 	 * @return void
 	 */
-	public static function saveArticleAuthors($event, $type, $entity) {
+	public static function saveeAuthors($event, $type, $entity) {
 		
 		if (!($entity instanceof \Publication)) {
 			return;
@@ -408,7 +444,7 @@ class Types {
 	 *
 	 * @return void
 	 */
-	public static function saveArticleBookAuthors($event, $type, $entity) {
+	public static function saveBookEditors($event, $type, $entity) {
 		
 		if (!($entity instanceof \Publication)) {
 			return;
