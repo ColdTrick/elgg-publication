@@ -76,6 +76,7 @@ $processed_entry_fields = [
 	'_author',
 	'editor',
 	'journal',
+	'abstract',
 ];
 
 // a bibtex file can have multiple entries
@@ -192,6 +193,12 @@ foreach ($entries as $ref => $entry) {
 	$journal = $entry->getField('journal');
 	if (!empty($journal)) {
 		$publication->journaltitle = $journal;
+	}
+	
+	// abstract
+	$abstract = $entry->getField('abstract');
+	if (!empty($abstract)) {
+		$publication->description = $abstract;
 	}
 	
 	// handle all other fields from the bibtex file
