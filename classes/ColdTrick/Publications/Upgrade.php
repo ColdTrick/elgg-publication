@@ -82,4 +82,38 @@ class Upgrade {
 		}
 		
 	}
+	
+	/**
+	 * Move the imported abstract fields to description
+	 *
+	 * @param string $event  the name of the event
+	 * @param string $type   the type of the event
+	 * @param mixed  $object supplied params
+	 *
+	 * @return void
+	 */
+	public static function abstractToDescription($event, $type, $object) {
+		
+		$options = [
+			'type' => 'object',
+			'subtype' => \Publication::SUBTYPE,
+			'limit' => false,
+			'metadata_name' => 'abstract',
+		];
+		$entities = new \ElggBatch('elgg_get_entities_from_metadata', $options);
+		$entities->setIncrementOffset(false);
+		foreach ($entities as $entity) {
+			
+			// append abstract to description
+			$entity->description .= ' ' . $entity->abstract;
+			// remove trailing spaces
+			trim($entity->description);
+			
+			// unset abstract
+			unset($entity->abstract);
+			
+			// save new data
+			$entity->save();
+		}
+	}
 }

@@ -67,9 +67,10 @@ function publication_init() {
 	
 	// register event handlers
 	elgg_register_event_handler('login', 'user', 'publication_login_check');
-	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'setClassHandler']);
-	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'updateArticleBook']);
-	elgg_register_event_handler('upgrade', 'system', ['\ColdTrick\Publications\Upgrade', 'updateArticleJournal']);
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\Publications\Upgrade::setClassHandler');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\Publications\Upgrade::updateArticleBook');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\Publications\Upgrade::updateArticleJournal');
+	elgg_register_event_handler('upgrade', 'system', '\ColdTrick\Publications\Upgrade::abstractToDescription');
 	
 	// Make sure the publication initialisation function is called on initialisation
 	elgg_register_event_handler('pagesetup', 'system', 'publication_pagesetup');
