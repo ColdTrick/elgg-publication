@@ -16,6 +16,13 @@ return [
 
 	// new keys
 	'publications:settings:enable_bibtex' => "Aktiviere BibTeX Import- und Exportfunktionen",
+	'publications:settings:bibtex_import_behaviour' => "Wie sollen doppelte Einträge beim BibTex-Import behandelt werden",
+	'publications:settings:bibtex_import_behaviour:skip' => "Überspringe Publikation",
+	'publications:settings:bibtex_import_behaviour:update' => "Aktualisiere Publikation",
+	'publications:settings:bibtex_import_behaviour:user_skip' => "Benutzer kann wählen (default: überspringen)",
+	'publications:settings:bibtex_import_behaviour:user_update' => "Benutzer kann wählen (default: aktualisieren)",
+	'publications:settings:bibtex_import_duplicates' => "Beschränkge Duplikat-Handling auf eigene Publikationen",
+
 	'publications:forms:required' => "*",
 	'publications:forms:required:hint' => "* Benötigte Felder",
 	'publications:forms:required:alert' => "Bitte füllen Sie alle erforderlichen Felder aus.",

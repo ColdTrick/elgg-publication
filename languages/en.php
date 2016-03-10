@@ -21,6 +21,7 @@ return [
 	'publications:settings:bibtex_import_behaviour:update' => "Update information",
 	'publications:settings:bibtex_import_behaviour:user_skip' => "User can choose (default: skip)",
 	'publications:settings:bibtex_import_behaviour:user_update' => "User can choose (default: update)",
+	'publications:settings:bibtex_import_duplicates' => "Limit duplicate handling during BibTex import to owned publications",
 	
 	// forms
 	'publications:forms:required' => "*",
