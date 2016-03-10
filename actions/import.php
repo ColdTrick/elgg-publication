@@ -50,6 +50,9 @@ $exists_options = [
 	'joins' => ["JOIN {$dbprefix}objects_entity oe ON e.guid = oe.guid"],
 ];
 
+/* handle owned publications only */
+$exists_options['owner_guid'] = elgg_get_logged_in_user_guid();
+
 $entity_attributes = [
 	'guid',
 	'type',
