@@ -87,6 +87,8 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:user:author' => "%s's authored publications",
 	'publication:friends' => "Friends' publications",
 	'publication:modify' => 'External Authors Invititation: ',
+	'publication:doi' => 'DOI',
+	'publication:url' => 'URL',
 	
 	'publication:everyone' => "All site publications",
 	'publication:export' => "Export to BibTeX file",
