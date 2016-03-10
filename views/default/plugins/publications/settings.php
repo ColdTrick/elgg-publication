@@ -16,10 +16,10 @@ $bibtex_import_behaviour = [
 	'user_update' => elgg_echo('publications:settings:bibtex_import_behaviour:user_update'),
 ];
 
-// $onoff_options = [
-// 	'on' => elgg_echo('on'),
-// 	'off' => elgg_echo('off')
-// ];
+//$onoff_options = [
+//	'on' => elgg_echo('on'),
+//	'off' => elgg_echo('off')
+//];
 
 // echo '<div>';
 // echo elgg_echo('publication:modify') . ' ';
@@ -55,3 +55,10 @@ $import_behaviour .= elgg_view('input/select', [
 ]);
 echo elgg_format_element('div', [], $import_behaviour);
 
+$import_duplicates = elgg_echo('publications:settings:bibtex_import_duplicates') . ' ';
+$import_duplicates .= elgg_view('input/select', [
+	'name' => 'params[bibtex_import_duplicates]',
+	'options_values' => $noyes_options,
+	'value' => $plugin->bibtex_import_duplicates,
+]);
+echo elgg_format_element('div', [], $import_duplicates);

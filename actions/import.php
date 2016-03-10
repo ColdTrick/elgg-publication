@@ -51,7 +51,9 @@ $exists_options = [
 ];
 
 /* handle owned publications only */
-$exists_options['owner_guid'] = elgg_get_logged_in_user_guid();
+if (elgg_get_plugin_setting('bibtex_import_duplicates','publications')==='yes') {
+	$exists_options['owner_guid'] = elgg_get_logged_in_user_guid();
+}
 
 $entity_attributes = [
 	'guid',
