@@ -458,6 +458,7 @@ class Types {
 			'book',
 			'inbook',
 			'incollection',
+			'proceedings',
 			'inproceedings',
 		];
 		
