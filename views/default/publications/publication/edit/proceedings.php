@@ -1,6 +1,9 @@
 <?php
 
+$entity = elgg_extract('entity', $vars);
+
 $book_editors = [];
+
 if ($entity instanceof Publication) {
 	$book_editors = explode(',', $entity->book_editors);
 }
