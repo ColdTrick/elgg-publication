@@ -1,5 +1,10 @@
 <?php
 
+// description
+echo "<div>",elgg_view('output/longtext', [
+	'value' => elgg_echo('publication:bibtex:description',[elgg_get_config('sitename')]),
+]),"</div>";
+
 // file
 $file = elgg_format_element('label', ['for' => 'publications-bibtext-import'], elgg_echo('publication:bibtex'));
 $file .= elgg_view('input/file', [
@@ -30,10 +35,6 @@ switch ($import_behaviour) {
 
 echo elgg_format_element('div', [], $file);
 
-// description
-echo elgg_view('output/longtext', [
-	'value' => elgg_echo('publication:bibtex:description'),
-]);
 
 // forward after upload
 // $forwarding = elgg_view('input/checkbox', [

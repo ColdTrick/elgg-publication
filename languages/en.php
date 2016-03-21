@@ -15,13 +15,13 @@ return [
 	'river:update:object:publication' => "%s updated a publication titled %s",
 	
 	// settings
-	'publications:settings:enable_bibtex' => "Enable BibTex import and export features",
-	'publications:settings:bibtex_import_behaviour' => "How to handle duplicate entries during BibTex import",
+	'publications:settings:enable_bibtex' => "Enable BibTeX import and export features",
+	'publications:settings:bibtex_import_behaviour' => "How to handle duplicate entries during BibTeX import",
 	'publications:settings:bibtex_import_behaviour:skip' => "Skip entry",
 	'publications:settings:bibtex_import_behaviour:update' => "Update information",
 	'publications:settings:bibtex_import_behaviour:user_skip' => "User can choose (default: skip)",
 	'publications:settings:bibtex_import_behaviour:user_update' => "User can choose (default: update)",
-	'publications:settings:bibtex_import_duplicates' => "Limit duplicate handling during BibTex import to owned publications",
+	'publications:settings:bibtex_import_duplicates' => "Limit duplicate handling during BibTeX import to owned publications",
 	
 	// forms
 	'publications:forms:required' => "*",
@@ -98,16 +98,16 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:export:confirm:single' => "Do you want to export this publication as a BibTeX file?",
 	'publication:import' => "Import BibTeX file",
 	'publication:bibtex' => 'BibTeX file',
-	'publication:bibtex:update' => 'Update existing publications with information from the BibTex file',
+	'publication:bibtex:update' => 'Use the BibTeX file to overwrite your existing publications.',
 	'publication:bibtex:skip:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be skipped.',
-	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTex file.',
-	'publication:bibtex:user_update:description' => 'Publications are matched on Title, if no match is found a new one will be created. If not checked matched publications will be skipped.',
-	'publication:bibtex:description' => 'Here you can upload a Bibtex file, so all publications will be imported into this site.',
+	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTeX file.',
+	'publication:bibtex:user_update:description' => 'The data in the BibTeX file will be compared with the titles of your publications already listed. If no match can be found, a new publication will be created. <br />If the box is not checked, matching titles will not be imported.',
+	'publication:bibtex:description' => 'Here you can upload a BibTeX file in order to import your publication list to %s.',
 	'publication:edit' => "Edit a publication",
 	'publication:abstract' => "Abstract",
 	'publication:details' => "Details",
-	'publication:bibtex:fileerror' => 'BibTex file not found',
-	'publication:bibtex:blank' => 'BibTex file has no entries',
+	'publication:bibtex:fileerror' => 'BibTeX file not found',
+	'publication:bibtex:blank' => 'BibTeX file has no entries',
 	'publication:enablepublication' => 'Enable group publication',
 	'publication:group' => 'Group publications',
 	'publication:river:posted' => "%s posted",
@@ -122,7 +122,7 @@ I have included you as an author on a publication titled: '%s' on our Portal. I 
 	'publication:notdeleted' => "Sorry; we could not delete this publication.",
 	'publications:seeall' => "See all publications from",
 	
-	'publication:error:bibtext:enabled' => "BibTex support is not enabled, the feature you're trying to use is not allowed.",
+	'publication:error:bibtext:enabled' => "BibTeX support is not enabled, the feature you're trying to use is not allowed.",
 	
 	// notifications
 	'publication:notification:create:subject' => "A new publication \"%s\" was created",
@@ -137,9 +137,9 @@ To view the publication click the link:
 	'publication:import:forward' => "After uploading go to the edit page",
 	'publication:import:forward:description' => "Only works if a single publication was imported",
 	
-	'publication:action:import:error:none' => "No publications where imported",
+	'publication:action:import:error:none' => "No publications were imported",
 	'publication:action:import:success:single' => "The publication was imported",
-	'publication:action:import:success:multiple_duplicates' => "Imported/updated %s publications and found %s publications already in the system",
-	'publication:action:import:success:multiple' => "Imported/updated %s publications",
-	'publication:action:import:success:duplicates' => "No publications imported and found %s publications already in the system",
+	'publication:action:import:success:multiple_duplicates' => "Not all publications could be imported. Some publications are already on %s.",
+	'publication:action:import:success:multiple' => "Publications were imported",
+	'publication:action:import:success:duplicates' => "No publications were imported",
 ];

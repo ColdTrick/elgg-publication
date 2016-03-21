@@ -16,7 +16,7 @@ return [
 
 	// new keys
 	'publications:settings:enable_bibtex' => "Aktiviere BibTeX Import- und Exportfunktionen",
-	'publications:settings:bibtex_import_behaviour' => "Wie sollen doppelte Einträge beim BibTex-Import behandelt werden",
+	'publications:settings:bibtex_import_behaviour' => "Wie sollen doppelte Einträge beim BibTeX-Import behandelt werden",
 	'publications:settings:bibtex_import_behaviour:skip' => "Überspringe Publikation",
 	'publications:settings:bibtex_import_behaviour:update' => "Aktualisiere Publikation",
 	'publications:settings:bibtex_import_behaviour:user_skip' => "Benutzer kann wählen (default: überspringen)",
@@ -104,11 +104,11 @@ ich habe Sie als Autor der Publikation '%s' auf unserem Portal hinzugefügt. Ich
 	'publication:export:confirm:single' => "Möchten Sie diese Publikation als BibTeX-Datei exportieren?",
 	'publication:import' => "BibTeX-Datei importieren",
 	'publication:bibtex' => 'BibTeX-Datei',
-	'publication:bibtex:update' => 'Bestehende Publikationen durch BibTeX-Daten aktualisieren.',
+	'publication:bibtex:update' => 'Ihre bestehenden Publikationen mit der BibTeX-Datei überschreiben.',
 	'publication:bibtex:skip:description' => 'Importierte Publikationen werden mit bestehenden Titeln abgeglichen. Wenn keine Übereinstimmung gefunden wird, wird eine Publikation erstellt. Übereinstimmende Publikationen werden übersprungen.',
-	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTex file.',
-	'publication:bibtex:user_update:description' => 'Importierte Publikationen werden mit bestehenden Titeln abgeglichen. Wenn keine Übereinstimmung gefunden wird, wird eine Publikation erstellt. Ist diese Funktion nicht markiert, werden übereinstimmende Publikationen übersprungen.',
-	'publication:bibtex:description' => 'Hier können Sie eine BibTeX-Datei hochladen, um Ihre Publikationsliste auf diese Plattform zu importieren.',
+	'publication:bibtex:update:description' => 'Publications are matched on Title, if no match is found a new one will be created. Matched publications will be updated with the information from the BibTeX file.',
+	'publication:bibtex:user_update:description' => 'Die in der BibTeX-Datei enthaltenen Angaben werden mit den Titeln Ihrer bereits vorhandenen Publikationen abgeglichen. Wenn keine Übereinstimmung gefunden wird, wird eine neue Publikation angelegt. <br />Wenn die Checkbox nicht angeklickt ist, werden übereinstimmende Titel beim Import übersprungen.',
+	'publication:bibtex:description' => 'Laden Sie hier eine BibTeX-Datei hoch, um Ihre Publikationsliste in %s zu importieren.',
 	'publication:edit' => "Eine Publikation bearbeiten",
 	'publication:abstract' => "Zusammenfassung",
 	'publication:details' => "Details",
@@ -144,8 +144,8 @@ Um die Publikation anzuzeigen, klicken Sie auf den folgenden Link:
 	'publication:import:forward:description' => "Funktioniert nur, wenn eine einzelne Publikation importiert wurde.",
 	
 	'publication:action:import:error:none' => "Es wurden keine Publikationen importiert",
-	'publication:action:import:success:single' => "Die Publikation(en) wurden importiert",
-	'publication:action:import:success:multiple_duplicates' => "%s Publikationen wurden importiert, %s Publikationen sind bereits auf der Plattform vorhanden",
-	'publication:action:import:success:multiple' => "%s Publikationen importiert",
-	'publication:action:import:success:duplicates' => "Die Publikation(en) wurde(n) nicht importiert. Es sind bereits %s Publikationen auf der Plattform vorhanden",
+	'publication:action:import:success:single' => "Die Publikation wurde importiert",
+	'publication:action:import:success:multiple_duplicates' => "Es konnten nicht alle Publikationen importiert werden. Ein Teil der Publikationen ist bereits in %s vorhanden.",
+	'publication:action:import:success:multiple' => "Die Publikationen wurden importiert.",
+	'publication:action:import:success:duplicates' => "Es wurden keine Publikationen importiert.",
 ];
