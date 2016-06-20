@@ -144,8 +144,10 @@ Um die Publikation anzuzeigen, klicken Sie auf den folgenden Link:
 	'publication:import:forward:description' => "Funktioniert nur, wenn eine einzelne Publikation importiert wurde.",
 	
 	'publication:action:import:error:none' => "Es wurden keine Publikationen importiert",
-	'publication:action:import:success:single' => "Die Publikation wurde importiert",
+	'publication:action:import:success:single' => "Eine Publikation wurde importiert",
 	'publication:action:import:success:multiple_duplicates' => "Es konnten nicht alle Publikationen importiert werden. Ein Teil der Publikationen ist bereits in %s vorhanden.",
 	'publication:action:import:success:multiple' => "Die Publikationen wurden importiert.",
 	'publication:action:import:success:duplicates' => "Es wurden keine Publikationen importiert.",
+	'publication:action:import:error:missingtitle' => "%s Publikation(en) konnten wegen fehlender Titel-Angabe nicht importiert werden.",
+
 ];

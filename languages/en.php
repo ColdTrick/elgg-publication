@@ -138,8 +138,9 @@ To view the publication click the link:
 	'publication:import:forward:description' => "Only works if a single publication was imported",
 	
 	'publication:action:import:error:none' => "No publications were imported",
-	'publication:action:import:success:single' => "The publication was imported",
+	'publication:action:import:success:single' => "One publication was imported",
 	'publication:action:import:success:multiple_duplicates' => "Not all publications could be imported. Some publications are already on %s.",
 	'publication:action:import:success:multiple' => "Publications were imported",
 	'publication:action:import:success:duplicates' => "No publications were imported",
+	'publication:action:import:error:missingtitle' => "%s publication(s) could not be imported due to missing title phrase.",
 ];
