@@ -87,6 +87,7 @@ $processed_entry_fields = [
 // a bibtex file can have multiple entries
 $count = 0;
 $duplicates = 0;
+$errtitle = 0;
 $forward_url = REFERER;
 
 $ia = elgg_set_ignore_access(true);
@@ -105,6 +106,7 @@ foreach ($entries as $ref => $entry) {
 	$title = $entry->getTitle();
 	if (empty($title)) {
 		// no title, can't continue
+		$errtitle++;
 		continue;
 	}
 	
@@ -228,6 +230,10 @@ foreach ($entries as $ref => $entry) {
 
 // restore access
 elgg_set_ignore_access($ia);
+
+if($errtitle>0) {
+	register_error(elgg_echo('publication:action:import:error:missingtitle',array($errtitle)));
+}
 
 if (empty($count) && empty($duplicates)) {
 	// no imports, no duplicates
